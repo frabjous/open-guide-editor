@@ -26,6 +26,9 @@
   },
   "homepage": "https://github.com/frabjous/open-guide-editor#readme",
   "dependencies": {
-    "codemirror": "^6.0.1"
+    "@codemirror/lang-javascript": "^6.1.9",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "codemirror": "^6.0.1",
+    "rollup": "^3.25.1"
   }
 }

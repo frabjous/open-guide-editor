@@ -13,6 +13,8 @@ The project is in early development. More documentation to come.
 
 1. Clone the repository.
 2. Run `npm install` to install codemirror.
+3. Create bundle script: node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve
+
 
 #####################3
 # KE = k(ev)e(dit) = Kevin’s editor
