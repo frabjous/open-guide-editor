@@ -1,0 +1,28 @@
+{
+  "name": "open-guide-editor",
+  "version": "0.0.1",
+  "description": "Web based editor based on codemirror for editing markdown and LaTeX files with live updating HTML and PDF previews.",
+  "main": "none",
+  "scripts": {
+    "test": "true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frabjous/open-guide-editor.git"
+  },
+  "keywords": [
+    "typesetting",
+    "LaTeX",
+    "markdown",
+    "editor",
+    "codemirror",
+    "open",
+    "guide"
+  ],
+  "author": "Kevin C. Klement",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/frabjous/open-guide-editor/issues"
+  },
+  "homepage": "https://github.com/frabjous/open-guide-editor#readme"
+}
