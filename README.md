@@ -6,7 +6,15 @@ This is a sequel to, and will supersede, my earlier [K(ev)E(dit)](https://bitbuc
 
 The project is in early development. More documentation to come.
 
+
+
 <!--
+# Installation
+
+1. Clone the repository.
+2. Run `npm install` to install codemirror.
+
+#####################3
 # KE = k(ev)e(dit) = Kevin’s editor
 
 KE is a PHP backend for the [codemirror](https://codemirror.net) browser based text editor, along with helper scripts, allowing files to be saved and post-processed. Although you can use it to edit any text file, it can provide for live-updating-as-you-type previews of the output of LaTeX, Markdown and HTML documents. It can also do text-to-speech on such files, which is useful for proofreading.

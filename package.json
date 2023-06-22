@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/frabjous/open-guide-editor/issues"
   },
-  "homepage": "https://github.com/frabjous/open-guide-editor#readme"
+  "homepage": "https://github.com/frabjous/open-guide-editor#readme",
+  "dependencies": {
+    "codemirror": "^6.0.1"
+  }
 }
