@@ -2,7 +2,7 @@
 
 Web based editor based on [codemirror](https://codemirror.net/) for editing markdown and LaTeX files with live updating HTML and PDF previews.
 
-This is a sequel and will supersede my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor. It is meant for use with the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
+This is a sequel to, and will supersede, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor. It is meant for use with the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
 The project is in early development. More documentation to come.
 
