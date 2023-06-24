@@ -19,6 +19,7 @@
     margin-right: 0.5rem;
     margin-top: 0.2rem;
     cursor: pointer;
+    user-select: none;
 }
 
 .panelbutton .material-symbols-outlined {

@@ -1,9 +1,11 @@
+//
 //███████╗██╗   ██╗███╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗
 //██╔════╝██║   ██║████╗  ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝
 //█████╗  ██║   ██║██╔██╗ ██║██║        ██║   ██║██║   ██║██╔██╗ ██║███████╗
 //██╔══╝  ██║   ██║██║╚██╗██║██║        ██║   ██║██║   ██║██║╚██╗██║╚════██║
 //██║     ╚██████╔╝██║ ╚████║╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║
 //╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+//
 
 function newElem(tagtype, par, classes = [], contents = '') {
     let e = document.createElement(tagtype);
@@ -60,9 +62,24 @@ function panelButton( possstates ) {
 }
 
 function powerUpEditor() {
-    ogEditor.save = function() {
+
+    ogEditor.save = function(opts = {}) {
         ogEditor.saveButton.makeState("saving");
-        console.log("saving");
+        if (window.basename == '') {
+            window.ogDialog.filechoose(
+                function(dn, bn) {
+                    window.dirname = dn;
+                    window.basename = bn;
+                    ogEditor.save();
+                },
+                window.dirname,
+                "Choose a file name to save:",
+                true,
+                'open-guide-misc/get-file-list.php'
+            );
+            return;
+        }
+        
     }
 
     // button for saving
@@ -70,7 +87,7 @@ function powerUpEditor() {
         "normal" : {
             icon: "save",
             tooltip: "save",
-            clickfn: function() { ogEditor.save(); }
+            clickfn: function() { ogEditor.save({}); }
         },
         "saving" : {
             icon: "sync",
@@ -80,7 +97,7 @@ function powerUpEditor() {
         "error" : {
             icon: "save",
             tooltip: "save error",
-            clickfn: function() { ogEditor.save(); }
+            clickfn: function() { ogEditor.save({}); }
         }
     });
     ogEditor.saveButton.makeState("normal");
@@ -151,7 +168,7 @@ function powerUpEditor() {
     ogEditor.replaceButton.makeState("normal");
 
     if (window.poweruser) {
-            // button for wrap
+        // button for wrap
         ogEditor.pipeButton = panelButton({
             "normal" : {
                 icon: "terminal",
@@ -174,6 +191,7 @@ function powerUpEditor() {
 
     // TODO: add file insert button?
     //
-    //  for markdown, need play, preview html, preview pdf, autopreview and speak aloud
+    //  for markdown, need play, preview html, preview pdf,
+    //  autopreview and speak aloud
 
 }

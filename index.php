@@ -2,10 +2,15 @@
 
 session_start();
 
-//todo
-$basename = 'placeholder.md';
+//TODO
 
-//todo
+//TODO
+$dirname = '';
+$basename = '';
+
+$displaybasename = ($basename == '') ? '⟨unnamed⟩' : $basename;
+
+//TODO
 $poweruser = true;
 
 ?><!DOCTYPE html>
@@ -27,11 +32,12 @@ $poweruser = true;
 
         <!-- web icon -->
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <title><?php echo $basename; ?> | open guide editor</title>
+        <title><?php echo $displaybasename; ?> | open guide editor</title>
 
         <!-- css file -->
         <link rel="stylesheet" type="text/css" href="style/one-dark-colors.css">
         <link rel="stylesheet" type="text/css" href="style/panel.css">
+        <link rel="stylesheet" type="text/css" href="open-guide-misc/dialog.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined">
         <!-- javascript file -->
         <script type="text/javascript" charset="utf-8" src="js/libeditor.js"></script>
@@ -74,8 +80,11 @@ $poweruser = true;
                 overflow: auto;
             }
         </style>
+        <script type="module" src='open-guide-misc/dialog.mjs'></script>
         <script>
             window.poweruser = <?php echo json_encode($poweruser); ?>;
+            window.dirname = '<?php echo $dirname; ?>';
+            window.basename = '<?php echo $basename; ?>';
             window.onload = function() {
                 powerUpEditor();
             }
