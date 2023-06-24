@@ -9,6 +9,7 @@
     --highlightbg: #2c313a;
     --white: #ffffff;
     --lightgray: #abb2bf;
+    --midgray: #5D6675;
     --lightblue: #61afef;
     --green: #98c379;
     --selection: #3E4451;
@@ -27,9 +28,8 @@
     color: var(--lightblue);
 }
 
-#editorparent .cm-activeLine {
-    background-color: var(--blacker);
-}
+
+.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection: {background-color: yellow}
 
 html, body {
     background-color: var(--black);

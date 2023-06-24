@@ -7,6 +7,7 @@
 //╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 //
 
+// creates a new element with a parent, class names and innerHTML
 function newElem(tagtype, par, classes = [], contents = '') {
     let e = document.createElement(tagtype);
     for (const cl of classes) {
@@ -21,6 +22,7 @@ function newElem(tagtype, par, classes = [], contents = '') {
     return e;
 }
 
+// generic function to create the panel buttons
 function panelButton( possstates ) {
     // create button and add to panel
     let panel = document.getElementById("toppanel");
@@ -61,30 +63,86 @@ function panelButton( possstates ) {
     return b;
 }
 
+// function run at load, giving the editor its commands and buttons
 function powerUpEditor() {
-
-    ogEditor.save = function(opts = {}) {
-        ogEditor.saveButton.makeState("saving");
-        if (window.basename == '') {
-            window.ogDialog.filechoose(
-                function(dn, bn) {
-                    window.dirname = dn;
-                    window.basename = bn;
-                    ogEditor.save();
-                },
-                window.dirname,
-                "Choose a file name to save:",
-                true,
-                'open-guide-misc/get-file-list.php'
-            );
-            return;
+    //
+    // SAVE FUNCTION
+    //
+    ogEditor.save = async function(opts = {}) {
+        // don't save if already saving
+        let autosave = (("autosave" in opts) && (opts.autosave));
+        if (!autosave) {
+            ogEditor.saveButton.makeState("saving");
         }
-        
+        let basename = window.basename;
+        let dirname = window.dirname;
+        if (basename == '') {
+            if (autosave) {
+                const now = new Date();
+                const ts = now.getFullYear.toString() + '-' +
+                    (now.getMonth()+1).toString() + '-' +
+                    now.getDate().toString() + '-' +
+                    now.getTime().toString();
+                basename = 'autosave-' + ts;
+            } else {
+                window.ogDialog.filechoose(
+                    function(dn, bn) {
+                        window.dirname = dn;
+                        window.basename = bn;
+                        ogEditor.save();
+                    },
+                    window.dirname,
+                    'Choose a file name to save:',
+                    true,
+                    'open-guide-misc/get-file-list.php'
+                );
+                return;
+            }
+        }
+        const buffer = ogEditor.state.doc.text.join('\n');
+        let saveerror = '';
+        window.lastsavedat = window.numchanges;
+        try {
+            let saveresponse = await postData('php/savefile.php', {
+                dirname: dirname,
+                basename: basename,
+                buffer: buffer,
+                opts: opts
+            });
+            if ((!"error" in saveresponse) || saveresponse.error) {
+                saveerror += (("errMsg" in saveresponse) ?
+                    saveresponse.errMsg : 'Unknown error. ');
+            } else {
+                if (opts.autosave) { return; }
+                if (window.numchanges <= window.lastsavedat) {
+                    ogEditor.saveButton.makeState('unchanged');
+                }
+                // TODO: postprocessing
+            }
+        } catch(err) {
+            saveerror += 'Browser error: ' + err.toString() + ' ';
+        }
+        if (saveerror != '') {
+            ogEditor.saveButton.makeState('error');
+            ogDialog.errdiag('Unable to save. ' + saveerror);
+        }
     }
+
+    // _           _   _
+    //| |__  _   _| |_| |_ ___  _ __  ___ 
+    //| '_ \| | | | __| __/ _ \| '_ \/ __|
+    //| |_) | |_| | |_| || (_) | | | \__ \
+    //|_.__/ \__,_|\__|\__\___/|_| |_|___/
+    //
 
     // button for saving
     ogEditor.saveButton = panelButton({
-        "normal" : {
+        "unchanged" : {
+            icon: "save",
+            tooltip: "file already saved",
+            clickfn: function() {}
+        },
+        "changed" : {
             icon: "save",
             tooltip: "save",
             clickfn: function() { ogEditor.save({}); }
@@ -100,7 +158,7 @@ function powerUpEditor() {
             clickfn: function() { ogEditor.save({}); }
         }
     });
-    ogEditor.saveButton.makeState("normal");
+    ogEditor.saveButton.makeState("unchanged");
 
     // button for opening
     ogEditor.openButton = panelButton({
@@ -189,8 +247,7 @@ function powerUpEditor() {
         ogEditor.pipeButton.makeState("normal");
     }
 
-    // TODO: add file insert button?
-    //
+    // TODO: generic function for adding more based on filetype?
     //  for markdown, need play, preview html, preview pdf,
     //  autopreview and speak aloud
 

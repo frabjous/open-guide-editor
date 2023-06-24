@@ -26,6 +26,19 @@ import {keymap} from "@codemirror/view";
 let editor = new EditorView({
     extensions: [
         basicSetup,
+        EditorView.theme({
+            "&.cm-focused .cm-selectionBackground, ::selection": {
+                backgroundColor: "#61afef"
+        },
+        }),
+        EditorView.updateListener.of((update) => {
+            if (update.docChanged) {
+                window.numchanges++;
+                if (editor?.saveButton) {
+                    editor.saveButton.makeState('changed');
+                }
+            }
+        }),
         indentUnit.of('    '),
         keymap.of([indentWithTab]),
         markdown(),

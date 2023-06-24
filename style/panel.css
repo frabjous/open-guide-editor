@@ -39,9 +39,20 @@
     color: var(--yellow);
 }
 
+.panelbutton.inactive,
+.panelbutton.unchanged {
+    border-color: var(--midgray);
+    color: var(--midgray);
+}
+
 .panelbutton.saving span {
     animation-name: spin;
     animation-duration: 1500ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+.panelbutton.error {
+    border-color: var(--red);
+    color: var(--red);
 }

@@ -1,0 +1,6 @@
+{
+    "directories": {
+        "archive": "/var/www-data/archive",
+        "autosave": "/var/www-data/autosave"
+    }
+}

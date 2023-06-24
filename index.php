@@ -20,7 +20,7 @@ $poweruser = true;
         <meta charset="utf-8">
         <meta name="description" content="Open guide editor and preview launcher">
         <meta name="author" content="Kevin C. Klement">
-        <meta name="copyright" content="Copyright 2023 © Kevin C> Klement">
+        <meta name="copyright" content="Copyright 2023 © Kevin C. Klement">
 
         <!-- to disable search indexing -->
         <meta name="robots" content="noindex,nofollow">
@@ -80,11 +80,14 @@ $poweruser = true;
                 overflow: auto;
             }
         </style>
+        <script type="module" src='open-guide-misc/fetch.mjs'></script>
         <script type="module" src='open-guide-misc/dialog.mjs'></script>
         <script>
             window.poweruser = <?php echo json_encode($poweruser); ?>;
             window.dirname = '<?php echo $dirname; ?>';
             window.basename = '<?php echo $basename; ?>';
+            window.numchanges = 0;
+            window.lastsavedat = 0;
             window.onload = function() {
                 powerUpEditor();
             }

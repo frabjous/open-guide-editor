@@ -29431,9 +29431,22 @@
    let editor = new EditorView({
        extensions: [
            basicSetup,
-           markdown(),
-           keymap.of([indentWithTab]),
+           EditorView.theme({
+               "&.cm-focused .cm-selectionBackground, ::selection": {
+                   backgroundColor: "#61afef"
+           },
+           }),
+           EditorView.updateListener.of((update) => {
+               if (update.docChanged) {
+                   window.numchanges++;
+                   if (editor?.saveButton) {
+                       editor.saveButton.makeState('changed');
+                   }
+               }
+           }),
            indentUnit.of('    '),
+           keymap.of([indentWithTab]),
+           markdown(),
            oneDark
        ],
        parent: document.getElementById("editorparent")
