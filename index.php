@@ -2,7 +2,11 @@
 
 session_start();
 
+//todo
 $basename = 'placeholder.md';
+
+//todo
+$poweruser = true;
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -26,47 +30,61 @@ $basename = 'placeholder.md';
         <title><?php echo $basename; ?> | open guide editor</title>
 
         <!-- css file -->
-        <!-- <link rel="stylesheet" type="text/css" href="/kcklib/kckdialog.css"> -->
+        <link rel="stylesheet" type="text/css" href="style/one-dark-colors.css">
+        <link rel="stylesheet" type="text/css" href="style/panel.css">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined">
         <!-- javascript file -->
-        <!-- <script type="text/javascript" charset="utf-8" src="/kcklib/kckdialog.js"></script> -->
+        <script type="text/javascript" charset="utf-8" src="js/libeditor.js"></script>
 
         <style>
             html, body {
                 margin: 0;
                 padding: 0;
                 font-size: 16px;
-                background-color: white;
-                color: black;
             }
             #allcontainer {
                 height: 100vh;
                 width: 100vw;
+                position: absolute;
             }
             #toppanelcontainer {
                 position: fixed;
                 z-index: 10;
                 top: 0;
                 width: 100%;
-                height: 3rem;
-                background-color: LightGray;
+                height: 2.8rem;
             }
             #editorcontainer {
-                position: relative;
-                padding-top: 3rem;
-                min-height: calc(100vh - 3rem);
+                position: fixed;
+                top: 2.4rem;
+                min-height: calc(100vh - 2.8rem);
+                max-height: calc(100vh - 2.8rem);
+                height: calc(100vh - 2.8rem);
+                width: 100%;
             }
             #editorparent {
                 width: 100%;
                 height: 100%;
+            }
+            .cm-editor {
+                height: 100%;
+                width: 100%;
+            }
+            .cm-scroller {
                 overflow: auto;
             }
         </style>
+        <script>
+            window.poweruser = <?php echo json_encode($poweruser); ?>;
+            window.onload = function() {
+                powerUpEditor();
+            }
+        </script>
     </head>
     <body>
         <div id="allcontainer">
             <div id="toppanelcontainer">
                 <div id="toppanel">
-                    Some content.
                 </div>
             </div>
             <div id="editorcontainer">

@@ -15,6 +15,8 @@ The project is in early development. More documentation to come.
 2. Run `npm install` to install codemirror.
 3. Create bundle script: node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve
 
+Note: Since tab it captured by the editor and not passed to the browser or OS, if you need to use tab to avoid the “no keyboard trap”, you can press Escape, then tab.
+=i
 
 #####################3
 # KE = k(ev)e(dit) = Kevin’s editor
