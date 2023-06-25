@@ -13,7 +13,6 @@ import {indentWithTab} from "@codemirror/commands"
 import {indentUnit} from '@codemirror/language';
 import {markdown} from '@codemirror/lang-markdown';
 import {EditorState} from "@codemirror/state";
-import {oneDark, color} from '@codemirror/theme-one-dark';
 import {keymap} from "@codemirror/view";
 
 //            ___ __
@@ -22,15 +21,10 @@ import {keymap} from "@codemirror/view";
 ///  __/ /_/ / / /_/ /_/ / /
 //\___/\__,_/_/\__/\____/_/
 //
-
 let editor = new EditorView({
+    doc: window.filecontents,
     extensions: [
         basicSetup,
-        EditorView.theme({
-            "&.cm-focused .cm-selectionBackground, ::selection": {
-                backgroundColor: "#61afef"
-        },
-        }),
         EditorView.updateListener.of((update) => {
             if (update.docChanged) {
                 window.numchanges++;
@@ -41,12 +35,10 @@ let editor = new EditorView({
         }),
         indentUnit.of('    '),
         keymap.of([indentWithTab]),
-        markdown(),
-        oneDark
+        markdown()
     ],
     parent: document.getElementById("editorparent")
 });
 
-window.stylecolors = color;
 window.ogEditor = editor;
 

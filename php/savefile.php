@@ -1,8 +1,12 @@
 <?php
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see 
+// https://www.gnu.org/licenses/.
 
 session_start();
 require '../open-guide-misc/send-as-json.php';
 require 'readsettings.php';
+require 'libauthentication.php';
 
 // read and verify posted information
 $json = file_get_contents('php://input') ?? false;
@@ -27,6 +31,11 @@ $buffer = $data->buffer;
 $opts = $data->opts;
 $filename = $dirname . '/' . $basename;
 
+if (!has_authentication($filename)) {
+    rage_quit(new StdClass(), "user does not have authentication to " .
+        "edit the file in quesiton");
+}
+
 // check if autosave request
 if (isset($opts->autosave) && $opts->autosave) {
     if (!isset($settings->directories->autosave)) {
@@ -48,7 +57,6 @@ if ((file_exists($filename)) && isset($settings->directories->archive)) {
     $archiveloc = dirname($archivefile);
     // ensure folder exists
     if (!is_dir($archiveloc)) {
-        error_log("here with $archiveloc");
         mkdir($archiveloc, 0755, true);
     }
     rename($filename, $archivefile);

@@ -1,11 +1,6 @@
-//
-//███████╗██╗   ██╗███╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗
-//██╔════╝██║   ██║████╗  ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝
-//█████╗  ██║   ██║██╔██╗ ██║██║        ██║   ██║██║   ██║██╔██╗ ██║███████╗
-//██╔══╝  ██║   ██║██║╚██╗██║██║        ██║   ██║██║   ██║██║╚██╗██║╚════██║
-//██║     ╚██████╔╝██║ ╚████║╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║
-//╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
-//
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see 
+// https://www.gnu.org/licenses/.
 
 // creates a new element with a parent, class names and innerHTML
 function newElem(tagtype, par, classes = [], contents = '') {
@@ -66,6 +61,68 @@ function panelButton( possstates ) {
 // function run at load, giving the editor its commands and buttons
 function powerUpEditor() {
     //
+    // OPEN FUNCTION
+    //
+    ogEditor.changetofile = function(dir, fn) {
+        document.title = fn + ' |' + document.title.split('|')[1];
+        window.basename = fn;
+        window.dirname = dir;
+        // TODO: fix filetype and more
+    }
+    ogEditor.grabcontents = async function(dir, fn) {
+        let grab = await postData('php/getfilecontents.php',
+            { dirname: dir, basename: fn }
+        );
+        if (grab?.error) {
+            ogEditor.openButton.makeState("error");
+            ogDialog.errdiag("Unable to open file: " +
+                (grab?.errMsg ?? 'Unknown problem.'));
+            return;
+        }
+        if (!"filecontents" in grab.respObj) {
+            ogEditor.openButton.makeState("error");
+            ogDialog.errdiag("No file contents sent.");
+            return;
+        }
+        ogEditor.openButton.makeState("normal");
+        let transaction = ogEditor.state.update({
+            changes: {
+                from: 0,
+                to: ogEditor.state.doc.length,
+                insert: grab.respObj.filecontents
+            }
+        });
+        ogEditor.dispatch(transaction);
+        window.lastsavedat = window.numchanges;
+        ogEditor.saveButton.makeState("unchanged");
+        ogEditor.changetofile(dir, fn);
+    }
+    ogEditor.openfile = function(opts = {}) {
+        ogEditor.openButton.makeState("opening");
+        if ((window.numchanges > window.lastsavedat) &&
+            ((!"bypass" in opts) || (!opts.bypass))) {
+            ogDialog.yesno('You have unsaved changes. ' +
+                'Open a new file anyway?',
+            function() {
+                ogEditor.openfile({bypass: true});
+            },
+            function() {
+                ogEditor.openButton.makeState("normal");
+            });
+            return;
+        }
+        window.ogDialog.filechoose(
+            function(dir, fn) {
+                ogEditor.grabcontents(dir, fn);
+            },
+            window.dirname,
+            "Choose a file to open:",
+            false,
+            'open-guide-misc/get-file-list.php',
+            ''
+        );
+    }
+    //
     // SAVE FUNCTION
     //
     ogEditor.save = async function(opts = {}) {
@@ -87,6 +144,9 @@ function powerUpEditor() {
             } else {
                 window.ogDialog.filechoose(
                     function(dn, bn) {
+                        if (dn == '---' && bn == '---') {
+                            ogEditor.saveButton.makeState("changed");
+                        }
                         window.dirname = dn;
                         window.basename = bn;
                         ogEditor.save();
@@ -127,13 +187,6 @@ function powerUpEditor() {
             ogDialog.errdiag('Unable to save. ' + saveerror);
         }
     }
-
-    // _           _   _
-    //| |__  _   _| |_| |_ ___  _ __  ___ 
-    //| '_ \| | | | __| __/ _ \| '_ \/ __|
-    //| |_) | |_| | |_| || (_) | | | \__ \
-    //|_.__/ \__,_|\__|\__\___/|_| |_|___/
-    //
 
     // button for saving
     ogEditor.saveButton = panelButton({

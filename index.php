@@ -1,17 +1,33 @@
 <?php
 
 session_start();
+require 'php/libauthentication.php';
 
-//TODO
+// check for authentication
+$poweruser = ((isset($_SESSION["open-guide-editor-poweruser"])) &&
+    $_SESSION["open-guide-editor-poweruser"]);
 
-//TODO
-$dirname = '';
-$basename = '';
+if ((!$poweruser) && (
+    !isset($_SESSION["open-guide-editor-dirname"]) ||
+    !isset($_SESSION["open-guide-editor-basename"])
+)) { echo 'You do not have access to this page.'; exit(0); }
 
+$dirname = $_SESSION["open-guide-editor-dirname"] ?? '';
+$basename = $_SESSION["open-guide-editor-basename"] ?? '';
+$fullfilename = $dirname .'/'.$basename;
+if (!has_authentication($fullfilename)) {
+    echo 'You do not have access for editing that file.';
+    exit(0);
+}
+
+// determine title
 $displaybasename = ($basename == '') ? '⟨unnamed⟩' : $basename;
+$file_contents = '';
 
-//TODO
-$poweruser = true;
+if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
+    !is_dir($fullfilename)) {
+    $file_contents = file_get_contents($fullfilename);
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -35,7 +51,7 @@ $poweruser = true;
         <title><?php echo $displaybasename; ?> | open guide editor</title>
 
         <!-- css file -->
-        <link rel="stylesheet" type="text/css" href="style/one-dark-colors.css">
+        <link rel="stylesheet" type="text/css" href="style/colors.css">
         <link rel="stylesheet" type="text/css" href="style/panel.css">
         <link rel="stylesheet" type="text/css" href="open-guide-misc/dialog.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined">
@@ -62,7 +78,7 @@ $poweruser = true;
             }
             #editorcontainer {
                 position: fixed;
-                top: 2.4rem;
+                top: calc(2.4rem + 2px);
                 min-height: calc(100vh - 2.8rem);
                 max-height: calc(100vh - 2.8rem);
                 height: calc(100vh - 2.8rem);
@@ -83,6 +99,7 @@ $poweruser = true;
         <script type="module" src='open-guide-misc/fetch.mjs'></script>
         <script type="module" src='open-guide-misc/dialog.mjs'></script>
         <script>
+            window.filecontents = <?php echo json_encode($file_contents); ?>;
             window.poweruser = <?php echo json_encode($poweruser); ?>;
             window.dirname = '<?php echo $dirname; ?>';
             window.basename = '<?php echo $basename; ?>';
