@@ -4,9 +4,9 @@
 // https://www.gnu.org/licenses/.
 
 session_start();
-require '../open-guide-misc/send-as-json.php';
-require 'readsettings.php';
-require 'libauthentication.php';
+require_once '../open-guide-misc/send-as-json.php';
+require_once 'readsettings.php';
+require_once 'libauthentication.php';
 
 // read and verify posted information
 $json = file_get_contents('php://input') ?? false;
@@ -38,10 +38,10 @@ if (!has_authentication($filename)) {
 
 // check if autosave request
 if (isset($opts->autosave) && $opts->autosave) {
-    if (!isset($settings->directories->autosave)) {
-        rage_quit(new StdClass(), "autosaving without an autosave folder");
+    if (!isset($settings->autosave->directory)) {
+        rage_quit(new StdClass(), "autosaving without an autosave folder in settings");
     }
-    $filename = $settings->directories->autosave . '/' .
+    $filename = $settings->autosave->directory . '/' .
         str_replace('/','⊃',$filename);
 }
 
@@ -49,25 +49,11 @@ if (isset($opts->autosave) && $opts->autosave) {
 if (!is_dir(dirname($filename))) {
     mkdir(dirname($filename), 0755, true);
 }
-
-// make archive backup
-if ((file_exists($filename)) && isset($settings->directories->archive)) {
-    $archivefile = $settings->directories->archive . '/' .
-        str_replace('/','⊃',$filename) . '-' . date('Y-m-d-U');
-    $archiveloc = dirname($archivefile);
-    // ensure folder exists
-    if (!is_dir($archiveloc)) {
-        mkdir($archiveloc, 0755, true);
-    }
-    rename($filename, $archivefile);
-}
-
 // actually save the file
 $putresult = file_put_contents($filename, $buffer);
 if ($putresult === false) {
     rage_quit(new StdClass(), 'Saving of file failed.');
 }
-
 $rv->savesuccess = true;
 send_as_json($rv);
 exit(0);

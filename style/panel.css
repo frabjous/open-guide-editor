@@ -21,6 +21,7 @@
     margin-top: 0.2rem;
     cursor: pointer;
     user-select: none;
+    box-shadow: 2px 2px 1px var(--gray4);
 }
 
 .panelbutton .material-symbols-outlined {
@@ -56,4 +57,27 @@
 .panelbutton.error {
     border-color: var(--red);
     color: var(--red);
+}
+
+.cm-search.cm-panel {
+    padding-top: 10px !important;
+}
+
+.oge-pipeform {
+    font-size: 18px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.oge-pipeform input {
+    font-size: 18px;
+    font-family: monospace;
+    padding: 0.2rem;
+    width: 20rem;
+}
+
+.oge-pipeform button {
+    font-size: 18px;
+    padding: 0.2rem;
+    cursor: pointer;
 }

@@ -4,11 +4,209 @@ Web based editor based on [codemirror](https://codemirror.net/) for editing mark
 
 This is a sequel to, and will supersede, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor. It is meant for use with the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
-The project is in early development. More documentation to come.
+The project is in early development and is not fully usable yet. More documentation to come.
 
+## TODO
 
-
+- [x] implement authentication model for who is allowed to edit which files
+- [x] implement basic codemirror v6 editor with top panel
+    - [x] allow saving
+    - [x] allow opening new files
+    - [x] allow toggling wrap/nowrap
+    - [x] find/replace panel
+    - [x] piping selection to unix tools on server
+    - [x] good keybindings
+    - [x] auto-comment/uncomment
+- [ ] provide generic mechanisms for autopreview depending on input filetype
+- [ ] support markdown as input
+    - [ ] preview html
+    - [ ] preview pdf
+    - [ ] download ePub
+- [ ] implement api for additing citations
+    - [ ] general api
+    - [ ] PhilPapers specific integration
+- [ ] good documentation
+    - [x] initial todo on readme
+    - [ ] basic usage
+    - [ ] buttons
+    - [ ] keybindings
+    - [ ] installation locally
+    - [ ] server installation
+    - [ ] security model
+- [ ] support LaTeX as input
+    - [ ] smart quotes
+    - [ ] error reports
+    - [ ] preview pdf
+    - [ ] synctex support
+- [ ] support html as input
+    - [ ] preview (itself)
+- [ ] implement autosaving
+- [ ] templates
+- [ ] edit supplementary files with preview
+    - [ ] proper syntax highlighting for type of file
+    - [ ] css/svg for html/markdown
+    - [ ] latex package, bibtex database or included file
+- [ ] provide git integration
+    - [ ] doing a commit
+    - [ ] revert to earlier commit
+    - [ ] more?
+- [ ] symbol/emoji picker
+- [ ] “Frege-ifier” integration
+- [ ] spellcheck
+- [ ] jump marks
+- [ ] probably unimportant things
+    - [ ] support other colorschemes
+    - [ ] make find button grayed out when search panel inactive
+- [ ] long term pipedreams (?)
+    - [ ] split panels
+    - [ ] linting
+    - [ ] word-processor-like interface for bold, italics, quotes, etc.
+    - [ ] LSP integration
+    - [ ] collaborative editing
 <!--
+
+| **Alt-5**: Move to matching bracket/parenthesis
+| **Alt-l**: Select current line
+| **Alt-w**: Toggle line wrapping
+| **Alt-/**: Toggle comment
+| **Alt-\\**: Pipe text to unix command
+| **Alt-↑**: Move current line up
+| **Alt-↓**: Move current line down
+| **Ctrl-a**: Select all
+| **Ctrl-d**: Duplicate current line
+| **Ctrl-k**: Delete to end of line
+| **Ctrl-s**: Save
+| **Ctrl-x**: Cut, or cut whole line if nothing selected
+| **Ctrl-/**: Toggle comment
+| **Ctrl-|**: Pipe text to unix command
+| **Ctrl-[**: Indent less
+  **Ctrl-]**: Indent more
+| **Ctrl-↑**: Insert line above
+| **Ctrl-↓**: Insert line below
+| **Ctrl-Alt-\**: indentSelection
+
+
+VIM KEY BINDS
+
+{
+                modifiers = {},
+                keys = {
+                    ['Tab'] = 'indent/autocomplete',
+                    ['F1']  = 'fzf help search',
+                    ['F2']  = 'show syntax',
+                    ['F3']  = 'switch window',
+                    ['F5']  = 'knap refresh',
+                    ['F6']  = 'close viewer',
+                    ['F7']  = 'toggle autopreview',
+                    ['F8']  = 'synctex forward'
+                }
+            },
+            {
+                modifiers = { alt },
+                keys = {
+                    a        = 'restore selection',
+                    b        = 'suggest spelling',
+                    c        = 'clean LaTeX files',
+                    d        = 'dictionary complete',
+                    e        = 'show errors',
+                    f        = 'filename complete',
+                    g        = 'add word to dict.',
+                    h        = 'jump last edit',
+                    j        = 'jump to mark…',
+                    m        = 'set mark…',
+                    o        = 'toggle opacity',
+                    t        = 'toggle fold',
+                    u        = 'unicode/emoji',
+                    v        = 'restore selection',
+                    x        = 'xelatex check',
+                    ['up']   = 'move line up',
+                    ['down'] = 'move line down',
+                    ['1..4'] = 'insert template',
+                    ['5']    = 'match paren',
+                    ['9']    = 'prev sentence',
+                    ['0']    = 'next sentence',
+                    ['(']    = 'prev sentence',
+                    [')']    = 'next sentence',
+                    ['=']    = 'increase num',
+                    ['-']    = 'decrease num',
+                    ['.']    = 'indent',
+                    [',']    = 'unindent',
+                    ['[']    = 'prev paragraph',
+                    [']']    = 'next paragraph',
+                    ['{']    = 'prev paragraph',
+                    ['}']    = 'next paragraph',
+                    ['tab']  = 'next tab',
+                    ['/']    = 'toggle comments'
+                }
+            },
+            {
+                modifiers = { alt, ctrl },
+                keys = {
+                    c = 'colorschemes',
+                    t = 'fzf open (home)'
+                }
+            },
+            {
+                modifiers = { alt, shift },
+                keys = {
+                    q        = 'force quit',
+                    ['end']  = 'select to end',
+                    ['home'] = 'select to start',
+                    ['tab']  = 'previous tab'
+                }
+            },
+            {
+                modifiers = { ctrl },
+                keys = {
+                    a         = 'select all',
+                    b         = 'clear highlights',
+                    c         = 'copy/copy line',
+                    d         = 'duplicate line',
+                    e         = 'command mode',
+                    f         = 'find',
+                    g         = 'find next',
+                    h         = 'jump last edit',
+                    j         = 'join lines',
+                    k         = 'kill remainder',
+                    l         = 'get citation key',
+                    n         = 'normal mode',
+                    q         = 'quit',
+                    r         = 'replace',
+                    s         = 'save',
+                    t         = 'fzf open (cwd)',
+                    u         = 'unicode/emoji',
+                    v         = 'paste',
+                    w         = 'toggle wrap',
+                    x         = 'cut/cut line',
+                    y         = 'redo',
+                    z         = 'undo',
+                    ['space'] = 'omnicomplete',
+                    ['up']    = 'put line above',
+                    ['down']  = 'put line below',
+                    ['\\']    = 'pipe selection',
+                    ['ins']   = 'copy',
+                    ['tab']   = 'next tab'
+                }
+            },
+            {
+                modifiers = { ctrl, shift },
+                keys = {
+                    ['tab'] = 'previous tab'
+                }
+            },
+            {
+                modifiers = { shift },
+                keys = {
+                    ['tab']    = 'autoindent selection',
+                    ['del']    = 'cut',
+                    ['insert'] = 'paste',
+                    ['F1']     = 'prev tab',
+                    ['F2']     = 'next tab'
+                }
+            }
+        }
+    },
+
 # Installation
 
 1. Clone the repository.

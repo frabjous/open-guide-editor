@@ -5487,7 +5487,9 @@
        */
        static widget(spec) {
            let side = Math.max(-10000, Math.min(10000, spec.side || 0)), block = !!spec.block;
-           side += block ? (side > 0 ? 300000000 /* BlockAfter */ : -400000000 /* BlockBefore */) : (side > 0 ? 100000000 /* InlineAfter */ : -100000000 /* InlineBefore */);
+           side += (block && !spec.inlineOrder)
+               ? (side > 0 ? 300000000 /* BlockAfter */ : -400000000 /* BlockBefore */)
+               : (side > 0 ? 100000000 /* InlineAfter */ : -100000000 /* InlineBefore */);
            return new PointDecoration(spec, side, side, block, spec.widget || null, false);
        }
        /**
@@ -7431,7 +7433,7 @@
        if (yOffset > docHeight)
            return view.state.doc.length;
        // Scan for a text block near the queried y position
-       for (let halfLine = view.defaultLineHeight / 2, bounced = false;;) {
+       for (let halfLine = view.viewState.heightOracle.textHeight / 2, bounced = false;;) {
            block = view.elementAtHeight(yOffset);
            if (block.type == BlockType.Text)
                break;
@@ -7511,7 +7513,8 @@
    function posAtCoordsImprecise(view, contentRect, block, x, y) {
        let into = Math.round((x - contentRect.left) * view.defaultCharacterWidth);
        if (view.lineWrapping && block.height > view.defaultLineHeight * 1.5) {
-           let line = Math.floor((y - block.top) / view.defaultLineHeight);
+           let textHeight = view.viewState.heightOracle.textHeight;
+           let line = Math.floor((y - block.top - (view.defaultLineHeight - textHeight) * 0.5) / textHeight);
            into += line * view.viewState.heightOracle.lineLength;
        }
        let content = view.state.sliceDoc(block.from, block.to);
@@ -7622,7 +7625,7 @@
            startY = (dir < 0 ? line.top : line.bottom) + docTop;
        }
        let resolvedGoal = rect.left + goal;
-       let dist = distance !== null && distance !== void 0 ? distance : (view.defaultLineHeight >> 1);
+       let dist = distance !== null && distance !== void 0 ? distance : (view.viewState.heightOracle.textHeight >> 1);
        for (let extra = 0;; extra += 10) {
            let curY = startY + (dist + extra) * dir;
            let pos = posAtCoords(view, { x: resolvedGoal, y: curY }, false, dir);
@@ -7905,7 +7908,6 @@
            doc.addEventListener("mouseup", this.up = this.up.bind(this));
            this.extend = startEvent.shiftKey;
            this.multiple = view.state.facet(EditorState.allowMultipleSelections) && addsSelectionRange(view, startEvent);
-           this.dragMove = dragMovesSelection(view, startEvent);
            this.dragging = isInPrimarySelection(view, startEvent) && getClickType(startEvent) == 1 ? null : false;
        }
        start(event) {
@@ -8243,7 +8245,7 @@
        let dropPos = view.posAtCoords({ x: event.clientX, y: event.clientY }, false);
        event.preventDefault();
        let { mouseSelection } = view.inputState;
-       let del = direct && mouseSelection && mouseSelection.dragging && mouseSelection.dragMove ?
+       let del = direct && mouseSelection && mouseSelection.dragging && dragMovesSelection(view, event) ?
            { from: mouseSelection.dragging.from, to: mouseSelection.dragging.to } : null;
        let ins = { from: dropPos, insert: text };
        let changes = view.state.changes(del ? [del, ins] : ins);
@@ -20434,6 +20436,15 @@
        }
    });
    /**
+   Add search state to the editor configuration, and optionally
+   configure the search extension.
+   ([`openSearchPanel`](https://codemirror.net/6/docs/ref/#search.openSearchPanel) will automatically
+   enable this if it isn't already on).
+   */
+   function search(config) {
+       return config ? [searchConfigFacet.of(config), searchExtensions] : searchExtensions;
+   }
+   /**
    A search query. Part of the editor's search state.
    */
    class SearchQuery {
@@ -21772,9 +21783,10 @@
        let result = [], prev = null;
        let compare = state.facet(completionConfig).compareCompletions;
        for (let opt of options.sort((a, b) => (b.score - a.score) || compare(a.completion, b.completion))) {
-           if (!prev || prev.label != opt.completion.label || prev.detail != opt.completion.detail ||
-               (prev.type != null && opt.completion.type != null && prev.type != opt.completion.type) ||
-               prev.apply != opt.completion.apply)
+           let cur = opt.completion;
+           if (!prev || prev.label != cur.label || prev.detail != cur.detail ||
+               (prev.type != null && cur.type != null && prev.type != cur.type) ||
+               prev.apply != cur.apply || prev.boost != cur.boost)
                result.push(opt);
            else if (score(opt.completion) > score(prev))
                result[result.length - 1] = opt;
@@ -22018,12 +22030,10 @@
    */
    const acceptCompletion = (view) => {
        let cState = view.state.field(completionState, false);
-       if (view.state.readOnly || !cState || !cState.open || cState.open.selected < 0 ||
+       if (view.state.readOnly || !cState || !cState.open || cState.open.selected < 0 || cState.open.disabled ||
            Date.now() - cState.open.timestamp < view.state.facet(completionConfig).interactionDelay)
            return false;
-       if (!cState.open.disabled)
-           return applyCompletion(view, cState.open.options[cState.open.selected]);
-       return true;
+       return applyCompletion(view, cState.open.options[cState.open.selected]);
    };
    /**
    Explicitly start autocompletion.
@@ -26206,15 +26216,15 @@
        token(input, stack) {
            let start = input.pos, skipped = 0;
            for (;;) {
+               let nextPos = input.resolveOffset(1, -1);
                readToken(this.data, input, stack, 0, this.data, this.precTable);
                if (input.token.value > -1)
                    break;
                if (this.elseToken == null)
                    return;
-               if (input.next < 0)
+               if (nextPos == null)
                    break;
-               input.advance();
-               input.reset(input.pos, input.token);
+               input.reset(nextPos, input.token);
                skipped++;
            }
            if (skipped) {
@@ -28739,7 +28749,7 @@
        return { from, to, options, validFor: token };
    }
    function htmlCompletionFor(schema, context) {
-       let { state, pos } = context, around = syntaxTree(state).resolveInner(pos), tree = around.resolve(pos, -1);
+       let { state, pos } = context, tree = syntaxTree(state).resolveInner(pos, -1), around = tree.resolve(pos);
        for (let scan = pos, before; around == tree && (before = tree.childBefore(scan));) {
            let last = before.lastChild;
            if (!last || !last.type.isError || last.from < last.to)
@@ -28769,6 +28779,13 @@
        else {
            return null;
        }
+   }
+   /**
+   HTML tag completion. Opens and closes tags and attributes in a
+   context-aware way.
+   */
+   function htmlCompletionSource(context) {
+       return htmlCompletionFor(Schema.default, context);
    }
    /**
    Create a completion source for HTML extended with additional tags
@@ -29273,7 +29290,7 @@
    Markdown language support.
    */
    function markdown(config = {}) {
-       let { codeLanguages, defaultCodeLanguage, addKeymap = true, base: { parser } = commonmarkLanguage } = config;
+       let { codeLanguages, defaultCodeLanguage, addKeymap = true, base: { parser } = commonmarkLanguage, completeHTMLTags = true } = config;
        if (!(parser instanceof MarkdownParser))
            throw new RangeError("Base parser provided to `markdown` should be a Markdown parser");
        let extensions = config.extensions ? [config.extensions] : [];
@@ -29289,33 +29306,186 @@
        extensions.push(parseCode({ codeParser, htmlParser: htmlNoMatch.language.parser }));
        if (addKeymap)
            support.push(Prec.high(keymap.of(markdownKeymap)));
-       return new LanguageSupport(mkLang(parser.configure(extensions)), support);
+       let lang = mkLang(parser.configure(extensions));
+       if (completeHTMLTags)
+           support.push(lang.data.of({ autocomplete: htmlTagCompletion }));
+       return new LanguageSupport(lang, support);
+   }
+   function htmlTagCompletion(context) {
+       let { state, pos } = context, m = /<[:\-\.\w\u00b7-\uffff]*$/.exec(state.sliceDoc(pos - 25, pos));
+       if (!m)
+           return null;
+       let tree = syntaxTree(state).resolveInner(pos, -1);
+       while (tree && !tree.type.isTop) {
+           if (tree.name == "CodeBlock" || tree.name == "FencedCode" || tree.name == "ProcessingInstructionBlock" ||
+               tree.name == "CommentBlock" || tree.name == "Link" || tree.name == "Image")
+               return null;
+           tree = tree.parent;
+       }
+       return {
+           from: pos - m[0].length, to: pos,
+           options: htmlTagCompletions(),
+           validFor: /^<[:\-\.\w\u00b7-\uffff]*$/
+       };
+   }
+   let _tagCompletions = null;
+   function htmlTagCompletions() {
+       if (_tagCompletions)
+           return _tagCompletions;
+       let result = htmlCompletionSource(new CompletionContext(EditorState.create({ extensions: htmlNoMatch }), 0, true));
+       return _tagCompletions = result ? result.options : [];
    }
 
-   //            ___ __
-   //  ___  ____/ (_) /_____  _____
-   // / _ \/ __  / / __/ __ \/ ___/
-   ///  __/ /_/ / / /_/ /_/ / /
-   //\___/\__,_/_/\__/\____/_/
+   // LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+   // Public License along with this program. If not, see
+   // https://www.gnu.org/licenses/.
+
    //
-   let editor = new EditorView({
-       doc: window.filecontents,
-       extensions: [
-           basicSetup,
-           EditorView.updateListener.of((update) => {
-               if (update.docChanged) {
-                   window.numchanges++;
-                   if (editor?.saveButton) {
+   // Keymap and new commands for keymap
+   //
+   const saveCmd = function(view) {
+       if (view.save) { view.save(); }
+   };
+
+   const pipeCmd = function(view) {
+       if (view.pipedialog) { view.pipedialog(); }
+   };
+
+   const insertBlankLineUp = function(view) {
+       // handle first line differently
+       cursorLineBoundaryBackward(view);
+       insertNewlineAndIndent(view);
+       cursorCharLeft(view);
+   };
+
+   const smartDeleteLine = function(view) {
+       if (!view.getfirstselection) { return false; }
+       let sel = view.getfirstselection();
+       if (sel.selectedtext == '') {
+           // nothing selected, get text of current line, copy to clipboard
+           if (navigator?.clipboard) {
+               let r = view.state.selection.ranges[0];
+               if (r.from == r.to) {
+                   let txt = view.state.doc.lineAt(r.from).text;
+                   navigator.clipboard.writeText(txt);
+               }
+           }
+           // delete the line
+           deleteLine(view);
+           return true;
+       }
+       // returning false passes through to next binding
+       return false;
+   };
+
+   const toggleWrap = function(view) {
+       if (!view.wrapButton) {
+           return;
+       }
+       if (view.wrapButton.mystate == "inactive") {
+           if (view.wrapon) { view.wrapon(); }
+           return;
+       }
+       view.wrapoff();
+   };
+
+   const additionalKeymap = [
+       { key: "Ctrl-d", run: copyLineDown, preventDefault: true },
+       { key: "Ctrl-x", run: smartDeleteLine },
+       { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
+       { key: "Alt-5", run: cursorMatchingBracket, preventDefault: true },
+       { key: "Alt-/", run: toggleComment, preventDefault: true },
+       { key: "Alt-\\", run: pipeCmd, preventDefault: true },
+       { key: "Ctrl-\\", run: pipeCmd, preventDefault: true },
+       { key: "Ctrl-|", run: pipeCmd, preventDefault: true },
+       { key: "Ctrl-s", run: saveCmd, preventDefault: true },
+       { key: "Alt-w", run: toggleWrap, preventDefault: true },
+       { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
+       { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
+   ];
+
+   //
+   // Editor
+   //
+   let extensions = [
+       keymap.of(additionalKeymap),
+       basicSetup,
+       search({ top: true }),
+       EditorView.updateListener.of((update) => {
+           if (update.docChanged) {
+               window.numchanges++;
+               if (editor?.saveButton) {
+                   if (editor.saveButton.mystate == 'unchanged') {
                        editor.saveButton.makeState('changed');
                    }
                }
-           }),
-           indentUnit.of('    '),
-           keymap.of([indentWithTab]),
-           markdown()
-       ],
+               if (document.title) {
+                   window.setTitle(true);
+               }
+           }
+       }),
+       indentUnit.of('    '),
+       keymap.of([indentWithTab]),
+       EditorView.lineWrapping,
+       markdown()
+   ];
+
+   let editor = new EditorView({
+       doc: window.filecontents,
+       extensions: extensions,
        parent: document.getElementById("editorparent")
    });
+
+   editor.switchToDocument = function(newcontents, dir, fn) {
+       let state = EditorState.create({
+           doc: newcontents,
+           extensions: extensions
+       });
+       this.setState(state);
+       window.basename = fn;
+       window.dirname = dir;
+       window.lastsavedat = window.numchanges;
+       window.setTitle(false);
+   };
+
+   // may need to fix this so it doesn't necessarily use original
+   // extensions
+   editor.wrapoff = function() {
+       let newextensions = [];
+       for (let ext of extensions) {
+           if (ext != EditorView.lineWrapping) {
+               newextensions.push(ext);
+           }
+       }
+       editor.dispatch({
+           effects: StateEffect.reconfigure.of(newextensions)
+       });
+       if (this.wrapButton) {
+           this.wrapButton.makeState("inactive");
+       }
+   };
+
+   editor.wrapon = function() {
+       editor.dispatch({
+           effects: StateEffect.reconfigure.of(extensions)
+       });
+       if (this.wrapButton) {
+           this.wrapButton.makeState("active");
+       }
+   };
+
+   editor.opensearch = function() {
+       openSearchPanel(this);
+   };
+
+   editor.closesearch = function() {
+       closeSearchPanel(this);
+   };
+
+   editor.pipedialog = function() {
+       this.dispatch(
+       );
+   };
 
    window.ogEditor = editor;
 

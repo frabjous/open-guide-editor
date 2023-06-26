@@ -1,5 +1,5 @@
 // LICENSE: GNU GPL v3 You should have received a copy of the GNU General
-// Public License along with this program. If not, see 
+// Public License along with this program. If not, see
 // https://www.gnu.org/licenses/.
 
 // creates a new element with a parent, class names and innerHTML
@@ -60,23 +60,41 @@ function panelButton( possstates ) {
 
 // function run at load, giving the editor its commands and buttons
 function powerUpEditor() {
-    //
-    // OPEN FUNCTION
-    //
-    ogEditor.changetofile = function(dir, fn) {
-        document.title = fn + ' |' + document.title.split('|')[1];
-        window.basename = fn;
-        window.dirname = dir;
-        // TODO: fix filetype and more
+    // get text, etc. from current selection
+    ogEditor.getfirstselection = function() {
+        let selectedtext = '';
+        let selectedfrom = 0;
+        let selectedto = 0;
+        let rr = ogEditor.state.selection.ranges;
+        // look for first selection with distinct anchors/heads
+        for (let r of rr) {
+            if (r.to != r.from) {
+                selectedfrom = r.from;
+                selectedto = r.to;
+                selectedtext = ogEditor.state.doc
+                    .slice(r.from, r.to).toString();
+                break;
+            }
+        }
+        return {
+            selectedtext: selectedtext,
+            from: selectedfrom,
+            to: selectedto
+        }
     }
+    //
+    // get contents of file from server
+    // 
     ogEditor.grabcontents = async function(dir, fn) {
         let grab = await postData('php/getfilecontents.php',
             { dirname: dir, basename: fn }
         );
-        if (grab?.error) {
+        // report errors if do not get good response from server
+        if ((grab?.error) || (grab?.respObj?.error)) {
             ogEditor.openButton.makeState("error");
             ogDialog.errdiag("Unable to open file: " +
-                (grab?.errMsg ?? 'Unknown problem.'));
+                (grab?.errMsg ?? '') + ' ' +
+                (grab?.respObj.errMsg ?? ''));
             return;
         }
         if (!"filecontents" in grab.respObj) {
@@ -84,19 +102,25 @@ function powerUpEditor() {
             ogDialog.errdiag("No file contents sent.");
             return;
         }
+        if ((!"newdir" in grab.respObj) ||
+            (!"newfn" in grab.respObj)) {
+            ogEditor.openButton.makeState("error");
+            ogDialog.errdiag("No file name/location not sent.");
+            return;
+        }
+        // mark editor as saved
         ogEditor.openButton.makeState("normal");
-        let transaction = ogEditor.state.update({
-            changes: {
-                from: 0,
-                to: ogEditor.state.doc.length,
-                insert: grab.respObj.filecontents
-            }
-        });
-        ogEditor.dispatch(transaction);
-        window.lastsavedat = window.numchanges;
         ogEditor.saveButton.makeState("unchanged");
-        ogEditor.changetofile(dir, fn);
+        // change editor to new document
+        ogEditor.switchToDocument(
+            grab.respObj.filecontents,
+            grab.respObj.newdir,
+            grab.respObj.newfn
+        );
     }
+    //
+    // OPEN FUNCTION
+    //
     ogEditor.openfile = function(opts = {}) {
         ogEditor.openButton.makeState("opening");
         if ((window.numchanges > window.lastsavedat) &&
@@ -113,7 +137,17 @@ function powerUpEditor() {
         }
         window.ogDialog.filechoose(
             function(dir, fn) {
-                ogEditor.grabcontents(dir, fn);
+                let url = 'php/redirect.php?dirname=' +
+                    encodeURIComponent(dir) + '&basename=' +
+                    encodeURIComponent(fn);
+                // if current window does not have any file save,
+                // reload it in this one, otherwise open in new tab
+                if (window.reloadonsave) {
+                    window.location.href = url;
+                } else {
+                    window.open(url, '_blank').focus();
+                    ogEditor.openButton.makeState("normal");
+                }
             },
             window.dirname,
             "Choose a file to open:",
@@ -122,6 +156,51 @@ function powerUpEditor() {
             ''
         );
     }
+    //
+    // PIPE FILTER
+    //
+    ogEditor.pipedialog = function() {
+        let formhtml = '<div class="oge-pipeform">' +
+            '<div><label for="pipeentry">Unix pipe command to filter through:</label></div>' +
+            '<div><input type="text" id="pipeentry"></div>' +
+            '<div><button type="button" onclick="submitPipeCmd()">run filter</button></div>' +
+            '</div>';
+        window.pipeBDiv = ogDialog.popupform(formhtml,true);
+    }
+    ogEditor.pipefilter = async function(opts = {}, cmd) {
+        ogEditor.pipeButton.makeState("processing");
+        let topipe = ogEditor.getfirstselection();
+        if (topipe.selectedtext == '') {
+            const selectedtext = ogEditor.state.doc.toString();
+            topipe = {
+                selectedtext: selectedtext,
+                from: 0,
+                to: selectedtext.length
+            };
+        }
+        topipe.cmd = cmd;
+        let piperesult = await postData('php/pipefilter.php', topipe);
+        if (piperesult?.error
+            || (!"respObj" in piperesult)
+            || piperesult?.respObj?.error
+            || (!piperesult?.respObj)
+            || (!"replacement" in piperesult?.respObj)) {
+            ogEditor.pipeButton.makeState("error");
+            ogDialog.errdiag("Error interacting with server. " +
+                (piperesult?.errMsg ?? '') + ' ' +
+                (piperesult?.respObj?.errMsg ?? ''));
+            return;
+        }
+        ogEditor.pipeButton.makeState("normal");
+        ogEditor.dispatch(ogEditor.state.update({
+            changes: {
+                from: topipe.from,
+                to: topipe.to,
+                insert: piperesult.respObj.replacement
+            }
+        }));
+    }
+
     //
     // SAVE FUNCTION
     //
@@ -146,6 +225,7 @@ function powerUpEditor() {
                     function(dn, bn) {
                         if (dn == '---' && bn == '---') {
                             ogEditor.saveButton.makeState("changed");
+                            return;
                         }
                         window.dirname = dn;
                         window.basename = bn;
@@ -159,7 +239,7 @@ function powerUpEditor() {
                 return;
             }
         }
-        const buffer = ogEditor.state.doc.text.join('\n');
+        const buffer = ogEditor.state.doc.toString();
         let saveerror = '';
         window.lastsavedat = window.numchanges;
         try {
@@ -169,13 +249,23 @@ function powerUpEditor() {
                 buffer: buffer,
                 opts: opts
             });
-            if ((!"error" in saveresponse) || saveresponse.error) {
-                saveerror += (("errMsg" in saveresponse) ?
-                    saveresponse.errMsg : 'Unknown error. ');
+            if ((!"error" in saveresponse)
+                || saveresponse.error
+                || (!"respObj" in saveresponse)
+                || (saveresponse.respObj.error)
+            ) {
+                saveerror += (saveresponse?.errMsg ?? '') + ' '
+                    (saveresponse?.respObj?.errMsg ?? '');
             } else {
                 if (opts.autosave) { return; }
                 if (window.numchanges <= window.lastsavedat) {
                     ogEditor.saveButton.makeState('unchanged');
+                    window.setTitle(false);
+                }
+                if (window.reloadonsave) {
+                    window.location.href = 'php/redirect.php?dirname=' +
+                        encodeURIComponent(dirname) + '&basename=' +
+                        encodeURIComponent(basename);
                 }
                 // TODO: postprocessing
             }
@@ -185,6 +275,16 @@ function powerUpEditor() {
         if (saveerror != '') {
             ogEditor.saveButton.makeState('error');
             ogDialog.errdiag('Unable to save. ' + saveerror);
+        }
+    }
+
+    ogEditor.togglesearch = function() {
+        let ispanel = (document
+            .getElementsByClassName("cm-search").length > 0);
+        if (ispanel) {
+            ogEditor.closesearch();
+        } else {
+            ogEditor.opensearch();
         }
     }
 
@@ -248,35 +348,15 @@ function powerUpEditor() {
     });
     ogEditor.wrapButton.makeState("active");
 
-    // button for wrap
+    // button for find
     ogEditor.findButton = panelButton({
         "normal" : {
             icon: "search",
-            tooltip: "find",
-            clickfn: function() { ogEditor.find(); }
+            tooltip: "toggle find/replace panel",
+            clickfn: function() { ogEditor.togglesearch(); }
         }
     });
     ogEditor.findButton.makeState("normal");
-
-    // button for wrap
-    ogEditor.findNextButton = panelButton({
-        "normal" : {
-            icon: "zoom_in",
-            tooltip: "find next",
-            clickfn: function() { ogEditor.findnext(); }
-        }
-    });
-    ogEditor.findNextButton.makeState("normal");
-
-    // button for wrap
-    ogEditor.replaceButton = panelButton({
-        "normal" : {
-            icon: "find_replace",
-            tooltip: "find and replace",
-            clickfn: function() { ogEditor.replace(); }
-        }
-    });
-    ogEditor.replaceButton.makeState("normal");
 
     if (window.poweruser) {
         // button for wrap
@@ -284,7 +364,7 @@ function powerUpEditor() {
             "normal" : {
                 icon: "terminal",
                 tooltip: "filter through unix command",
-                clickfn: function() { ogEditor.pipefilter(); }
+                clickfn: function() { ogEditor.pipedialog({}); }
             },
             "processing" : {
                 icon: "terminal",
@@ -294,14 +374,22 @@ function powerUpEditor() {
             "error" : {
                 icon: "terminal",
                 tooltip: "unix command error",
-                clickfn: function() { ogEditor.pipefilter(); }
+                clickfn: function() { ogEditor.pipedialog({}); }
             }
         });
         ogEditor.pipeButton.makeState("normal");
     }
-
     // TODO: generic function for adding more based on filetype?
     //  for markdown, need play, preview html, preview pdf,
     //  autopreview and speak aloud
 
+}
+
+function submitPipeCmd() {
+    let pipeentry = document.getElementById("pipeentry");
+    if (!pipeentry) { return; }
+    let cmd = pipeentry.value;
+    window.pipeBDiv.closeMe();
+    if (cmd == '') { return; }
+    ogEditor.pipefilter({},cmd);
 }

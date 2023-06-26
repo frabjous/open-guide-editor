@@ -1,33 +1,16 @@
 <?php
 
 session_start();
-require 'php/libauthentication.php';
+require_once 'php/libauthentication.php';
 
-// check for authentication
-$poweruser = ((isset($_SESSION["open-guide-editor-poweruser"])) &&
-    $_SESSION["open-guide-editor-poweruser"]);
-
-if ((!$poweruser) && (
-    !isset($_SESSION["open-guide-editor-dirname"]) ||
-    !isset($_SESSION["open-guide-editor-basename"])
-)) { echo 'You do not have access to this page.'; exit(0); }
-
-$dirname = $_SESSION["open-guide-editor-dirname"] ?? '';
-$basename = $_SESSION["open-guide-editor-basename"] ?? '';
-$fullfilename = $dirname .'/'.$basename;
-if (!has_authentication($fullfilename)) {
-    echo 'You do not have access for editing that file.';
-    exit(0);
-}
-
-// determine title
-$displaybasename = ($basename == '') ? '⟨unnamed⟩' : $basename;
+    // determine title
+    $displaybasename = ($basename == '') ? '⟨unnamed⟩' : $basename;
 $file_contents = '';
-
-if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
-    !is_dir($fullfilename)) {
-    $file_contents = file_get_contents($fullfilename);
-}
+// TODO set fullfilename
+    if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
+        !is_dir($fullfilename)) {
+        $file_contents = file_get_contents($fullfilename);
+    }
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -48,7 +31,7 @@ if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
 
         <!-- web icon -->
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <title><?php echo $displaybasename; ?> | open guide editor</title>
+        <title><?php echo $displaybasename; ?> | <?php echo $projectname; ?> editor</title>
 
         <!-- css file -->
         <link rel="stylesheet" type="text/css" href="style/colors.css">
@@ -105,8 +88,20 @@ if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
             window.basename = '<?php echo $basename; ?>';
             window.numchanges = 0;
             window.lastsavedat = 0;
+            window.reloadonsave = (window.basename == '');
             window.onload = function() {
                 powerUpEditor();
+            }
+            window.onbeforeunload = function(e) {
+                if (window.lastsavedat != window.numchanges) {
+                    e.preventDefault();
+                }
+            }
+            window.setTitle = function(changed) {
+                let bn = (window.basename == '') ? '⟨untitled⟩' :
+                    window.basename;
+                document.title = (changed ? '[+] ' : '') +
+                    bn + ' | <?php echo $projectname; ?> editor';
             }
         </script>
     </head>

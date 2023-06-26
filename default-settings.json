@@ -1,0 +1,7 @@
+{
+    "accesskeyfile" : "/tmp/oge-accesskeys.json",
+    "autosave": {
+        "interval": 2000,
+        "directory": "/tmp"
+    }
+}
