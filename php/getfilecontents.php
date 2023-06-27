@@ -4,8 +4,9 @@
 // https://www.gnu.org/licenses/.
 
 session_start();
-require '../open-guide-misc/send-as-json.php';
-require 'libauthentication.php';
+chdir('..');
+require 'open-guide-misc/send-as-json.php';
+require 'php/libauthentication.php';
 
 // read and verify posted information
 $json = file_get_contents('php://input') ?? false;
@@ -14,7 +15,7 @@ if ($json === false) {
 }
 $data = json_decode($json) ?? false;
 if ($data === false) {
-    rage_quit(new StdClass(), 'Could not parse posted JSON.',400);
+    rage_quit(new StdClass(), 'Could not parse posted JSON.', 400);
 }
 $required = array('dirname', 'basename');
 foreach($required as $req) {

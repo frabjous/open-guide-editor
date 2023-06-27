@@ -9,7 +9,6 @@ if (isset($_SESSION["open-guide-project-name"])) {
 $defaultsettingsfile = 'default-settings.json';
 $settings = new StdClass();
 $sitesettings = new StdClass();
-$projectsettings = new StdClass();
 $settingsfile = 'settings.json';
 
 if (file_exists($defaultsettingsfile)) {
@@ -28,15 +27,6 @@ function get_project_settings_filename($dirname) {
     return get_project_settings_filename(dirname($dirname));
 }
 
-if (isset($_SESSION["open-guide-editor-dirname"])) {
-    $projectsettingsfile = get_project_settings_filename(
-        $_SESSION["open-guide-editor-dirname"]
-    );
-    if ($projectsettingsfile !== false) {
-        $projectsettings = json_decode(file_get_contents($projectsettingsfile));
-    }
-}
-
 function merge($obj, $rep_obj) {
     foreach($rep_obj as $key => $val) {
         if (!isset($obj->{$key})) {
@@ -52,5 +42,13 @@ function merge($obj, $rep_obj) {
     return $obj;
 }
 
+function merge_projectsettings($project_dirname) {
+    global $settings;
+    $ps_filename = get_project_settings_filename($project_dirname);
+    if ($ps_filename === false) { return $settings; }
+    $projectsettings = json_decode(file_get_contents($ps_filename));
+    $settings = merge($settings, $projectsettings);
+    return $settings;
+}
+
 $settings = merge($settings, $sitesettings);
-$settings = merge($settings, $projectsettings);

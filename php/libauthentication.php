@@ -35,7 +35,7 @@ function has_authentication($filename) {
     return false;
 }
 
-require_once("php/readsettings.php");
+require_once("readsettings.php");
 
 // returns the dirname and basename for a given key
 function data_for_key($accesskey) {
@@ -44,31 +44,27 @@ function data_for_key($accesskey) {
     return $allkeys->{$accesskey};
 }
 
-// returns true for poweruser accessing blank page
+function load_access_keys() {
+    global $settings;
+    // settings should contain accesskeyfile, or things are broken
+    if (!isset($settings->accesskeyfile)) {
+        return false;
+    }
+    // if file doesn't exist yet, send empty object
+    if (!file_exists($settings->accesskeyfile)) {
+        return (new StdClass());
+    }
+    return json_decode(file_get_contents($settings->accesskeyfile)) ?? false;
+}
+
 // return false when access should not be granted
 // returns key string otherwise
-function get_new_access_key() {
+function new_access_key($dirname, $basename) {
     global $poweruser, $settings;
 
-    // only powerusers may start blank pages; if they try, return false
-    if ((!$poweruser) && (
-        !isset($_SESSION["open-guide-editor-dirname"]) ||
-        !isset($_SESSION["open-guide-editor-basename"])
-    )) {
-       return false;
-    }
-
-    // get target from session
-    $dirname = $_SESSION["open-guide-editor-dirname"] ?? '';
-    $basename = $_SESSION["open-guide-editor-basename"] ?? '';
-
-    // clear session variables so they're not "saved"
-    unset($_SESSION["open-guide-editor-dirname"]);
-    unset($_SESSION["open-guide-editor-basename"]);
-
-    // for blank page return true (must be poweruser to get here)
-    if ($basename == '') {
-        return true;
+    // dirname and basename cannot be blank
+    if ($basename == '' || $basename == '') {
+        return false;
     }
 
     // check for regular authentication
@@ -99,19 +95,6 @@ function get_new_access_key() {
 
     // return key string
     return $accesskey;
-}
-
-function load_access_keys() {
-    global $settings;
-    // settings should contain accesskeyfile, or things are broken
-    if (!isset($settings->accesskeyfile)) {
-        return false;
-    }
-    // if file doesn't exist yet, send empty object
-    if (!file_exists($settings->accesskeyfile)) {
-        return (new StdClass());
-    }
-    return json_decode(file_get_contents($settings->accesskeyfile)) ?? false;
 }
 
 function random_string($length = 24) {

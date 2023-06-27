@@ -137,6 +137,10 @@ function powerUpEditor() {
         }
         window.ogDialog.filechoose(
             function(dir, fn) {
+                if (dir == '---' && fn == '---') {
+                    ogEditor.openButton.makeState("normal");
+                    return;
+                }
                 let url = 'php/redirect.php?dirname=' +
                     encodeURIComponent(dir) + '&basename=' +
                     encodeURIComponent(fn);
@@ -241,7 +245,11 @@ function powerUpEditor() {
         }
         const buffer = ogEditor.state.doc.toString();
         let saveerror = '';
-        window.lastsavedat = window.numchanges;
+        if (opts?.autosave) {
+            window.lastautosavedat = window.numchanges;
+        } else {
+            window.lastsavedat = window.numchanges;
+        }
         try {
             let saveresponse = await postData('php/savefile.php', {
                 dirname: dirname,
@@ -254,10 +262,9 @@ function powerUpEditor() {
                 || (!"respObj" in saveresponse)
                 || (saveresponse.respObj.error)
             ) {
-                saveerror += (saveresponse?.errMsg ?? '') + ' '
+                saveerror += (saveresponse?.errMsg ?? '') + ' ' +
                     (saveresponse?.respObj?.errMsg ?? '');
             } else {
-                if (opts.autosave) { return; }
                 if (window.numchanges <= window.lastsavedat) {
                     ogEditor.saveButton.makeState('unchanged');
                     window.setTitle(false);
@@ -379,10 +386,91 @@ function powerUpEditor() {
         });
         ogEditor.pipeButton.makeState("normal");
     }
+
+    // create button for picking what output routine to use
+    if (("routines" in window.ogeSettings) &&
+        (window.rootextension in window.ogeSettings.routines)) {
+        let outputSelectButtonOpts = {};
+        window.outputopts = [];
+        let routines = window.ogeSettings.routines[window.rootextension];
+        // for each is that is viewable, make it a state for the button
+        for (let outputext in routines) {
+            if (outputext in window.outputextensions) {
+                if (window.outputextensions[outputext].viewable) {
+                    window.outputopts.push(outputext);
+                    outputSelectButtonOpts[outputext] = {
+                        icon: (window.outputextensions[outputext].icon ?? ''),
+                        tooltip: "change output routine",
+                        clickfn: function() {
+                            let st = this.mystate;
+                            let pos = window.outputopts.indexOf(st) + 1;
+                            if (pos == window.outputopts.length) {
+                                pos = 0;
+                            }
+                            this.makeState(window.outputopts[pos]);
+                        }
+                    }
+                }
+            }
+        }
+        // create button
+        ogEditor.outputSelectButton = panelButton(outputSelectButtonOpts);
+        ogEditor.outputSelectButton.makeState(window.outputopts[0]);
+    }
     // TODO: generic function for adding more based on filetype?
     //  for markdown, need play, preview html, preview pdf,
     //  autopreview and speak aloud
+    if (("outputopts" in window) && (window.outputopts.length > 0)) {
+        // create process once button
+        ogEditor.processButton = panelButton({
+            "normal" : {
+                icon: "play_arrow",
+                tooltip: "process output",
+                clickfn: function() { ogEditor.process({}); }
+            },
+            "processing" : {
+                icon: "sync",
+                tooltip: "processing",
+                clickfn: function() { }
+            },
+            "error" : {
+                icon: "play_arrow",
+                tooltip: "process error",
+                clickfn: function() { ogEditor.process({}); }
+            }
+        });
+        ogEditor.processButton.makeState("normal");
 
+        // create autoprocess button
+        ogEditor.autoprocessButton = panelButton({
+            "inactive": {
+                icon: "autoplay",
+                tooltip: "activate autopreview",
+                clickfn: function() { ogEditor.autopreview(true); }
+            },
+            "active": {
+                icon: "autoplay",
+                tooltip: "deactivate autopreview",
+                clickfn: function() { ogEditor.autopreview(false); }
+            }
+        });
+        ogEditor.autoprocessButton.makeState("inactive");
+
+        // create preview window button
+        ogEditor.previewButton = panelButton({
+            "inactive": {
+                icon: "visibility_off",
+                tooltip: "activate preview",
+                clickfn: function() { ogEditor.preview(true); }
+            },
+            "active": {
+                icon: "visibility",
+                tooltip: "deactivate preview",
+                clickfn: function() { ogEditor.preview(false); }
+            }
+        });
+        ogEditor.previewButton.makeState("inactive");
+    }
 }
 
 function submitPipeCmd() {

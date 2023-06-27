@@ -17,10 +17,12 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] piping selection to unix tools on server
     - [x] good keybindings
     - [x] auto-comment/uncomment
+- [x] implement autosaving
 - [ ] provide generic mechanisms for autopreview depending on input filetype
 - [ ] support markdown as input
     - [ ] preview html
     - [ ] preview pdf
+    - [ ] speak aloud
     - [ ] download ePub
 - [ ] implement api for additing citations
     - [ ] general api
@@ -40,7 +42,6 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] synctex support
 - [ ] support html as input
     - [ ] preview (itself)
-- [ ] implement autosaving
 - [ ] templates
 - [ ] edit supplementary files with preview
     - [ ] proper syntax highlighting for type of file

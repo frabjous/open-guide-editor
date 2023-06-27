@@ -30,6 +30,8 @@
     top: 0.18rem;
 }
 
+.panelbutton.inactive:hover,
+.panelbutton.unchanged:hover,
 .panelbutton:hover {
     color: var(--green);
     border-color: var(--green);
@@ -45,6 +47,7 @@
 .panelbutton.unchanged {
     border-color: var(--gray5);
     color: var(--gray5);
+    box-shadow: none;
 }
 
 .panelbutton.saving span {

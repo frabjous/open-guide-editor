@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-
-$redirect_url = '../meinongian-page';
+chdir('..');
+require 'libauthentication.php';
 
 $dirname = $_GET["dirname"] ?? false;
 $basename = $_GET["basename"] ?? false;
@@ -12,10 +12,12 @@ if ($dirname === false || $basename === false) {
     exit(0);
 }
 
-$_SESSION["open-guide-editor-dirname"] = $dirname;
-$_SESSION["open-guide-editor-basename"] = $basename;
+$accesskey = new_access_key($dirname, $basename);
 
-error_log("redirect-oge" . $_SESSION["open-guide-editor-dirname"]);
+if ($accesskey === false) {
+    header("HTTP/1.1 403 Forbidden");
+    exit;
+}
 
-header('Location: ../');
+header('Location: ../?accesskey=' . $accesskey);
 exit(0);

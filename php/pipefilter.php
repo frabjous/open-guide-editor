@@ -4,13 +4,13 @@
 // https://www.gnu.org/licenses/.
 
 session_start();
-require '../open-guide-misc/send-as-json.php';
-require 'libauthentication.php';
+chdir('..');
+require 'open-guide-misc/send-as-json.php';
+require 'php/libauthentication.php';
 
 
 // only power users can do this
-if ((!isset($_SESSION["open-guide-editor-poweruser"])) ||
-    (!$_SESSION["open-guide-editor-poweruser"])) {
+if (!$poweruser) {
     rage_quit(new StdClass(), 'Only powerusers can use unix filters.');
 }
 

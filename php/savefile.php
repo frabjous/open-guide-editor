@@ -4,9 +4,9 @@
 // https://www.gnu.org/licenses/.
 
 session_start();
-require_once '../open-guide-misc/send-as-json.php';
-require_once 'readsettings.php';
-require_once 'libauthentication.php';
+chdir('..');
+require_once 'open-guide-misc/send-as-json.php';
+require_once 'php/libauthentication.php';
 
 // read and verify posted information
 $json = file_get_contents('php://input') ?? false;
@@ -30,12 +30,14 @@ $basename = $data->basename;
 $buffer = $data->buffer;
 $opts = $data->opts;
 $filename = $dirname . '/' . $basename;
+$settings = merge_projectsettings($dirname);
 
 if (!has_authentication($filename)) {
     rage_quit(new StdClass(), "user does not have authentication to " .
         "edit the file in quesiton");
 }
 
+error_log(json_encode($settings));
 // check if autosave request
 if (isset($opts->autosave) && $opts->autosave) {
     if (!isset($settings->autosave->directory)) {
