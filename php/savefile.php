@@ -57,5 +57,11 @@ if ($putresult === false) {
     rage_quit(new StdClass(), 'Saving of file failed.');
 }
 $rv->savesuccess = true;
-send_as_json($rv);
-exit(0);
+
+// quit here if no processing to be done
+if (!isset($opts->routine)) {
+    send_as_json($rv);
+    exit(0);
+}
+
+require 'php/libprocessing.php';

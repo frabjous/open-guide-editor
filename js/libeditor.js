@@ -293,7 +293,7 @@ function powerUpEditor() {
                 if (window.numchanges <= window.lastsavedat) {
                     ogEditor.saveButton.makeState('unchanged');
                     window.setTitle(false);
-                }t
+                }
                 if (window.reloadonsave) {
                     window.location.href = 'php/redirect.php?dirname=' +
                         encodeURIComponent(dirname) + '&basename=' +
