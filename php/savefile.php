@@ -131,7 +131,10 @@ if (!is_dir(dirname($opts->outputfile))) {
 // load library
 require 'php/libprocessing.php';
 
+// fill in variables in command to run
 $cmd = fill_processing_variables($opts);
+
+$rv->cmdrun = $cmd;
 
 send_as_json($rv);
 exit(0);

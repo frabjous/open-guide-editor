@@ -4,18 +4,19 @@
 // https://www.gnu.org/licenses/.
 //
 require 'open-guide-misc/pipe.php';
-$swaps = array('outputfile', 'rootdocument', 'savedfile');
+$swapvariabless = array('outputfile', 'rootdocument', 'savedfile');
 
 function fill_processing_variables($opts) {
+    global $swapvariables;
     $cmd = 'false';
     if (isset($opts->routine->cmd)) {
         $cmd = $opts->routine->cmd;
     }
-    foreach ($swaps as $variable) {
+    foreach ($swapvariables as $variable) {
         if (isset($opts->{$variable})) {
             $cmd = str_replace(
                 '%' . $variable . '%',
-                $opts->{$variable},
+                '"' . $opts->{$variable} . '"',
                 $cmd
             );
         }
