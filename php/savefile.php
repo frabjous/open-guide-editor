@@ -64,9 +64,26 @@ if (!isset($opts->routine)) {
     exit(0);
 }
 
+$rv->processResult = new StdClass();
+
+if (!isset($opts->outputext)) {
+    $rv->processResult->error = true;
+    $rv->processResult->errMsg = 'no output extension given';
+    send_as_json($rv);
+    exit(0);
+}
+
+// put filename in opts
+$opts->savedfile = $filename;
+
 // take root document from opts if present
 if (!isset($opts->rootdocument)) {
     $opts->rootdocument = $filename;
 }
+
+$inext = pathinfo($rootdocument, PATHINFO_EXTENSION);
+$outext = $opts->outputext;
+$opts->fullroot = full_document_root($dirname, $rootdocument);
+$opts->outputfile = mb_ereg_replace($inext . '$', $outext, $rootdocument
 
 require 'php/libprocessing.php';

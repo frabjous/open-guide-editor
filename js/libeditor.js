@@ -221,6 +221,7 @@ function powerUpEditor() {
         const routine = ogeSettings.routines[rootextension][outputext];
         // if not a pipe command, then just save and call routine
         opts.routine = routine;
+        opts.outputext = outputext;
         const sv = await ogEditor.save(opts);
         return sv;
     }

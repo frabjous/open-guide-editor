@@ -19,6 +19,16 @@ if (file_exists($settingsfile)) {
     $sitesettings = json_decode(file_get_contents($settingsfile));
 }
 
+function full_document_root($dirname, $rootdocument) {
+    global $settings;
+    $gpsf = get_project_settings_filename($dirname);
+    if ($gpsf === false) {
+        return realpath($dirname . '/' + $rootdocument);
+    }
+    $gpsf_dir = dirname($gpsf);
+    return realpath($gpsf_dir . '/' + $rootdocument);
+}
+
 function get_project_settings_filename($dirname) {
     if (!has_authentication($dirname)) { return false; }
     if ($dirname == '/' || $dirname == '') { return false; }
