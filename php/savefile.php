@@ -88,6 +88,14 @@ $outext = $opts->outputext;
 // determine the full path of the root document
 $opts->fullroot = full_document_root($dirname, $opts->rootdocument);
 
+// ensure that it exists
+if (!file_exists($opts>fullroot)) {
+    $rv->processResult->error = true;
+    $rv->processResult->errMsg = 'document root does not exist';
+    send_as_json($rv);
+    exit(0);
+}
+
 // $determine the outputfile
 $opts->outputfile = mb_ereg_replace($inext . '$', $outext, $opts->fullroot);
 
@@ -96,7 +104,21 @@ if (isset($opts->routine->outputfile)) {
     $opts->outputfile = $opts->routine->outputfile;
 }
 
+// ensure folder for output exists
+if (!is_dir(dirname($opts->outputfile))) {
+    if (!mkdir(dirname($opts->outputfile), 0755, true)) {
+    }
+}
+
 // load library
 require 'php/libprocessing.php';
 
-//TODO
+// go into folder of root document
+$rootdir = dirname($fullroot);
+chdir($rootdir)
+
+$cmd = fill_processing_variables($opts);
+
+
+send_as_json($rv);
+exit(0);
