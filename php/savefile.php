@@ -81,9 +81,22 @@ if (!isset($opts->rootdocument)) {
     $opts->rootdocument = $filename;
 }
 
-$inext = pathinfo($rootdocument, PATHINFO_EXTENSION);
+// determine input and put extension
+$inext = pathinfo($opts->rootdocument, PATHINFO_EXTENSION);
 $outext = $opts->outputext;
-$opts->fullroot = full_document_root($dirname, $rootdocument);
-$opts->outputfile = mb_ereg_replace($inext . '$', $outext, $rootdocument
 
+// determine the full path of the root document
+$opts->fullroot = full_document_root($dirname, $opts->rootdocument);
+
+// $determine the outputfile
+$opts->outputfile = mb_ereg_replace($inext . '$', $outext, $opts->fullroot);
+
+// allow overriding the output file in the settings
+if (isset($opts->routine->outputfile)) {
+    $opts->outputfile = $opts->routine->outputfile;
+}
+
+// load library
 require 'php/libprocessing.php';
+
+//TODO
