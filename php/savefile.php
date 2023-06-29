@@ -96,29 +96,42 @@ if (!file_exists($opts>fullroot)) {
     exit(0);
 }
 
+// go into folder of root document
+$rootdir = dirname($fullroot);
+chdir($rootdir);
+
+// we want to make "rootdocument" to point at the basename since we are
+// now in its folder, so we do some shuffling
+$opts->origroot = $opts->rootdocument;
+$opts->rootdocument = basename($opts->fullroot);
+
 // $determine the outputfile
-$opts->outputfile = mb_ereg_replace($inext . '$', $outext, $opts->fullroot);
+//
+// note: since we are in the root document's folder, we will
+// use the basename of the result by default
+$opts->outputfile = mb_ereg_replace($inext . '$', $outext,
+        basename($opts->fullroot));
 
 // allow overriding the output file in the settings
 if (isset($opts->routine->outputfile)) {
     $opts->outputfile = $opts->routine->outputfile;
 }
 
-// ensure folder for output exists
+// ensure folder for output exists; probably shouldn't be an issue except
+// with weird uses of override
 if (!is_dir(dirname($opts->outputfile))) {
     if (!mkdir(dirname($opts->outputfile), 0755, true)) {
+        $rv->processResult->error = true;
+        $rv->processResult->errMsg = 'could not create directory for output';
+        send_as_json($rv);
+        exit(0);
     }
 }
 
 // load library
 require 'php/libprocessing.php';
 
-// go into folder of root document
-$rootdir = dirname($fullroot);
-chdir($rootdir)
-
 $cmd = fill_processing_variables($opts);
-
 
 send_as_json($rv);
 exit(0);
