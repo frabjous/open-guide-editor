@@ -211,14 +211,14 @@ function powerUpEditor() {
         // determine routine to use
         if (!ogEditor?.outputSelectButton) { return false; }
         const outputext = ogEditor.outputSelectButton.mystate;
-        const docrootext = windows.docrootext;
-        if (!ogeSettings?.routines?.[docrootext]?.[outputext]) {
-            ogDialog.errdiag('Proposed routine ' + docrootext + ' to ' +
+        const rootextension = window.rootextension;
+        if (!ogeSettings?.routines?.[rootextension]?.[outputext]) {
+            ogDialog.errdiag('Proposed routine ' + rootextension + ' to ' +
                 outputext + ' does not exist');
             ogEditor.outputSelectButton.makeState('error');
             return false;
         }
-        const routine = ogeSettings.routines[docrootext][outputext];
+        const routine = ogeSettings.routines[rootextension][outputext];
         // if not a pipe command, then just save and call routine
         opts.routine = routine;
         const sv = await ogEditor.save(opts);
@@ -268,12 +268,13 @@ function powerUpEditor() {
             }
         }
         const buffer = ogEditor.state.doc.toString();
-        let saveerror = '';
+        let saveerror = ''; let processingerror = '';
         if (opts?.autosave) {
             window.lastautosavedat = window.numchanges;
         } else {
             window.lastsavedat = window.numchanges;
         }
+        let respObj = {};
         try {
             const saveresponse = await postData('php/savefile.php', {
                 dirname: dirname,
@@ -292,17 +293,31 @@ function powerUpEditor() {
                 if (window.numchanges <= window.lastsavedat) {
                     ogEditor.saveButton.makeState('unchanged');
                     window.setTitle(false);
-                }
+                }t
                 if (window.reloadonsave) {
                     window.location.href = 'php/redirect.php?dirname=' +
                         encodeURIComponent(dirname) + '&basename=' +
                         encodeURIComponent(basename);
                 }
-                // TODO: postprocessing
+                respObj = saveresponse.respObj;
             }
         } catch(err) {
             saveerror += 'Browser error: ' + err.toString() + ' ';
         }
+                // look for processing error
+        if (("routine" in opts) &&
+            ((!("processResult" in respObj)) ||
+                (respObj?.processResult?.error))) {
+            processingerror += (respObj?.processResult?.errMsg ??
+                'Unknown processing error');
+            if (respObj?.proessingResult &&
+                ("stderr" in respObj?.processResult)) {
+                processingerror + stdErrorInclusion(
+                    respObj?.processResult?.stderr
+                );
+            }
+        }
+
         if (saveerror != '') {
             ogEditor.saveButton.makeState('error');
             ogDialog.errdiag('Unable to save. ' + saveerror);
@@ -311,7 +326,20 @@ function powerUpEditor() {
                     ogEditor.processButton.makeState("normal");
                 }
             }
+        } else {
+            if (processingerror != '') {
+                if (ogEditor.processButton) {
+                    ogEditor.processButton.makeState('error');
+                }
+                ogDialog.errdiag('Processing error: ' + processingerror);
+                return false;
+            } else {
+                if (ogEditor.processButton) {
+                    ogEditor.processButton.makeState('normal');
+                }
+            }
         }
+        // TODO: postprocessing
     }
 
     ogEditor.togglesearch = function() {
@@ -500,6 +528,11 @@ function powerUpEditor() {
         });
         ogEditor.previewButton.makeState("inactive");
     }
+}
+
+// TODO
+function stdErrorInclusion(stderr) {
+    return '';
 }
 
 function submitPipeCmd() {

@@ -37,6 +37,7 @@
     border-color: var(--green);
 }
 
+.panelbutton.processing,
 .panelbutton.opening,
 .panelbutton.saving {
     border-color: var(--blue);
@@ -50,6 +51,8 @@
     box-shadow: none;
 }
 
+.panelbutton.processing span,
+.panelbutton.opening span,
 .panelbutton.saving span {
     animation-name: spin;
     animation-duration: 1500ms;
