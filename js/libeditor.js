@@ -204,6 +204,30 @@ function powerUpEditor() {
             }
         }));
     }
+    //
+    // PROCESS FUNCTION
+    //
+    ogEditor.process = async function(opts = {}) {
+        // determine routine to use
+        if (!ogEditor?.outputSelectButton) { return false; }
+        let outputext = ogEditor.outputSelectButton.mystate;
+        let docrootext = windows.docrootext;
+        if (!ogeSettings?.routines?.[docrootext]?.[outputext]) {
+            ogDialog.errdiag('Proposed routine ' + docrootext + ' to ' +
+                outputext + ' does not exist');
+            ogEditor.outputSelectButton.makeState('error');
+            return false;
+        }
+        let routine = ogeSettings.routines[docrootext][outputext];
+        // if not a pipe command, then just save and call routine
+        if (!routine.pipe) {
+            return await ogEditor.save({ routine: routine });
+        }
+        // processonly
+        if (ogEditor.processButton) {
+            ogEditor.processButton.makeState("processing");
+        }
+    }
 
     //
     // SAVE FUNCTION
