@@ -64,4 +64,9 @@ if (!isset($opts->routine)) {
     exit(0);
 }
 
+// take root document from opts if present
+if (!isset($opts->rootdocument)) {
+    $opts->rootdocument = $filename;
+}
+
 require 'php/libprocessing.php';

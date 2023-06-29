@@ -7,12 +7,10 @@
     "routines": {
         "md": {
             "pdf": {
-                "pipe": false,
-                "command": "pandoc -t pdf %rootfile% %outputfile%"
+                "command": "pandoc -t pdf %rootdocument% %outputfile%"
             },
             "html": {
-                "pipe": false,
-                "command": "pandoc -t html --embed-resources --standalone %rootfile% -o %outputfile%"
+                "command": "pandoc -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
             }
         }
     }
