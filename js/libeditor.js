@@ -97,13 +97,13 @@ function powerUpEditor() {
                 (grab?.respObj.errMsg ?? ''));
             return;
         }
-        if (!"filecontents" in grab.respObj) {
+        if (!("filecontents" in grab.respObj)) {
             ogEditor.openButton.makeState("error");
             ogDialog.errdiag("No file contents sent.");
             return;
         }
-        if ((!"newdir" in grab.respObj) ||
-            (!"newfn" in grab.respObj)) {
+        if ((!("newdir" in grab.respObj)) ||
+            (!("newfn" in grab.respObj))) {
             ogEditor.openButton.makeState("error");
             ogDialog.errdiag("No file name/location not sent.");
             return;
@@ -124,7 +124,7 @@ function powerUpEditor() {
     ogEditor.openfile = function(opts = {}) {
         ogEditor.openButton.makeState("opening");
         if ((window.numchanges > window.lastsavedat) &&
-            ((!"bypass" in opts) || (!opts.bypass))) {
+            ((!("bypass" in opts)) || (!opts.bypass))) {
             ogDialog.yesno('You have unsaved changes. ' +
                 'Open a new file anyway?',
             function() {
@@ -185,10 +185,10 @@ function powerUpEditor() {
         topipe.cmd = cmd;
         let piperesult = await postData('php/pipefilter.php', topipe);
         if (piperesult?.error
-            || (!"respObj" in piperesult)
+            || (!("respObj" in piperesult))
             || piperesult?.respObj?.error
             || (!piperesult?.respObj)
-            || (!"replacement" in piperesult?.respObj)) {
+            || (!("replacement" in piperesult?.respObj))) {
             ogEditor.pipeButton.makeState("error");
             ogDialog.errdiag("Error interacting with server. " +
                 (piperesult?.errMsg ?? '') + ' ' +
@@ -210,31 +210,64 @@ function powerUpEditor() {
     ogEditor.process = async function(opts = {}) {
         // determine routine to use
         if (!ogEditor?.outputSelectButton) { return false; }
-        let outputext = ogEditor.outputSelectButton.mystate;
-        let docrootext = windows.docrootext;
+        const outputext = ogEditor.outputSelectButton.mystate;
+        const docrootext = windows.docrootext;
         if (!ogeSettings?.routines?.[docrootext]?.[outputext]) {
             ogDialog.errdiag('Proposed routine ' + docrootext + ' to ' +
                 outputext + ' does not exist');
             ogEditor.outputSelectButton.makeState('error');
             return false;
         }
-        let routine = ogeSettings.routines[docrootext][outputext];
+        const routine = ogeSettings.routines[docrootext][outputext];
         // if not a pipe command, then just save and call routine
         if (!routine.pipe) {
-            return await ogEditor.save({ routine: routine });
+            let sv = await ogEditor.save({ routine: routine });
+            return sv;
         }
         // processonly
-        if (ogEditor.processButton) {
+        if (ogEditor?.processButton) {
             ogEditor.processButton.makeState("processing");
         }
+        const buffer = ogEditor.state.doc.toString();
+        try {
+            const basename = window.basename;
+            const dirname = window.dirname;
+            opts.routine = routine;
+            const processresponse = await postData('php/processonly.php', {
+                dirname: dirname,
+                basename: basename,
+                buffer: buffer,
+                opts: opts
+            });
+            if ((!("error" in processresponse)) ||
+                processresponse.error ||
+                (!("respObj" in processresponse)) ||
+                (processresponse.respObj.error)) {
+                if (ogEditor?.processButton) {
+                    ogEditor.processButton.makeState('error');
+                }
+                ogEditor.errdiag((processresponse?.errMsg ?? '') +
+                    ' ' + (processresponse?.respObj?.errMsg ?? ''));
+                return false;
+            }
+            if (ogEditor?.processButton) {
+                ogEditor.processButton.makeState('normal');
+            }
+            // TODO: post processing
+        } catch(err) {
+            if (ogEditor?.processButton) {
+                ogEditor.processButton.makeState('error');
+            }
+            ogDialog.errdiag('Unable to save. ' + err.toString());
+            return;
+        }
     }
-
     //
     // SAVE FUNCTION
     //
     ogEditor.save = async function(opts = {}) {
         // don't save if already saving
-        let autosave = (("autosave" in opts) && (opts.autosave));
+        const autosave = (("autosave" in opts) && (opts.autosave));
         if (!autosave) {
             ogEditor.saveButton.makeState("saving");
         }
@@ -275,15 +308,15 @@ function powerUpEditor() {
             window.lastsavedat = window.numchanges;
         }
         try {
-            let saveresponse = await postData('php/savefile.php', {
+            const saveresponse = await postData('php/savefile.php', {
                 dirname: dirname,
                 basename: basename,
                 buffer: buffer,
                 opts: opts
             });
-            if ((!"error" in saveresponse)
+            if ((!("error" in saveresponse))
                 || saveresponse.error
-                || (!"respObj" in saveresponse)
+                || (!("respObj" in saveresponse))
                 || (saveresponse.respObj.error)
             ) {
                 saveerror += (saveresponse?.errMsg ?? '') + ' ' +
@@ -310,7 +343,7 @@ function powerUpEditor() {
     }
 
     ogEditor.togglesearch = function() {
-        let ispanel = (document
+        const ispanel = (document
             .getElementsByClassName("cm-search").length > 0);
         if (ispanel) {
             ogEditor.closesearch();
