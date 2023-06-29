@@ -139,6 +139,10 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.basename = '<?php echo $basename; ?>';
             window.ogeSettings = <?php echo json_encode($settings); ?>;
             window.rootextension = '<?php echo $rootextension; ?>';
+            window.rootdocument = window.dirname + '/' + window.basename;
+            if (ogeSettings.rootdocument) {
+                window.rootdocument = ogeSettings.rootdocument;
+            }
             window.numchanges = 0;
             window.lastsavedat = 0;
             window.lastautosavedat = 0;

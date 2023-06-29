@@ -220,47 +220,9 @@ function powerUpEditor() {
         }
         const routine = ogeSettings.routines[docrootext][outputext];
         // if not a pipe command, then just save and call routine
-        if (!routine.pipe) {
-            let sv = await ogEditor.save({ routine: routine });
-            return sv;
-        }
-        // processonly
-        if (ogEditor?.processButton) {
-            ogEditor.processButton.makeState("processing");
-        }
-        const buffer = ogEditor.state.doc.toString();
-        try {
-            const basename = window.basename;
-            const dirname = window.dirname;
-            opts.routine = routine;
-            const processresponse = await postData('php/processonly.php', {
-                dirname: dirname,
-                basename: basename,
-                buffer: buffer,
-                opts: opts
-            });
-            if ((!("error" in processresponse)) ||
-                processresponse.error ||
-                (!("respObj" in processresponse)) ||
-                (processresponse.respObj.error)) {
-                if (ogEditor?.processButton) {
-                    ogEditor.processButton.makeState('error');
-                }
-                ogEditor.errdiag((processresponse?.errMsg ?? '') +
-                    ' ' + (processresponse?.respObj?.errMsg ?? ''));
-                return false;
-            }
-            if (ogEditor?.processButton) {
-                ogEditor.processButton.makeState('normal');
-            }
-            // TODO: post processing
-        } catch(err) {
-            if (ogEditor?.processButton) {
-                ogEditor.processButton.makeState('error');
-            }
-            ogDialog.errdiag('Unable to save. ' + err.toString());
-            return;
-        }
+        opts.routine = routine;
+        const sv = await ogEditor.save(opts);
+        return sv;
     }
     //
     // SAVE FUNCTION
@@ -270,6 +232,11 @@ function powerUpEditor() {
         const autosave = (("autosave" in opts) && (opts.autosave));
         if (!autosave) {
             ogEditor.saveButton.makeState("saving");
+        }
+        if ("routine" in opts) {
+            if (ogEditor?.processButton) {
+                ogEditor.processButton.makeState("processing");
+            }
         }
         let basename = window.basename;
         let dirname = window.dirname;
@@ -339,6 +306,11 @@ function powerUpEditor() {
         if (saveerror != '') {
             ogEditor.saveButton.makeState('error');
             ogDialog.errdiag('Unable to save. ' + saveerror);
+            if ("routine" in opts) {
+                if (ogEditor?.processButton) {
+                    ogEditor.processButton.makeState("normal");
+                }
+            }
         }
     }
 
