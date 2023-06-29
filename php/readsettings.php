@@ -21,10 +21,19 @@ if (file_exists($settingsfile)) {
 
 function full_document_root($dirname, $rootdocument) {
     global $settings;
+    // check if already an absolute path
+    if (substr($rootdocument,0,1) == '/') {
+        return $rootdocument;
+    }
+    // look for where settings are; relative path
+    // would be relative to it, most likely
     $gpsf = get_project_settings_filename($dirname);
+    // if not settings file found, use the saved file's
+    // director as base
     if ($gpsf === false) {
         return realpath($dirname . '/' + $rootdocument);
     }
+    // otherwise use path relative to settings file
     $gpsf_dir = dirname($gpsf);
     return realpath($gpsf_dir . '/' + $rootdocument);
 }

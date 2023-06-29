@@ -9,8 +9,8 @@ $swapvariabless = array('outputfile', 'rootdocument', 'savedfile');
 function fill_processing_variables($opts) {
     global $swapvariables;
     $cmd = 'false';
-    if (isset($opts->routine->cmd)) {
-        $cmd = $opts->routine->cmd;
+    if (isset($opts->routine->command)) {
+        $cmd = $opts->routine->command;
     }
     foreach ($swapvariables as $variable) {
         if (isset($opts->{$variable})) {

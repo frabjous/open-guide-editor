@@ -20,7 +20,7 @@ if ($data === false) {
 $required = array('dirname', 'basename', 'buffer', 'opts');
 foreach($required as $req) {
     if (!isset($data->{$req})) {
-        rage_quit(new StdClass(), 'Required part of data not provided.');
+        rage_quit(new StdClass(), 'required part of data not provided.');
     }
 }
 // initiate key variables
@@ -29,22 +29,22 @@ $dirname = $data->dirname;
 $basename = $data->basename;
 $buffer = $data->buffer;
 $opts = $data->opts;
-$filename = $dirname . '/' . $basename;
+$filename = realpath($dirname . '/' . $basename);
 $settings = merge_projectsettings($dirname);
 
+// ensure user has authentication
 if (!has_authentication($filename)) {
     rage_quit(new StdClass(), "user does not have authentication to " .
         "edit the file in quesiton");
 }
 
-error_log(json_encode($settings));
 // check if autosave request
 if (isset($opts->autosave) && $opts->autosave) {
     if (!isset($settings->autosave->directory)) {
         rage_quit(new StdClass(), "autosaving without an autosave folder in settings");
     }
     $filename = $settings->autosave->directory . '/' .
-        str_replace('/','⊃',$filename);
+        str_replace('/','⁒',$filename);
 }
 
 // make sure destination folder exists
@@ -54,7 +54,7 @@ if (!is_dir(dirname($filename))) {
 // actually save the file
 $putresult = file_put_contents($filename, $buffer);
 if ($putresult === false) {
-    rage_quit(new StdClass(), 'Saving of file failed.');
+    rage_quit(new StdClass(), 'saving of file failed.');
 }
 $rv->savesuccess = true;
 
@@ -108,7 +108,7 @@ $opts->rootdocument = basename($opts->fullroot);
 // $determine the outputfile
 //
 // note: since we are in the root document's folder, we will
-// use the basename of the result by default
+// use its basename to determine the root of the output file
 $opts->outputfile = mb_ereg_replace($inext . '$', $outext,
         basename($opts->fullroot));
 
