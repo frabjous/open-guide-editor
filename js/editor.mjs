@@ -104,8 +104,8 @@ let extensions = [
             if (document.title) {
                 window.setTitle(true);
             }
-            if (window.autoprocessing && window.triggerAutoprocess) {
-                window.triggerAutoprocess();
+            if (window.autoprocessing && ogEditor.triggerAutoprocess) {
+                ogEditor.triggerAutoprocess();
             }
         }
     }),

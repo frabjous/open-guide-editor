@@ -79,7 +79,7 @@ function powerUpEditor() {
             window.autoprocessTimeOut = {};
         }
         window.autoprocessing = false;
-        window.autoprocessButton.makeState("inactive");
+        ogEditor.autoprocessButton.makeState("inactive");
     }
 
     // get text, etc. from current selection
@@ -376,7 +376,7 @@ function powerUpEditor() {
     }
 
     ogEditor.triggerAutoprocess = function() {
-        if (typeof window.autoprocessTimeOut == number) {
+        if (typeof window.autoprocessTimeOut == 'number') {
             clearTimeout(window.autoprocessTimeOut);
         }
         window.autoprocessTimeOut = setTimeout(
@@ -384,8 +384,8 @@ function powerUpEditor() {
                 if (window.autoprocessing) {
                     ogEditor.process({ auto: true });
                 }
-            }
-            (ogeSettings?.autopreview?.delay ?? 1000)
+            },
+            (ogeSettings?.autoprocess?.delay ?? 100000)
         );
     }
 
