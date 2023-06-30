@@ -1,16 +1,19 @@
 {
     "accesskeyfile" : "/tmp/oge-accesskeys.json",
+    "autoprocess" : {
+        "delay": 1000
+    },
     "autosave": {
         "interval": 300000,
         "directory": "/tmp"
     },
     "routines": {
         "md": {
-            "pdf": {
-                "command": "pandoc -f markdown -t pdf %rootdocument% %outputfile%"
-            },
             "html": {
                 "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
+            },
+            "pdf": {
+                "command": "pandoc -f markdown -t pdf %rootdocument% %outputfile%"
             }
         }
     }

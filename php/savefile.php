@@ -134,7 +134,14 @@ if (!is_dir(dirname($opts->outputfile))) {
 // fill in variables in command to run
 $cmd = fill_processing_variables($opts);
 
-$rv->cmdrun = $cmd;
+$rv->processResult = pipe_to_command($cmd);
+$rv->processResult->cmdrun = $cmd;
+
+if ($rv->processResult->returnvalue == 0) {
+    $rv->processResult->error = false;
+} else {
+    $rv->processResult->error = true;
+}
 
 send_as_json($rv);
 exit(0);
