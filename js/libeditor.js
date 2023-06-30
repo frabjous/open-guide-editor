@@ -339,6 +339,7 @@ function powerUpEditor() {
                     ogEditor.processButton.makeState('normal');
                 }
             }
+            console.log(respObj);
         }
         // TODO: postprocessing
     }

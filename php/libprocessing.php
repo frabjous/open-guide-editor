@@ -4,7 +4,7 @@
 // https://www.gnu.org/licenses/.
 //
 require 'open-guide-misc/pipe.php';
-$swapvariabless = array('outputfile', 'rootdocument', 'savedfile');
+$swapvariables = array('outputfile', 'rootdocument', 'savedfile');
 
 function fill_processing_variables($opts) {
     global $swapvariables;

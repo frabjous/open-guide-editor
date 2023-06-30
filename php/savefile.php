@@ -64,6 +64,9 @@ if (!isset($opts->routine)) {
     exit(0);
 }
 
+// load library
+require 'php/libprocessing.php';
+
 $rv->processResult = new StdClass();
 
 if (!isset($opts->outputext)) {
@@ -89,7 +92,7 @@ $outext = $opts->outputext;
 $opts->fullroot = full_document_root($dirname, $opts->rootdocument);
 
 // ensure that it exists
-if (!file_exists($opts>fullroot)) {
+if (!file_exists($opts->fullroot)) {
     $rv->processResult->error = true;
     $rv->processResult->errMsg = 'document root does not exist';
     send_as_json($rv);
@@ -97,7 +100,7 @@ if (!file_exists($opts>fullroot)) {
 }
 
 // go into folder of root document
-$rootdir = dirname($fullroot);
+$rootdir = dirname($opts->fullroot);
 chdir($rootdir);
 
 // we want to make "rootdocument" to point at the basename since we are
@@ -127,9 +130,6 @@ if (!is_dir(dirname($opts->outputfile))) {
         exit(0);
     }
 }
-
-// load library
-require 'php/libprocessing.php';
 
 // fill in variables in command to run
 $cmd = fill_processing_variables($opts);

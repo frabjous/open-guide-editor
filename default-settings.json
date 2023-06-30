@@ -7,10 +7,10 @@
     "routines": {
         "md": {
             "pdf": {
-                "command": "pandoc -t pdf %rootdocument% %outputfile%"
+                "command": "pandoc -f markdown -t pdf %rootdocument% %outputfile%"
             },
             "html": {
-                "command": "pandoc -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
+                "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
             }
         }
     }
