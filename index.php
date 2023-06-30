@@ -147,6 +147,8 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.lastsavedat = 0;
             window.lastautosavedat = 0;
             window.reloadonsave = (window.basename == '');
+            window.autoprocessing = false;
+            window.autoprocessTimeOut = {}
             window.onload = function() {
                 powerUpEditor();
                 // start autosave timer if applicable

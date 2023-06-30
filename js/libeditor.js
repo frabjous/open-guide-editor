@@ -60,6 +60,28 @@ function panelButton( possstates ) {
 
 // function run at load, giving the editor its commands and buttons
 function powerUpEditor() {
+    //
+    // Turn autoprocessing on or off
+    ogEditor.autoprocess = function(onoff) {
+        window.autoprocessing = onoff;
+        if (typeof window.autoprocessTimeOut == 'number') {
+            clearTimeout(autoprocessTimeOut);
+        }
+        if (onoff) {
+            window.autoprocessing = true;
+            ogEditor.autoprocessButton.makeState("active");
+            ogEditor.triggerAutoprocess();
+            return;
+        }
+        // turn it off
+        if (typeof window.autoprocessTimeOut == 'number') {
+            clearTimeout(window.autoprocessTimeOut);
+            window.autoprocessTimeOut = {};
+        }
+        window.autoprocessing = false;
+        window.autoprocessButton.makeState("inactive");
+    }
+
     // get text, etc. from current selection
     ogEditor.getfirstselection = function() {
         let selectedtext = '';
@@ -353,6 +375,20 @@ function powerUpEditor() {
         }
     }
 
+    ogEditor.triggerAutoprocess = function() {
+        if (typeof window.autoprocessTimeOut == number) {
+            clearTimeout(window.autoprocessTimeOut);
+        }
+        window.autoprocessTimeOut = setTimeout(
+            function() {
+                if (window.autoprocessing) {
+                    ogEditor.process({ auto: true });
+                }
+            }
+            (ogeSettings?.autopreview?.delay ?? 1000)
+        );
+    }
+
     // button for saving
     ogEditor.saveButton = panelButton({
         "unchanged" : {
@@ -477,7 +513,7 @@ function powerUpEditor() {
     }
     // TODO: generic function for adding more based on filetype?
     //  for markdown, need play, preview html, preview pdf,
-    //  autopreview and speak aloud
+    //  autoprocess and speak aloud
     if (("outputopts" in window) && (window.outputopts.length > 0)) {
         // create process once button
         ogEditor.processButton = panelButton({
@@ -504,12 +540,12 @@ function powerUpEditor() {
             "inactive": {
                 icon: "autoplay",
                 tooltip: "activate autopreview",
-                clickfn: function() { ogEditor.autopreview(true); }
+                clickfn: function() { ogEditor.autoprocess(true); }
             },
             "active": {
                 icon: "autoplay",
                 tooltip: "deactivate autopreview",
-                clickfn: function() { ogEditor.autopreview(false); }
+                clickfn: function() { ogEditor.autoprocess(false); }
             }
         });
         ogEditor.autoprocessButton.makeState("inactive");

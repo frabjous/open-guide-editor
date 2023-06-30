@@ -86,7 +86,6 @@ const additionalKeymap = [
     { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
-
 //
 // Editor
 //
@@ -104,6 +103,9 @@ let extensions = [
             }
             if (document.title) {
                 window.setTitle(true);
+            }
+            if (window.autoprocessing && window.triggerAutoprocess) {
+                window.triggerAutoprocess();
             }
         }
     }),
