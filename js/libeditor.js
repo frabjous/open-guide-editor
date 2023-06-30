@@ -349,20 +349,23 @@ function powerUpEditor() {
                     ogEditor.processButton.makeState("normal");
                 }
             }
-        } else {
-            if (processingerror != '') {
-                if (ogEditor.processButton) {
-                    ogEditor.processButton.makeState('error');
-                }
-                ogDialog.errdiag('Processing error: ' + processingerror);
-                return false;
-            } else {
-                if (ogEditor.processButton) {
-                    ogEditor.processButton.makeState('normal');
-                }
-            }
+            return false;
         }
-        // TODO: postprocessing
+        if (processingerror != '') {
+            if (ogEditor.processButton) {
+                ogEditor.processButton.makeState('error');
+            }
+            ogDialog.errdiag('Processing error: ' + processingerror);
+            return false;
+        }
+
+        if (opts.routine) {
+            window.processedonce = true;
+            if (ogEditor.processButton) {
+                ogEditor.processButton.makeState('normal');
+            }
+            // TODO: postprocessing
+        }
     }
 
     ogEditor.togglesearch = function() {
