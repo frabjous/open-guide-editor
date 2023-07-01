@@ -80,7 +80,7 @@ if (isset($settings->routines->{$rootextension}->{$outputext})) {
 
 // determine the outputfile
 $outputfile = mb_ereg_replace($rootextension . '$', $outputext,
-       $fullbase));
+       $rootbase);
 
 // allow overriding the output file in the settings
 if (isset($routine->outputfile)) {
@@ -92,9 +92,10 @@ $outputbase = basename($outputfile);
 
 // ensure we can actually preview the kind of file in question
 if (!file_exists("preview/$outputbase/viewer.mjs")) {
-    header("HTTP/1.1 404 Not Found");
+    header("Location: ../meinongian-page.html");
     exit;
 }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -181,6 +182,7 @@ if (!file_exists("preview/$outputbase/viewer.mjs")) {
             </div>
             <div id="viewercontainer">
                 <div id="viewerparent">
+                    <?php echo 'output file is ' . $outputfile; ?>
                 </div>
             </div>
         </div>
