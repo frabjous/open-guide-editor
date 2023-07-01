@@ -45,6 +45,9 @@ if (!$keydata === false) {
 }
 $fullfilename = $dirname . '/' . $basename;
 
+// merge the project settings
+$settings = merge_projectsettings($dirname);
+
 // determine root document
 $rootdocument = $fullfilename;
 if (isset($settings->rootdocument)) {
@@ -87,6 +90,12 @@ if (isset($routine->outputfile)) {
 // used in title, etc.
 $outputbase = basename($outputfile);
 
+// ensure we can actually preview the kind of file in question
+if (!file_exists("preview/$outputbase/viewer.mjs")) {
+    header("HTTP/1.1 404 Not Found");
+    exit;
+}
+
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -118,9 +127,14 @@ $outputbase = basename($outputfile);
         <!-- javascript file -->
         <!-- <script type="text/javascript" charset="utf-8" src="/kcklib/kckdialog.js"></script> -->
 
-        <script charset="utf-8" src="../js/filetypeicons.js"></script>
         <script charset="utf-8" src="../js/panel.js"></script>
-        <script type="module" src='open-guide-misc/fetch.mjs'></script>
+        <script type="module" charset="utf-8" src="open-guide-misc/fetch.mjs"></script>
+        <script type="module" charset="utf-8" src="<?php echo $outputext; ?>/viewer.mjs"></script>
+
+        <script>
+            //LICENSE: GNU GPL v3
+                window.ogeSettings = <?php echo json_encode($settings); ?>;
+        </script>
 
         <style>
             html, body {
@@ -167,11 +181,8 @@ $outputbase = basename($outputfile);
             </div>
             <div id="viewercontainer">
                 <div id="viewerparent">
-
-
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="editor.bundle.js"></script>
     </body>
 </html>
