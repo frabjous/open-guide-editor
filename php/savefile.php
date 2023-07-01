@@ -143,7 +143,7 @@ if (!is_dir(dirname($opts->outputfile))) {
 }
 
 // fill in variables in command to run
-$cmd = fill_processing_variables($opts);
+$cmd = fill_processing_variables($opts, false);
 
 // run command, record what was run
 $rv->processResult = pipe_to_command($cmd);
@@ -154,7 +154,29 @@ $rv->processResult->outputfile = realpath($opts->outputfile);
 if ($rv->processResult->returnvalue == 0) {
     $rv->processResult->error = false;
 } else {
+    // only move on to postprocessing if successful
     $rv->processResult->error = true;
+    send_as_json($rv);
+    exit(0);
+}
+
+// skip post-processing if not set
+if (!isset($opts->routine->postprocess)) {
+    send_as_json($rv);
+    exit(0);
+}
+
+// post-processing
+$postprocesscmd = fill_processing_variables($opts, true);
+
+// run post processing
+$rv->processResult->postProcessResult = pipe_to_cmd($cmd);
+$rv->processResult->postProcessResult->cmdrun = $postprocesscmd;
+// if there was an error, add it to the processResult
+if ($rv->processResult->postProcessResult->returnvalue != 0) {
+    $rv->processResult->error = true;
+    $rv->processResult->stderr .=
+        $rv->processResult->postProcessResult->stderr;
 }
 
 // send json response and exist

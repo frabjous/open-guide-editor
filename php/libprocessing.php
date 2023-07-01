@@ -10,11 +10,14 @@
 require_once 'open-guide-misc/pipe.php';
 $swapvariables = array('outputfile', 'rootdocument', 'savedfile');
 
-function fill_processing_variables($opts) {
+function fill_processing_variables($opts, $postprocess = false) {
     global $swapvariables;
     $cmd = 'false';
-    if (isset($opts->routine->command)) {
+    if ((isset($opts->routine->command)) && (!$postprocess)) {
         $cmd = $opts->routine->command;
+    }
+    if ((isset($opts->routine->postprocess)) && ($postprocess)) {
+        $cmd = $opts->routine->postprocess;
     }
     foreach ($swapvariables as $variable) {
         if (isset($opts->{$variable})) {

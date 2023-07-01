@@ -478,16 +478,28 @@ function powerUpEditor() {
                 window.processedonce[outputext] = true;
                 // if viewer has never been launched, and this has a
                 // viewable output extension, launch the viewer
+                let postprocessdata = '';
+                // if postprocessing info set along, then pass it to
+                // viewer
+                if (respObj?.processResult?.postProcessResult?.stdout) {
+                    postprocessdata = respObj.processResult
+                        .postProcessResult.stdout;
+                }
                 if ((!window.viewedonce) &&
                     (outputext in window.outputextensions) &&
                     (window.outputextensions[outputext].viewable)) {
-                    return ogEditor.preview(true);
+                    return ogEditor.preview(true,
+                        { postprocessdata: postprocessdata }
+                    );
                 }
                 // if viewer is currently open, refresh it
                 if ((outputext in window.outputextensions) &&
                     (window.outputextensions[outputext].viewable) &&
                     (window.viewerwindow !== false)) {
-                    ogEditor.sendmessage({ messagecmd: 'refresh' });
+                    ogEditor.sendmessage({
+                        messagecmd: 'refresh',
+                        opts: { postprocessdata: postprocessdata }
+                    });
                 }
             }
             if (opts?.download) {
