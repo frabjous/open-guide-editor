@@ -40,7 +40,7 @@ $topipe = $data->selectedtext;
 $cmd = $data->cmd;
 
 // load pipe command from misc
-require_once '../open-guide-misc/pipe.php';
+require_once 'open-guide-misc/pipe.php';
 
 // run pipe command
 $piperesult = pipe_to_command($cmd, $topipe);

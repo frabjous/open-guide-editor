@@ -269,8 +269,30 @@ function powerUpEditor() {
     //
     // PREVIEW ON/OFF FUNCTION
     //
-    ogEditor.preview = function(onoff, opts = {}) {
+    ogEditor.preview = async function(onoff, opts = {}) {
         if (onoff) {
+            // turning on, determine output extension
+            let outputext = '';
+            if ("outputext" in opts) {
+                outputext = opts.outputext;
+            } else {
+                if (ogEditor.outputSelectButton) {
+                    outputext = ogEditor.outputSelectButton.mystate;
+                }
+            }
+            // if there is an outputextension, and it hasn't
+            // been processed before, process it first
+            if (outputext != '') {
+                if ((!(outputext in window.processedonce)) ||
+                    (!window.processedonce[outputext])) {
+                    let r = await ogEditor.process(opts);
+                    // if that opened the viewer window, we're good
+                    if (window.viewerwindow) {
+                        return true;
+                    }
+                    // if not we launch it below
+                }
+            }
             return ogEditor.launchviewer(opts);
         }
         return ogEditor.closeviewer({});
