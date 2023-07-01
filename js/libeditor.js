@@ -429,18 +429,42 @@ function powerUpEditor() {
                 let outputext = opts.outputext
                 // keep track of what outputs should already exist
                 window.processedonce[outputext] = true;
-                // why process without viewing? If viewer has not been
+                // why process without viewing? If viewer has never been
                 // opened, open it now
-                if ((!window.viewedonce) &&
-                    (outputext in window.outputextensions)) {
-                    ogEditor.preview(true);
+                if (opts?.download) {
+                    // TODO: download thingymajig
+                    return;
                 }
-                // TODO: POST-PROCESSING
+                // if viewer has never been launched, and this has a
+                // viewable output extension, launch the viewer
+                if ((!window.viewedonce) &&
+                    (outputext in window.outputextensions) &&
+                    (window.outputextensions[outputext].viewable)) {
+                    return ogEditor.preview(true);
+                }
+                // if viewer is currently open, refresh it
+                if ((outputext in window.outputextensions) &&
+                    (window.outputextensions[outputext].viewable) &&
+                    (window.viewerwindow !== false)) {
+                    ogEditor.sendmessage({ messagecmd: 'refresh' });
+                }
             }
         }
     }
-
+    //
+    // send a message to the viewer window
+    //
+    ogEditor.sendmessage = function(d, opts = {}) {
+        // sanity checks
+        if (!window.viewerwindow) { return false; }
+        if (!window.viewerwindow?.postMessage) { return false; }
+        // post a message
+        console.log('sending message');
+        return window.viewerwindow.postMessage(d, '*');
+    }
+    //
     // open or close the search/replace panel
+    //
     ogEditor.togglesearch = function() {
         // see if it's already open
         const ispanel = (document

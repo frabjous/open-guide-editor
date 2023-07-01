@@ -146,6 +146,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
                 if (e.data.accesskey != window.accesskey) { return false; }
                 // refresh if asked
                 if (e.data.messagecmd == 'refresh' && window.viewerrefresh) {
+                    console.log("got message", e.data);
                     return window.viewerrefresh((e.data?.opts ?? {}));
                 }
                 // handle other messages if need be
