@@ -199,6 +199,7 @@ function powerUpEditor() {
     //
     // PIPE FILTER
     //
+    // create form for getting pipe command
     ogEditor.pipedialog = function() {
         let formhtml = '<div class="oge-pipeform">' +
             '<div><label for="pipeentry">Unix pipe command to filter through:</label></div>' +
@@ -207,9 +208,14 @@ function powerUpEditor() {
             '</div>';
         window.pipeBDiv = ogDialog.popupform(formhtml,true);
     }
+
+    //actually process the pipe command
     ogEditor.pipefilter = async function(opts = {}, cmd) {
+        // make button active
         ogEditor.pipeButton.makeState("processing");
+        // if there is a selection we only pipe it
         let topipe = ogEditor.getfirstselection();
+        // if nothing is selected we pipe whole document
         if (topipe.selectedtext == '') {
             const selectedtext = ogEditor.state.doc.toString();
             topipe = {
@@ -218,8 +224,11 @@ function powerUpEditor() {
                 to: selectedtext.length
             };
         }
+        // set the command
         topipe.cmd = cmd;
+        // post request to pipe to server
         let piperesult = await postData('php/pipefilter.php', topipe);
+        // respond to errors
         if (piperesult?.error
             || (!("respObj" in piperesult))
             || piperesult?.respObj?.error
@@ -231,7 +240,9 @@ function powerUpEditor() {
                 (piperesult?.respObj?.errMsg ?? ''));
             return;
         }
+        // change back to normal
         ogEditor.pipeButton.makeState("normal");
+        // swap out the selection with the new contents from the pipe
         ogEditor.dispatch(ogEditor.state.update({
             changes: {
                 from: topipe.from,
@@ -241,6 +252,19 @@ function powerUpEditor() {
         }));
     }
     //
+    // PREVIEW ON/OFF FUNCTION
+    //
+    ogEditor.preview = function(onoff) {
+        if (onoff) {
+            ogEditor.previewButton.makeState("active");
+            console.log("I shoudl preview!");
+            return;
+        }
+        // turning off
+        ogEditor.previewButton.makeState("inactive");
+        // TODO: Close viewer
+    }
+
     // PROCESS FUNCTION
     //
     ogEditor.process = async function(opts = {}) {
@@ -248,6 +272,7 @@ function powerUpEditor() {
         if (!ogEditor?.outputSelectButton) { return false; }
         const outputext = ogEditor.outputSelectButton.mystate;
         const rootextension = window.rootextension;
+        // ensure the routine exists
         if (!ogeSettings?.routines?.[rootextension]?.[outputext]) {
             ogDialog.errdiag('Proposed routine ' + rootextension + ' to ' +
                 outputext + ' does not exist');
@@ -255,7 +280,7 @@ function powerUpEditor() {
             return false;
         }
         const routine = ogeSettings.routines[rootextension][outputext];
-        // if not a pipe command, then just save and call routine
+        // call save function with options for processing
         opts.routine = routine;
         opts.outputext = outputext;
         const sv = await ogEditor.save(opts);
@@ -265,19 +290,23 @@ function powerUpEditor() {
     // SAVE FUNCTION
     //
     ogEditor.save = async function(opts = {}) {
-        // don't save if already saving
+        // don't change button if autosaving, but otherwise do so
         const autosave = (("autosave" in opts) && (opts.autosave));
         if (!autosave) {
             ogEditor.saveButton.makeState("saving");
         }
+        // if also processing, then mark its button as such
         if ("routine" in opts) {
             if (ogEditor?.processButton) {
                 ogEditor.processButton.makeState("processing");
             }
         }
+        // check if we have a basename and dirname
         let basename = window.basename;
         let dirname = window.dirname;
         if (basename == '') {
+            // if autosaving an unnamed file, create a filename based
+            // on the date and time
             if (autosave) {
                 const now = new Date();
                 const ts = now.getFullYear.toString() + '-' +
@@ -286,12 +315,15 @@ function powerUpEditor() {
                     now.getTime().toString();
                 basename = 'autosave-' + ts;
             } else {
+                // otherwise, we'll need to give it a filename to save it
                 window.ogDialog.filechoose(
                     function(dn, bn) {
+                        // crazy response if filename choice canceled
                         if (dn == '---' && bn == '---') {
                             ogEditor.saveButton.makeState("changed");
                             return;
                         }
+                        // start again with the filename chosen
                         window.dirname = dn;
                         window.basename = bn;
                         ogEditor.save();
@@ -301,16 +333,21 @@ function powerUpEditor() {
                     true,
                     'open-guide-misc/get-file-list.php'
                 );
+                // don't fall through to rest of function
+                // since we're going to call it again
                 return;
             }
         }
+        // get contents of file
         const buffer = ogEditor.state.doc.toString();
         let saveerror = ''; let processingerror = '';
+        // make this current state as the one last saved
         if (opts?.autosave) {
             window.lastautosavedat = window.numchanges;
         } else {
             window.lastsavedat = window.numchanges;
         }
+        // get response from server
         let respObj = {};
         try {
             const saveresponse = await postData('php/savefile.php', {
@@ -319,6 +356,7 @@ function powerUpEditor() {
                 buffer: buffer,
                 opts: opts
             });
+            // handle errors
             if ((!("error" in saveresponse))
                 || saveresponse.error
                 || (!("respObj" in saveresponse))
@@ -327,26 +365,31 @@ function powerUpEditor() {
                 saveerror += (saveresponse?.errMsg ?? '') + ' ' +
                     (saveresponse?.respObj?.errMsg ?? '');
             } else {
+                // mark as saved if no new changes were make
                 if (window.numchanges <= window.lastsavedat) {
                     ogEditor.saveButton.makeState('unchanged');
                     window.setTitle(false);
                 }
+                // if we have a new filename, so reload to it
                 if (window.reloadonsave) {
                     window.location.href = 'php/redirect.php?dirname=' +
                         encodeURIComponent(dirname) + '&basename=' +
                         encodeURIComponent(basename);
                 }
+                // pass respObj back into wider scope
                 respObj = saveresponse.respObj;
             }
         } catch(err) {
+            // there was an error with the above; report it
             saveerror += 'Browser error: ' + err.toString() + ' ';
         }
-                // look for processing error
+        // look for processing error
         if (("routine" in opts) &&
             ((!("processResult" in respObj)) ||
                 (respObj?.processResult?.error))) {
             processingerror += (respObj?.processResult?.errMsg ??
                 'Unknown processing error');
+            // report error using its stderr output
             if (respObj?.proessingResult &&
                 ("stderr" in respObj?.processResult)) {
                 processingerror + stdErrorInclusion(
@@ -355,9 +398,11 @@ function powerUpEditor() {
             }
         }
 
+        // if there were errors saving the file, report them
         if (saveerror != '') {
             ogEditor.saveButton.makeState('error');
             ogDialog.errdiag('Unable to save. ' + saveerror);
+            // mark as no longer processing
             if ("routine" in opts) {
                 if (ogEditor?.processButton) {
                     ogEditor.processButton.makeState("normal");
@@ -365,6 +410,7 @@ function powerUpEditor() {
             }
             return false;
         }
+        // report any processing error
         if (processingerror != '') {
             if (ogEditor.processButton) {
                 ogEditor.processButton.makeState('error');
@@ -373,22 +419,31 @@ function powerUpEditor() {
             return false;
         }
 
+        // if finished a processing run, mark the button as completed
         if ((opts?.routine) && (opts?.outputext)) {
             if (ogEditor.processButton) {
+                //return processing button to normal
                 ogEditor.processButton.makeState('normal');
-            }
-            window.processedonce[outputext] = true;
-            // why process without viewing? If viewer has not been
-            // opened, open it now
-            if (!window.viewedonce) {
-                ogEditor.preview(true);
+                let outputext = opts.outputext
+                // keep track of what outputs should already exist
+                window.processedonce[outputext] = true;
+                // why process without viewing? If viewer has not been
+                // opened, open it now
+                if ((!window.viewedonce) &&
+                    (outputext in window.outputextensions)) {
+                    ogEditor.preview(true);
+                }
+                // TODO: POST-PROCESSING
             }
         }
     }
 
+    // open or close the search/replace panel
     ogEditor.togglesearch = function() {
+        // see if it's already open
         const ispanel = (document
             .getElementsByClassName("cm-search").length > 0);
+        // close or open it accordingly
         if (ispanel) {
             ogEditor.closesearch();
         } else {
@@ -396,10 +451,13 @@ function powerUpEditor() {
         }
     }
 
+    // start or re-start the autoprocesss timer
     ogEditor.triggerAutoprocess = function() {
+        // cancel the current one
         if (typeof window.autoprocessTimeOut == 'number') {
             clearTimeout(window.autoprocessTimeOut);
         }
+        // the timing is 1 second or what is in settings
         window.autoprocessTimeOut = setTimeout(
             function() {
                 if (window.autoprocessing) {
@@ -410,6 +468,9 @@ function powerUpEditor() {
         );
     }
 
+    /////////////
+    // BUTTONS //
+    /////////////
     // button for saving
     ogEditor.saveButton = panelButton({
         "unchanged" : {
@@ -532,9 +593,8 @@ function powerUpEditor() {
         ogEditor.outputSelectButton = panelButton(outputSelectButtonOpts);
         ogEditor.outputSelectButton.makeState(window.outputopts[0]);
     }
-    // TODO: generic function for adding more based on filetype?
-    //  for markdown, need play, preview html, preview pdf,
-    //  autoprocess and speak aloud
+
+    // create button for processing if there were routines
     if (("outputopts" in window) && (window.outputopts.length > 0)) {
         // create process once button
         ogEditor.processButton = panelButton({
@@ -586,6 +646,7 @@ function powerUpEditor() {
         });
         ogEditor.previewButton.makeState("inactive");
     }
+    // TODO: speak aloud button
 }
 
 // TODO
@@ -593,11 +654,16 @@ function stdErrorInclusion(stderr) {
     return '';
 }
 
+// function to read pipe command form and start the filter
 function submitPipeCmd() {
+    // ensure that the input field exists and read its value
     let pipeentry = document.getElementById("pipeentry");
     if (!pipeentry) { return; }
-    let cmd = pipeentry.value;
+    let cmd = pipeentry.value.trim();
+    // close the form
     window.pipeBDiv.closeMe();
+    // don't process an empty command
     if (cmd == '') { return; }
+    // run filter
     ogEditor.pipefilter({},cmd);
 }
