@@ -1,5 +1,11 @@
 <?php
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
 
+///////////////////////////// index.php /////////////////////////////
+// sets up and serves the main page for the editor
+/////////////////////////////////////////////////////////////////////
 session_start();
 require_once 'php/libauthentication.php';
 
@@ -93,6 +99,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
 
         <!-- javascript file -->
         <script type="text/javascript" charset="utf-8" src="js/filetypeicons.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/panel.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/libeditor.js"></script>
 
         <style>
