@@ -9,9 +9,19 @@
 window.viewerparent = {};
 window.htmliframe = {}
 
+function getIframeSrc() {
+    return  'html/gethtml.php?file=' +
+        encodeURIComponent(window.outputfile) + '&ts=' +
+        (new Date()).getTime().toString();
+}
+
 window.onload = function() {
     window.viewerparent = document.getElementById("viewerparent");
     window.htmliframe = newElem('iframe', window.viewerparent);
-    window.htmliframe.src =
-        'html/gethtml.php?file=' + encodeURIComponent(window.outputfile);
+    window.htmliframe.src = getIframeSrc();
+       
+}
+
+window.onmessage() {
+
 }
