@@ -53,13 +53,15 @@ if ($dirname != '') {
     $settings = merge_projectsettings($dirname);
 }
 
-// determine title
+// determine filename to use in title
 $displaybasename = ($basename == '') ? '⟨unnamed⟩' : $basename;
+
+// read contents
 $file_contents = '';
-    if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
-        !is_dir($fullfilename)) {
-        $file_contents = file_get_contents($fullfilename);
-    }
+if ((file_exists($fullfilename)) && ($fullfilename != '/') &&
+    !is_dir($fullfilename)) {
+    $file_contents = file_get_contents($fullfilename);
+}
 
 // determine root document
 $rootdocument = $fullfilename;
@@ -67,6 +69,7 @@ if (isset($settings->rootdocument)) {
     $rootdocument = $settings->rootdocument;
 }
 $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
+
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -98,9 +101,11 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> 
 
         <!-- javascript file -->
-        <script type="text/javascript" charset="utf-8" src="js/filetypeicons.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/panel.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/libeditor.js"></script>
+        <script charset="utf-8" src="js/filetypeicons.js"></script>
+        <script charset="utf-8" src="js/panel.js"></script>
+        <script charset="utf-8" src="js/libeditor.js"></script>
+        <script type="module" charset="utf-8" src='open-guide-misc/fetch.mjs'></script>
+        <script type="module" charset="utf-8" src='open-guide-misc/dialog.mjs'></script>
 
         <style>
             html, body {
@@ -146,8 +151,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
                 overflow: auto;
             }
         </style>
-        <script type="module" src='open-guide-misc/fetch.mjs'></script>
-        <script type="module" src='open-guide-misc/dialog.mjs'></script>
+
         <script>
             window.filecontents = <?php echo json_encode($file_contents); ?>;
             window.poweruser = <?php echo json_encode($poweruser); ?>;
