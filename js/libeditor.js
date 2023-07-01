@@ -664,12 +664,7 @@ function powerUpEditor() {
                         icon: (window.outputextensions[outputext].icon ?? ''),
                         tooltip: "change output routine",
                         clickfn: function() {
-                            let st = this.mystate;
-                            let pos = window.outputopts.indexOf(st) + 1;
-                            if (pos == window.outputopts.length) {
-                                pos = 0;
-                            }
-                            this.makeState(window.outputopts[pos]);
+                            ogEditor.changeOutputExt();
                         }
                     }
                 }
@@ -678,6 +673,25 @@ function powerUpEditor() {
         // create button
         ogEditor.outputSelectButton = panelButton(outputSelectButtonOpts);
         ogEditor.outputSelectButton.makeState(window.outputopts[0]);
+        // create function for changing the outputextension
+        ogEditor.changeOutputExt = function() {
+            // shorter name for button
+            let b = ogEditor?.outputSelectButton;
+            if (!b) { return; }
+            let st = b.mystate;
+            let pos = window.outputopts.indexOf(st) + 1;
+            if (pos == window.outputopts.length) {
+                pos = 0;
+            }
+            b.makeState(window.outputopts[pos]);
+            if ((b.mystate != st) && (window.viewerwindow !== false)) {
+                ogEditor.launchviewer();
+            }
+        }
+        //  hide the button if there is only one possibility
+        if (window.outputopts.length == 1) {
+            ogEditor.outputSelectButton.style.display = 'none';
+        }
 
         // for non-viewable routines, create a download button
         for (let outputext in routines) {
