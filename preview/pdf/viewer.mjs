@@ -2,27 +2,29 @@
 // Public License along with this program. If not, see
 // https://www.gnu.org/licenses/.
 
-///////////////////////// html/viewer.mjs ///////////////////////////////
-// creates and controls the viewer for html files                      //
+///////////////////////// pdf/viewer.mjs ////////////////////////////////
+// creates and controls the viewer for pdf files                       //
 /////////////////////////////////////////////////////////////////////////
 
 import downloadFile from '../../open-guide-misc/download.mjs';
-    
-window.viewerparent = {};
-window.htmliframe = {}
 
+window.viewerparent = {};
+window.pdfimageholder = {}
+
+// download the pdf
 function downloadOutput() {
     // determine basename of outputfile
     const outputsplit = window.outputfile.split('/');
     const outputbase = outputsplit[ outputsplit.length - 1 ];
     // url is sake
-    const url = getIframeSrc(true);
+    const url = '../php/downloadfile.php?filename=' +
+        encodeURIComponent(window.outputfile);
     return downloadFile(url, outputbase);
 }
 
-// function get the right src url for the preview iframe
-function getIframeSrc(download = false) {
-    let h= 'html/gethtml.php?file=' +
+// function get the right src url for the preview imageholder
+function getimageholderSrc(download = false) {
+    let h= 'pdf/getpdf.php?file=' +
         encodeURIComponent(window.outputfile) + '&ts=' +
         (new Date()).getTime().toString();
     // mark as download if requested
@@ -33,12 +35,12 @@ function getIframeSrc(download = false) {
 window.onload = function() {
     window.panel = document.getElementById("toppanel");
     window.viewerparent = document.getElementById("viewerparent");
-    window.htmliframe = newElem('iframe', window.viewerparent);
-    window.htmliframe.src = getIframeSrc(false);
+    window.pdfimageholder = newElem('imageholder', window.viewerparent);
+    window.pdfimageholder.src = getimageholderSrc(false);
     window.panel.downloadButton = panelButton({
         "normal" : {
             icon: "download",
-            tooltip: "download html file",
+            tooltip: "download pdf file",
             clickfn: function() { downloadOutput(); }
         }
     });
@@ -47,6 +49,6 @@ window.onload = function() {
 }
 
 window.viewerrefresh = function(opts) {
-    window.htmliframe.contentWindow.location.reload();
+    window.pdfimageholder.contentWindow.location.reload();
     window.sendmessage({ refreshed: true });
 }

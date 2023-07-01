@@ -7,15 +7,16 @@
 /////////////////////////////////////////////////////////////////////////
 
 import downloadFile from '../../open-guide-misc/download.mjs';
-    
+
 window.viewerparent = {};
 window.htmliframe = {}
 
+// download the outputfile
 function downloadOutput() {
     // determine basename of outputfile
     const outputsplit = window.outputfile.split('/');
     const outputbase = outputsplit[ outputsplit.length - 1 ];
-    // url is sake
+    // url is same but with download set to true
     const url = getIframeSrc(true);
     return downloadFile(url, outputbase);
 }
@@ -30,11 +31,14 @@ function getIframeSrc(download = false) {
     return h;
 }
 
+// set up the viewer initially
 window.onload = function() {
     window.panel = document.getElementById("toppanel");
     window.viewerparent = document.getElementById("viewerparent");
+    // create an iframe and set its src
     window.htmliframe = newElem('iframe', window.viewerparent);
     window.htmliframe.src = getIframeSrc(false);
+    // create button for downloading the html
     window.panel.downloadButton = panelButton({
         "normal" : {
             icon: "download",
@@ -43,9 +47,11 @@ window.onload = function() {
         }
     });
     window.panel.downloadButton.makeState("normal");
+    // tell the editor we've loaded
     window.sendmessage({ loaded: true });
 }
 
+// reload the html file
 window.viewerrefresh = function(opts) {
     window.htmliframe.contentWindow.location.reload();
     window.sendmessage({ refreshed: true });
