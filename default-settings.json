@@ -7,14 +7,6 @@
         "interval": 300000,
         "directory": "/tmp"
     },
-    "conversions": {
-        "md": {
-            "epub": {
-                "directOutputCommand": "pandoc -f markdown -t epub -o - %rootdocument%",
-                "fileOutputCommand": "pandoc -f markdown -t epub -o %converedfile% %rootdocument%"
-            }
-        }
-    },
     "routines": {
         "md": {
             "html": {
@@ -22,6 +14,9 @@
             },
             "pdf": {
                 "command": "pandoc -f markdown -t pdf %rootdocument% %outputfile%"
+            },
+            "epub": {
+                "command": "pandoc -f markdown -t epub %rootdocument% %outputfile%"
             }
         }
     },

@@ -221,6 +221,8 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
         <div id="allcontainer">
             <div id="toppanelcontainer">
                 <div id="toppanel">
+                    <div id="toppanelleftbuttons"></div>
+                    <div id="toppanelrightbuttons"></div>
                 </div>
             </div>
             <div id="editorcontainer">

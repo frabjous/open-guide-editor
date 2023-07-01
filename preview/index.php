@@ -217,6 +217,8 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
     <body>
         <div id="allcontainer">
             <div id="toppanelcontainer">
+                    <div id="toppanelleftbuttons"></div>
+                    <div id="toppanelrightbuttons"></div>
                 <div id="toppanel">
                 </div>
             </div>

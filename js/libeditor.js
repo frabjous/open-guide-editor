@@ -619,6 +619,57 @@ function powerUpEditor() {
         // create button
         ogEditor.outputSelectButton = panelButton(outputSelectButtonOpts);
         ogEditor.outputSelectButton.makeState(window.outputopts[0]);
+
+        // for non-viewable routines, create a download button
+        for (let outputext in routines) {
+            if (outputext in window.outputextensions) {
+                if (!window.outputextensions[outputext].viewable) {
+                    if (!ogEditor.downloadButtons) {
+                        ogEditor.downloadButtons = {};
+                    }
+                    const icon = window.outputextensions[outputext].icon
+                        ?? 'download';
+                    const b = panelButton({
+                        "normal" : {
+                            icon: icon,
+                            tooltip: "download " + outputext,
+                            clickfn: function() {
+                                ogEditor.download(this.outputext);
+                            }
+                        },
+                        "processing" : {
+                            icon: icon,
+                            tooltip: "processing download",
+                            clickfn: function() { }
+                        },
+                        "error" : {
+                            icon: icon",
+                            tooltip: "download processing error",
+                            clickfn: function() {
+                                ogEditor.download(this.outputext);
+                            }
+                        }
+                    }, true);
+                    b.outputext = outputext;
+                    b.makeState("normal");
+                    ogEditor.downloadButtons[outputext] = b;
+
+                    window.outputopts.push(outputext);
+                    outputSelectButtonOpts[outputext] = {
+                        icon: (window.outputextensions[outputext].icon ?? ''),
+                        tooltip: "change output routine",
+                        clickfn: function() {
+                            let st = this.mystate;
+                            let pos = window.outputopts.indexOf(st) + 1;
+                            if (pos == window.outputopts.length) {
+                                pos = 0;
+                            }
+                            this.makeState(window.outputopts[pos]);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // create button for processing if there were routines

@@ -25,10 +25,13 @@ function newElem(tagtype, par, classes = [], contents = '') {
 }
 
 // generic function to create the panel buttons
-function panelButton( possstates ) {
+function panelButton( possstates, onRight = false ) {
     // create button and add to panel
-    let panel = document.getElementById("toppanel");
-    let b = newElem( "div", panel, ["panelbutton"], '');
+    let panel = document.getElementById("toppanelleftbuttons");
+    if (onRight) {
+        panel = document.getElementById("toppanelrightbuttons");
+    }
+    const b = newElem( "div", panel, ["panelbutton"], '');
     // create span with material symbols outlined class
     b.iconspan = newElem("span", b, ["material-symbols-outlined"],'');
     // set possible states it can have

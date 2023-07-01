@@ -11,6 +11,16 @@
     padding-bottom: 0rem;
     border-bottom: 0.5px solid var(--purple);
 }
+
+#toppanelleftbuttons {
+    display: inline-block;
+}
+
+#toppanelrightbuttons {
+    display: inline-block;
+    float: right;
+}
+
 .panelbutton {
     background-color: var(--white);
     color: var(--gray3);
