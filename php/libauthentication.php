@@ -1,4 +1,12 @@
 <?php
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+/////////////// libauthentication.php ////////////////////////////////
+// determines what authentication level the user has and provides a //
+// library dealing with it for other scripts                        //
+//////////////////////////////////////////////////////////////////////
 
 // should always be required from script that calls session_start
 
@@ -35,6 +43,7 @@ function has_authentication($filename) {
     return false;
 }
 
+// need settings read for data location, etc.
 require_once("readsettings.php");
 
 // returns the dirname and basename for a given key
@@ -44,6 +53,7 @@ function data_for_key($accesskey) {
     return $allkeys->{$accesskey};
 }
 
+// read access keys from file
 function load_access_keys() {
     global $settings;
     // settings should contain accesskeyfile, or things are broken
@@ -97,6 +107,7 @@ function new_access_key($dirname, $basename) {
     return $accesskey;
 }
 
+// for generating random strings for access keys, etc.
 function random_string($length = 24) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $clength = strlen($characters);
@@ -107,6 +118,7 @@ function random_string($length = 24) {
     return $str;
 }
 
+// save access keys after adding to them
 function save_access_keys($newkeys) {
     global $settings;
     if (!isset($settings->accesskeyfile)) {
