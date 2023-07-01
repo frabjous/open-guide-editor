@@ -19,6 +19,7 @@
 #toppanelrightbuttons {
     display: inline-block;
     float: right;
+    padding-right: 0.4rem;
 }
 
 .panelbutton {

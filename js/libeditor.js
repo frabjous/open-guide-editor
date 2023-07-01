@@ -43,6 +43,15 @@ function powerUpEditor() {
         // set the button to off
         ogEditor.previewButton.makeState('inactive');
     }
+    //
+    // Download function
+    //
+    ogEditor.download = function(outputext) {
+        ogEditor.process({
+            download: true,
+            outputext: outputext
+        });
+    }
 
     //
     // GET SELECTION FUNCTION
@@ -270,9 +279,16 @@ function powerUpEditor() {
     // PROCESS FUNCTION
     //
     ogEditor.process = async function(opts = {}) {
-        // determine routine to use
-        if (!ogEditor?.outputSelectButton) { return false; }
-        const outputext = ogEditor.outputSelectButton.mystate;
+        // determine routine to use;
+        // it'll either be passed as opt, or we'll read it from the
+        // select button
+        let outputext = '';
+        if ("outputext" in opts) {
+            outputext = opts.outputext;
+        } else {
+            if (!ogEditor?.outputSelectButton) { return false; }
+            outputext = ogEditor.outputSelectButton.mystate;
+        }
         const rootextension = window.rootextension;
         // ensure the routine exists
         if (!ogeSettings?.routines?.[rootextension]?.[outputext]) {
@@ -298,10 +314,13 @@ function powerUpEditor() {
             ogEditor.saveButton.makeState("saving");
         }
         // if also processing, then mark its button as such
-        if ("routine" in opts) {
-            if (ogEditor?.processButton) {
-                ogEditor.processButton.makeState("processing");
-            }
+        if (("routine" in opts) && (ogEditor?.processButton)) {
+            ogEditor.processButton.makeState("processing");
+        }
+        // if a download, then make its button processing as well
+        if (("download" in opts) && ("outputext" in opts) &&
+            (ogEditor?.downloadButtons?.[opts.outputext])) {
+            ogEditor.downloadButton[opts.outputext].makeState("processing");
         }
         // check if we have a basename and dirname
         let basename = window.basename;
@@ -643,7 +662,7 @@ function powerUpEditor() {
                             clickfn: function() { }
                         },
                         "error" : {
-                            icon: icon",
+                            icon: icon,
                             tooltip: "download processing error",
                             clickfn: function() {
                                 ogEditor.download(this.outputext);
@@ -653,20 +672,6 @@ function powerUpEditor() {
                     b.outputext = outputext;
                     b.makeState("normal");
                     ogEditor.downloadButtons[outputext] = b;
-
-                    window.outputopts.push(outputext);
-                    outputSelectButtonOpts[outputext] = {
-                        icon: (window.outputextensions[outputext].icon ?? ''),
-                        tooltip: "change output routine",
-                        clickfn: function() {
-                            let st = this.mystate;
-                            let pos = window.outputopts.indexOf(st) + 1;
-                            if (pos == window.outputopts.length) {
-                                pos = 0;
-                            }
-                            this.makeState(window.outputopts[pos]);
-                        }
-                    }
                 }
             }
         }
