@@ -15,6 +15,17 @@ require_once('php/libauthentication.php');
 // read filename
 $filename = $_GET["file"] ?? false;
 
+// downloadmode is off by default; can be turned on with almost
+// anything
+$downloadmode = false;
+if (isset($_GET["download"])) {
+    $downloadparam = $_GET["download"];
+    if ($downloadparam != "off" && $downloadparam != "no" &&
+        $downloadparam != "false") {
+        $downloadmode = true;
+    }
+}
+
 // ensure file exists
 if (!$filename || !file_exists($filename)) {
     header('Location: ../../meinongian-page.html');
@@ -27,7 +38,14 @@ if (!has_authentication($filename)) {
     exit;
 }
 
+// defines the servelet_send command
+require_once 'open-guide-misc/libservelet.php';
 
+servelet_send(array(
+    "download" => $downloadmode,
+    "filename" => $filename,
+    "mimetype" => "text/html"
+));
 
 // output the file
 readfile($filename);
