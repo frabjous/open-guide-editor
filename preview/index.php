@@ -67,6 +67,7 @@ if (!file_exists($fullroot)) {
 }
 
 // go into folder of root document
+$whereiwas = getcwd();
 $rootdir = dirname($fullroot);
 chdir($rootdir);
 
@@ -91,7 +92,7 @@ if (isset($routine->outputfile)) {
 $outputbase = basename($outputfile);
 
 // ensure we can actually preview the kind of file in question
-if (!file_exists("preview/$outputbase/viewer.mjs")) {
+if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
     header("Location: ../meinongian-page.html");
     exit;
 }
@@ -135,6 +136,7 @@ if (!file_exists("preview/$outputbase/viewer.mjs")) {
         <script>
             //LICENSE: GNU GPL v3
                 window.ogeSettings = <?php echo json_encode($settings); ?>;
+                window.outputfile = '<?php echo $outputfile; ?>';
         </script>
 
         <style>
@@ -153,6 +155,7 @@ if (!file_exists("preview/$outputbase/viewer.mjs")) {
                 flex-direction: column;
                 align-items: stretch;
                 overflow-y: hidden;
+                padding: 0;
             }
             #toppanelcontainer {
                 z-index: 10;
@@ -170,6 +173,16 @@ if (!file_exists("preview/$outputbase/viewer.mjs")) {
             #viewerparent {
                 width: 100%;
                 height: 100%;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+            }
+            #viewerparent iframe {
+                border: none;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
             }
         </style>
 
@@ -182,7 +195,6 @@ if (!file_exists("preview/$outputbase/viewer.mjs")) {
             </div>
             <div id="viewercontainer">
                 <div id="viewerparent">
-                    <?php echo 'output file is ' . $outputfile; ?>
                 </div>
             </div>
         </div>
