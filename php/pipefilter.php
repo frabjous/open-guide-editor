@@ -3,10 +3,15 @@
 // Public License along with this program. If not, see
 // https://www.gnu.org/licenses/.
 
+/////////////////// pipefilter.php //////////////////////////////////////
+// responds to fetch request to filter part or all of a file through a //
+// unix command acting as a stdin/stdout pipe                          //
+/////////////////////////////////////////////////////////////////////////
+
 session_start();
 chdir('..');
-require 'open-guide-misc/send-as-json.php';
-require 'php/libauthentication.php';
+require_once 'open-guide-misc/send-as-json.php';
+require_once 'php/libauthentication.php';
 
 
 // only power users can do this
@@ -35,7 +40,7 @@ $topipe = $data->selectedtext;
 $cmd = $data->cmd;
 
 // load pipe command from misc
-require '../open-guide-misc/pipe.php';
+require_once '../open-guide-misc/pipe.php';
 
 // run pipe command
 $piperesult = pipe_to_command($cmd, $topipe);

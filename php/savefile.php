@@ -3,8 +3,17 @@
 // Public License along with this program. If not, see 
 // https://www.gnu.org/licenses/.
 
+//////////////////////// savefile.php  /////////////////////////////////////
+// responds to save request from editor and also initiates any processing //
+// request from the editor as well                                        //
+////////////////////////////////////////////////////////////////////////////
+
 session_start();
+
+// go to parent folder for consistency in library locations
 chdir('..');
+
+// load library
 require_once 'open-guide-misc/send-as-json.php';
 require_once 'php/libauthentication.php';
 
@@ -65,10 +74,12 @@ if (!isset($opts->routine)) {
 }
 
 // load library
-require 'php/libprocessing.php';
+require_once 'php/libprocessing.php';
 
+// initiate process part of return value
 $rv->processResult = new StdClass();
 
+// sanity check
 if (!isset($opts->outputext)) {
     $rv->processResult->error = true;
     $rv->processResult->errMsg = 'no output extension given';
@@ -134,14 +145,17 @@ if (!is_dir(dirname($opts->outputfile))) {
 // fill in variables in command to run
 $cmd = fill_processing_variables($opts);
 
+// run command, record what was run
 $rv->processResult = pipe_to_command($cmd);
 $rv->processResult->cmdrun = $cmd;
 
+// set whether or not there was an error depending on return value
 if ($rv->processResult->returnvalue == 0) {
     $rv->processResult->error = false;
 } else {
     $rv->processResult->error = true;
 }
 
+// send json response and exist
 send_as_json($rv);
 exit(0);

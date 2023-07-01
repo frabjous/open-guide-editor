@@ -1,4 +1,12 @@
 <?php
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+//////////////// readsettings.php //////////////////////////////////////
+// reads the editor settings from a file and defines functions for    //
+// making use of those settings                                       //
+////////////////////////////////////////////////////////////////////////
 
 // determine project name
 $projectname = 'open guide';
@@ -6,11 +14,13 @@ if (isset($_SESSION["open-guide-project-name"])) {
     $projectname = $_SESSION["open-guide-project-name"];
 }
 
+// initiate some variables
 $defaultsettingsfile = 'default-settings.json';
 $settings = new StdClass();
 $sitesettings = new StdClass();
 $settingsfile = 'settings.json';
 
+// get default and site-wide settings from files
 if (file_exists($defaultsettingsfile)) {
     $settings = json_decode(file_get_contents($defaultsettingsfile));
 }
@@ -19,6 +29,7 @@ if (file_exists($settingsfile)) {
     $sitesettings = json_decode(file_get_contents($settingsfile));
 }
 
+// get full path of root document
 function full_document_root($dirname, $rootdocument) {
     global $settings;
     // check if already an absolute path
@@ -38,6 +49,7 @@ function full_document_root($dirname, $rootdocument) {
     return realpath($gpsf_dir . '/' + $rootdocument);
 }
 
+// determine where the project-specific settings file, if any
 function get_project_settings_filename($dirname) {
     if (!has_authentication($dirname)) { return false; }
     if ($dirname == '/' || $dirname == '') { return false; }
@@ -46,6 +58,7 @@ function get_project_settings_filename($dirname) {
     return get_project_settings_filename(dirname($dirname));
 }
 
+// merge settings from different files, recursively
 function merge($obj, $rep_obj) {
     foreach($rep_obj as $key => $val) {
         if (!isset($obj->{$key})) {
@@ -61,6 +74,7 @@ function merge($obj, $rep_obj) {
     return $obj;
 }
 
+// get the project settings file, read it, and merge it
 function merge_projectsettings($project_dirname) {
     global $settings;
     $ps_filename = get_project_settings_filename($project_dirname);
@@ -70,4 +84,5 @@ function merge_projectsettings($project_dirname) {
     return $settings;
 }
 
+// merge the files already read
 $settings = merge($settings, $sitesettings);

@@ -2,8 +2,12 @@
 // LICENSE: GNU GPL v3 You should have received a copy of the GNU General
 // Public License along with this program. If not, see 
 // https://www.gnu.org/licenses/.
-//
-require 'open-guide-misc/pipe.php';
+
+////////////////// libprocessing.php //////////////////////////////////
+// defines functions common to different scripts that do processing  //
+///////////////////////////////////////////////////////////////////////
+
+require_once 'open-guide-misc/pipe.php';
 $swapvariables = array('outputfile', 'rootdocument', 'savedfile');
 
 function fill_processing_variables($opts) {
