@@ -34,7 +34,7 @@ window.onload = function() {
     window.panel = document.getElementById("toppanel");
     window.viewerparent = document.getElementById("viewerparent");
     window.htmliframe = newElem('iframe', window.viewerparent);
-    window.viewerrefresh();
+    window.htmliframe.src = getIframeSrc(false);
     window.panel.downloadButton = panelButton({
         "normal" : {
             icon: "download",
@@ -43,9 +43,10 @@ window.onload = function() {
         }
     });
     window.panel.downloadButton.makeState("normal");
+    window.sendmessage({ loaded: true });
 }
 
 window.viewerrefresh = function(opts) {
-    window.htmliframe.src = getIframeSrc(false);
+    window.htmliframe.contentWindow.location.reload();
     window.sendmessage({ refreshed: true });
 }

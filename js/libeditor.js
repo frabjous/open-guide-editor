@@ -117,7 +117,7 @@ function powerUpEditor() {
     // HANDLE MESSAGE FUNCTION
     //
     ogEditor.handlemessage =function(data) {
-        if (data?.refreshed) {
+        if (data?.refreshed || data?.loaded) {
             ogEditor.previewButton.makeState("active");
             window.viewedonce = true;
         }
