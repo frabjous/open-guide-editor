@@ -5,10 +5,10 @@
 
 #toppanelcontainer {
     background-color: var(--lightblue);
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.3rem;
-    padding-bottom: 0;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0rem;
     border-bottom: 0.5px solid var(--purple);
 }
 .panelbutton {
@@ -25,6 +25,8 @@
     cursor: pointer;
     user-select: none;
     box-shadow: 2px 2px 1px var(--gray4);
+    position: relative;
+    top: 0.15rem;
 }
 
 .panelbutton .material-symbols-outlined {

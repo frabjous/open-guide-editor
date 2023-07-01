@@ -93,12 +93,13 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
                 margin: 0;
                 padding: 0;
                 font-size: 16px;
+                background-color: white;
+                color: black;
             }
             #allcontainer {
                 height: 100vh;
                 max-height: 100vh;
                 width: 100vw;
-                /*position: absolute;*/
                 display: flex;
                 flex-direction: column;
                 align-items: stretch;
@@ -115,7 +116,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
                 width: 100%;
                 height: 100%;
                 max-height: 100%;
-                overflow-y: auto;
+                overflow: auto;
             }
             #viewerparent {
                 width: 100%;
@@ -132,10 +133,6 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             </div>
             <div id="viewercontainer">
                 <div id="viewerparent">
-
-I<br>realize<br>there<br>are<br>some<br>things<br>I<br>wrote<br>earlier<br>that<br>may<br>make<br>it<br>sound<br>as<br>if<br>I<br>blame<br>Carla<br>for<br>the<br>incident,<br>or<br>even<br>the<br>two<br>of<br>you<br>together.<br>I<br>think<br>that<br>is<br>just<br>because<br>I<br>am<br>trying<br>to<br>make<br>it<br>clear<br>that<br>there<br>are<br>different<br>ways<br>of<br>looking<br>at<br>what<br>happened,<br>and<br>I<br>am<br>a<br>bit<br>worried<br>that<br>you<br>might<br>be<br>interpreting<br>it<br>all<br>a<br>bit<br>too<br>simply.<br>However,<br>I<br>want<br>to<br>make<br>it<br>clear<br>that<br>I<br>don’t<br>blame<br>her<br>or<br>you<br>at<br>all,<br>any<br>more<br>than<br>I<br>should<br>blame<br>myself<br>or<br>Emily<br>herself<br>for<br>Emily’s<br>troubles.<br>I<br>doubt<br>casting<br>blame<br>is<br>ever<br>very<br>useful<br>in<br>life,<br>and<br>none<br>of<br>the<br>philosophical<br>literature<br>I’ve<br>read<br>on<br>moral<br>responsibility<br>and<br>its<br>relation<br>to<br>blame<br>(which<br>is<br>a<br>fair<br>amount),<br>even<br>that<br>which<br>attempts<br>to<br>justify<br>the<br>role<br>of<br>blameworthiness<br>in<br>our<br>moral<br>practices,<br>has<br>convinced<br>me<br>that<br>the<br>concept<br>of<br>“who’s<br>to<br>blame”<br>for<br>any<br>given<br>real-life<br>situation<br>even<br>makes<br>any<br>sense.<br>We<br>were<br>all<br>caused<br>to<br>be<br>who<br>we<br>are<br>and<br>act<br>the<br>way<br>we<br>do<br>by<br>laws<br>of<br>nature<br>and<br>psychology<br>outside<br>our<br>personal<br>control.<br>Whatever<br>the<br>right<br>philosophy<br>is<br>about<br>that<br>question,<br>however,<br>we’re<br>all<br>human,<br>and<br>being<br>grandparents<br>to<br>a<br>child<br>with<br>autism<br>is<br>not<br>much<br>easier<br>than<br>being<br>parents<br>of<br>a<br>child<br>with<br>autism<br>(or<br>so<br>I<br>imagine).<br>Elyssa’s<br>parents<br>still<br>struggle<br>even<br>though<br>they<br>have<br>much<br>more<br>experience<br>with<br>Emily<br>in<br>particular<br>than<br>you<br>and<br>Carla<br>do.<br>Things<br>such<br>as<br>what<br>happened<br>are<br>bound<br>to<br>happen<br>when<br>complex<br>families<br>come<br>together<br>and<br>talk<br>about<br>anything<br>that<br>matters<br>in<br>any<br>way.<br>We<br>all<br>need<br>to<br>work<br>on<br>trying<br>not<br>to<br>take<br>these<br>things<br>personally,<br>and<br>not<br>get<br>any<br>more<br>upset<br>about<br>them<br>than<br>we<br>need<br>to,<br>and<br>remember<br>above<br>all<br>that<br>we<br>all<br>love<br>each<br>other<br>and<br>want<br>the<br>best<br>for<br>each<br>other.<br>I<br>think<br>that<br>might<br>be<br>equally<br>true<br>for<br>everyone<br>who<br>was<br>at<br>that<br>table,<br>and<br>certainly<br>myself.
-
-Anyway,<br>I<br>don’t<br>think<br>the<br>incident<br>on<br>its<br>own<br>is<br>that<br>important.<br>I’m<br>really<br>just<br>using<br>it<br>as<br>an<br>example<br>of<br>how<br>so<br>many<br>things<br>can<br>come<br>together<br>at<br>once<br>to<br>make<br>life<br>complicated,<br>especially<br>when<br>you<br>have<br>a<br>child<br>with<br>autism.
 
 
                 </div>
