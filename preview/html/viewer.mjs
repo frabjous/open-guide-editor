@@ -6,13 +6,28 @@
 // creates and controls the viewer for html files                      //
 /////////////////////////////////////////////////////////////////////////
 
+import downloadFile from '../../open-guide-misc/download.mjs';
+    
 window.viewerparent = {};
 window.htmliframe = {}
 
-function getIframeSrc() {
-    return  'html/gethtml.php?file=' +
+function downloadOutput() {
+    // determine basename of outputfile
+    const outputsplit = window.outputfile.split('/');
+    const outputbase = outputsplit[ outputsplit.length - 1 ];
+    // url is sake
+    const url = getIframeSrc(true);
+    return downloadFile(url, outputbase);
+}
+
+// function get the right src url for the preview iframe
+function getIframeSrc(download = false) {
+    let h= 'html/gethtml.php?file=' +
         encodeURIComponent(window.outputfile) + '&ts=' +
         (new Date()).getTime().toString();
+    // mark as download if requested
+    if (download) { h += '&download=true' };
+    return h;
 }
 
 window.onload = function() {
@@ -24,15 +39,13 @@ window.onload = function() {
         "normal" : {
             icon: "download",
             tooltip: "download html file",
-            clickfn: function() {
-                downloadFile(window.outputfile);
-            }
+            clickfn: function() { downloadOutput(); }
         }
     });
     window.panel.downloadButton.makeState("normal");
 }
 
 window.viewerrefresh = function(opts) {
-    window.htmliframe.src = getIframeSrc();
+    window.htmliframe.src = getIframeSrc(false);
     window.sendmessage({ refreshed: true });
 }
