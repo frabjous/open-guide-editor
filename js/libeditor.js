@@ -148,6 +148,9 @@ function powerUpEditor() {
             grab.respObj.newfn
         );
     }
+    ogEditor.launchviewer(opts) {
+        window.pre
+    }
     //
     // OPEN FUNCTION
     //
@@ -254,14 +257,21 @@ function powerUpEditor() {
     //
     // PREVIEW ON/OFF FUNCTION
     //
-    ogEditor.preview = function(onoff) {
+    ogEditor.preview = function(onoff, opts = {}) {
         if (onoff) {
-            ogEditor.previewButton.makeState("active");
-            console.log("I shoudl preview!");
+            //ogEditor.previewButton.makeState("active");
+            // get output extension, if nothing, then stop
+            let outputext = ogEditor.outputSelectButton.mystate ?? '';
+            if (outputext == '') { ogEditor.preview(false); return; }
+            console.log('lanching viewer for', outputext);
+            opts.outputext = outputext;
+            ogEditor.launchviewer(opts);
+            window.viewedonce = true;
             return;
         }
         // turning off
-        ogEditor.previewButton.makeState("inactive");
+        //ogEditor.previewButton.makeState("inactive");
+        console.log('closing viewer');
         // TODO: Close viewer
     }
 

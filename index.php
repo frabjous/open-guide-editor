@@ -160,6 +160,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.autoprocessTimeOut = {};
             window.processedonce = {};
             window.viewedonce = false;
+            window.viewerwindow = {};
             window.onload = function() {
                 powerUpEditor();
                 // start autosave timer if applicable
