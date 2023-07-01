@@ -469,10 +469,22 @@ function powerUpEditor() {
                 }
             }
             if (opts?.download) {
+                // mark download button as finished
                 if (ogEditor?.downloadButtons?.[opts.outputext]) {
                     ogEditor.downloadButtons[opts.outputext].makeState('normal');
-                    console.log(opts, respObj);
                 }
+                // get filename from response
+                const filetodl = ((respObj?.processResult?.outputfile) ?? false);
+                if (!filetodl) { return; }
+                const pathparts = filetodl.split('/');
+                const basename = pathparts[ pathparts.length - 1];
+                // determine url
+                const url = 'php/downloadfile.php?filename=' +
+                    encodeURIComponent(filetodl);
+                // download the file
+                console.log("got herE");
+                window.downloadFile(url, basename);
+                console.log("got there");
             }
         }
     }
