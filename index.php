@@ -193,12 +193,21 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
                 }
             }
             window.onbeforeunload = function(e) {
+                // close viewer window when closing this window
+                if (window.viewerwindow !== false) {
+                    window.viewerwindow.close();
+                }
+                // prevent losing saved data
                 if (window.lastsavedat != window.numchanges) {
                     e.preventDefault();
                 }
             }
             window.onmessage = function(e) {
-                console.log(e);
+                // sanity checks
+                if (!e.data) { return false; }
+                if (!ogEditor) { return false; }
+                if (!ogEditor.handlemessage) { return false; }
+                return ogEditor.handlemessage(e.data);
             }
             window.setTitle = function(changed) {
                 let bn = (window.basename == '') ? '⟨untitled⟩' :

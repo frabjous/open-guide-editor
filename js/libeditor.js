@@ -30,7 +30,23 @@ function powerUpEditor() {
         }
         ogEditor.autoprocessButton.makeState("inactive");
     }
+    //
+    // CLOSE EDITOR FUNCTION
+    //
+    ogEditor.closeviewer = function(opts) {
+        // close the viewer window unless closing anyway
+        if ((!(opts?.closingonown)) && (window.viewerwindow !== false)) {
+            window.viewerwindow.close();
+        }
+        // set the viewerwindow back to false
+        window.viewerwindow == false;
+        // set the button to off
+        ogEditor.previewButton.makeState('inactive');
+    }
 
+    //
+    // GET SELECTION FUNCTION
+    //
     // get text, etc. from current selection
     ogEditor.getfirstselection = function() {
         // default values
@@ -97,11 +113,28 @@ function powerUpEditor() {
             grab.respObj.newfn
         );
     }
-    ogEditor.launchviewer =function(opts) {
+    //
+    // HANDLE MESSAGE FUNCTION
+    //
+    ogEditor.handlemessage =function(data) {
+        if (data?.refreshed) {
+            ogEditor.previewButton.makeState("active");
+            window.viewedonce = true;
+        }
+        return true;
+    }
+    //
+    // VIEWER LAUNCH FUNCTION
+    //
+    ogEditor.launchviewer =function(opts = {}) {
         // if we already had a viewing window, close it
         if (window.viewerwindow !== false) {
             ogEditor.closeviewer();
         }
+        // get output extension, if nothing, then stop
+        let outputext = ogEditor.outputSelectButton.mystate ?? '';
+        opts.outputext = outputext;
+        if (outputext == '') { return; }
         let url='preview/';
         url += '?accesskey=' + encodeURIComponent(window.accesskey);
         for (let opt in opts) {
@@ -115,8 +148,11 @@ function powerUpEditor() {
                 ((ogeSettings?.viewer?.width ?? 900).toString()) +
             ',height=' +
                 ((ogeSettings?.viewer?.height ?? 500).toString()),
-            
         );
+        // mark it as turned off if it closes
+        window.viewerwindow.onbeforeunload = function(e) {
+            this.opener.ogEditor.closeviewer({ closingonown: true });
+        }
     }
     //
     // OPEN FUNCTION
@@ -226,20 +262,9 @@ function powerUpEditor() {
     //
     ogEditor.preview = function(onoff, opts = {}) {
         if (onoff) {
-            //ogEditor.previewButton.makeState("active");
-            // get output extension, if nothing, then stop
-            let outputext = ogEditor.outputSelectButton.mystate ?? '';
-            if (outputext == '') { ogEditor.preview(false); return; }
-            console.log('lanching viewer for', outputext);
-            opts.outputext = outputext;
-            ogEditor.launchviewer(opts);
-            window.viewedonce = true;
-            return;
+            return ogEditor.launchviewer(opts);
         }
-        // turning off
-        //ogEditor.previewButton.makeState("inactive");
-        console.log('closing viewer');
-        // TODO: Close viewer
+        return ogEditor.closeviewer({});
     }
 
     // PROCESS FUNCTION
