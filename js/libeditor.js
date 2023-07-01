@@ -148,7 +148,7 @@ function powerUpEditor() {
             grab.respObj.newfn
         );
     }
-    ogEditor.launchviewer(opts) {
+    ogEditor.launchviewer =function(opts) {
         // if we already had a viewing window, close it
         if (window.viewerwindow !== false) {
             ogEditor.closeviewer();
