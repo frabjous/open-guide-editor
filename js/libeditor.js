@@ -320,7 +320,7 @@ function powerUpEditor() {
         // if a download, then make its button processing as well
         if (("download" in opts) && ("outputext" in opts) &&
             (ogEditor?.downloadButtons?.[opts.outputext])) {
-            ogEditor.downloadButton[opts.outputext].makeState("processing");
+            ogEditor.downloadButtons[opts.outputext].makeState("processing");
         }
         // check if we have a basename and dirname
         let basename = window.basename;
@@ -411,7 +411,7 @@ function powerUpEditor() {
             processingerror += (respObj?.processResult?.errMsg ??
                 'Unknown processing error');
             // report error using its stderr output
-            if (respObj?.proessingResult &&
+            if (respObj?.processingResult &&
                 ("stderr" in respObj?.processResult)) {
                 processingerror + stdErrorInclusion(
                     respObj?.processResult?.stderr
@@ -435,6 +435,12 @@ function powerUpEditor() {
         if (processingerror != '') {
             if (ogEditor.processButton) {
                 ogEditor.processButton.makeState('error');
+                // make download button error if download
+                if ((opts?.download) &&
+                    (ogEditor?.downloadButtons?.[opts.outputext])) {
+                    ogEditor.downloadButtons[opts.outputext]
+                        .makeState('error');
+                }
             }
             ogDialog.errdiag('Processing error: ' + processingerror);
             return false;
@@ -445,15 +451,9 @@ function powerUpEditor() {
             if (ogEditor.processButton) {
                 //return processing button to normal
                 ogEditor.processButton.makeState('normal');
-                let outputext = opts.outputext
+                let outputext = opts.outputext;
                 // keep track of what outputs should already exist
                 window.processedonce[outputext] = true;
-                // why process without viewing? If viewer has never been
-                // opened, open it now
-                if (opts?.download) {
-                    // TODO: download thingymajig
-                    return;
-                }
                 // if viewer has never been launched, and this has a
                 // viewable output extension, launch the viewer
                 if ((!window.viewedonce) &&
@@ -466,6 +466,12 @@ function powerUpEditor() {
                     (window.outputextensions[outputext].viewable) &&
                     (window.viewerwindow !== false)) {
                     ogEditor.sendmessage({ messagecmd: 'refresh' });
+                }
+            }
+            if (opts?.download) {
+                if (ogEditor?.downloadButtons?.[opts.outputext]) {
+                    ogEditor.downloadButtons[opts.outputext].makeState('normal');
+                    console.log(opts, respObj);
                 }
             }
         }
@@ -596,7 +602,7 @@ function powerUpEditor() {
                 clickfn: function() { ogEditor.pipedialog({}); }
             },
             "processing" : {
-                icon: "terminal",
+                icon: "sync",
                 tooltip: "processing",
                 clickfn: function() { }
             },
@@ -657,7 +663,7 @@ function powerUpEditor() {
                             }
                         },
                         "processing" : {
-                            icon: icon,
+                            icon: "sync",
                             tooltip: "processing download",
                             clickfn: function() { }
                         },

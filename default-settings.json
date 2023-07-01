@@ -13,10 +13,10 @@
                 "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
             },
             "pdf": {
-                "command": "pandoc -f markdown -t pdf %rootdocument% %outputfile%"
+                "command": "pandoc -f markdown -t pdf %rootdocument% -o %outputfile%"
             },
             "epub": {
-                "command": "pandoc -f markdown -t epub %rootdocument% %outputfile%"
+                "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%"
             }
         }
     },

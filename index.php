@@ -106,7 +106,10 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
         <script charset="utf-8" src="js/libeditor.js"></script>
         <script type="module" charset="utf-8" src='open-guide-misc/fetch.mjs'></script>
         <script type="module" charset="utf-8" src='open-guide-misc/dialog.mjs'></script>
-
+        <script type="module" charset="utf-8">
+            import downloadFile from './open-guide-misc/download.mjs';
+            window.downloadFile = downloadFile;
+        </script>
         <style>
             html, body {
                 margin: 0;

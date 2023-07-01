@@ -148,6 +148,7 @@ $cmd = fill_processing_variables($opts);
 // run command, record what was run
 $rv->processResult = pipe_to_command($cmd);
 $rv->processResult->cmdrun = $cmd;
+$rv->processResult->outputfile = realpath($opts->outputfile);
 
 // set whether or not there was an error depending on return value
 if ($rv->processResult->returnvalue == 0) {
