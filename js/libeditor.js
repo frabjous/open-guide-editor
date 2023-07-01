@@ -359,11 +359,11 @@ function powerUpEditor() {
             return false;
         }
 
-        if (opts.routine) {
-            window.processedonce = true;
+        if ((opts?.routine) && (opts?.outputext)) {
             if (ogEditor.processButton) {
                 ogEditor.processButton.makeState('normal');
             }
+            window.processedonce[outputext] = true;
             // TODO: postprocessing
         }
     }

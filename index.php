@@ -131,10 +131,11 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             }
             .cm-scroller {
                 font-family:
-                'JetBrains Mono',
-                'TeX Gyre DejaVu Math',
-                'DejaVu Sans Mono',
-                monospace !important;
+                    'JetBrains Mono',
+                    'JuliaMono',
+                    'TeX Gyre DejaVu Math',
+                    'DejaVu Sans Mono',
+                    monospace !important;
                 overflow: auto;
             }
         </style>
@@ -157,7 +158,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.reloadonsave = (window.basename == '');
             window.autoprocessing = false;
             window.autoprocessTimeOut = {};
-            window.processedonce = false;
+            window.processedonce = {};
             window.viewedonce = false;
             window.onload = function() {
                 powerUpEditor();
