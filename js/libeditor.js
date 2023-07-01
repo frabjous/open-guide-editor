@@ -458,8 +458,9 @@ function powerUpEditor() {
         // sanity checks
         if (!window.viewerwindow) { return false; }
         if (!window.viewerwindow?.postMessage) { return false; }
-        // post a message
-        console.log('sending message');
+        // attach accesskey
+        d.accesskey = window.accesskey;
+        // post the message
         return window.viewerwindow.postMessage(d, '*');
     }
     //

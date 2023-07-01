@@ -16,9 +16,20 @@ function getIframeSrc() {
 }
 
 window.onload = function() {
+    window.panel = document.getElementById("toppanel");
     window.viewerparent = document.getElementById("viewerparent");
     window.htmliframe = newElem('iframe', window.viewerparent);
     window.viewerrefresh();
+    window.panel.downloadButton = panelButton({
+        "normal" : {
+            icon: "download",
+            tooltip: "download html file",
+            clickfn: function() {
+                downloadFile(window.outputfile);
+            }
+        }
+    });
+    window.panel.downloadButton.makeState("normal");
 }
 
 window.viewerrefresh = function(opts) {
