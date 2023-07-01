@@ -86,7 +86,10 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
         <link rel="stylesheet" type="text/css" href="style/colors.css">
         <link rel="stylesheet" type="text/css" href="style/panel.css">
         <link rel="stylesheet" type="text/css" href="open-guide-misc/dialog.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined">
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> 
 
         <!-- javascript file -->
         <script type="text/javascript" charset="utf-8" src="js/filetypeicons.js"></script>
@@ -127,6 +130,11 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
                 width: 100%;
             }
             .cm-scroller {
+                font-family:
+                'JetBrains Mono',
+                'TeX Gyre DejaVu Math',
+                'DejaVu Sans Mono',
+                monospace !important;
                 overflow: auto;
             }
         </style>
