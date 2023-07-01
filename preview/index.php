@@ -96,25 +96,28 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             }
             #allcontainer {
                 height: 100vh;
+                max-height: 100vh;
                 width: 100vw;
-                position: absolute;
+                /*position: absolute;*/
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                overflow-y: hidden;
             }
             #toppanelcontainer {
-                position: fixed;
                 z-index: 10;
-                top: 0;
                 width: 100%;
-                height: 2.8rem;
+                min-height: 2.8rem;
+                flex-shrink: 0;
             }
-            #editorcontainer {
-                position: fixed;
-                top: calc(2.4rem + 2px);
-                min-height: calc(100vh - 2.8rem);
-                max-height: calc(100vh - 2.8rem);
-                height: calc(100vh - 2.8rem);
+            #viewercontainer {
+                flex-grow: 1;
                 width: 100%;
+                height: 100%;
+                max-height: 100%;
+                overflow-y: auto;
             }
-            #editorparent {
+            #viewerparent {
                 width: 100%;
                 height: 100%;
             }

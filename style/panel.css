@@ -6,6 +6,9 @@
 #toppanelcontainer {
     background-color: var(--lightblue);
     padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0;
     border-bottom: 0.5px solid var(--purple);
 }
 .panelbutton {
@@ -18,7 +21,7 @@
     border-radius: 0.5rem;
     border: 0.15rem solid var(--gray3);
     margin-right: 0.5rem;
-    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
     cursor: pointer;
     user-select: none;
     box-shadow: 2px 2px 1px var(--gray4);
