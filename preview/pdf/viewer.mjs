@@ -9,7 +9,9 @@
 import downloadFile from '../../open-guide-misc/download.mjs';
 
 window.viewerparent = {};
-window.pdfimageholder = {}
+window.pdfimageholder = {};
+window.pdfpage = 1;
+window.pdfzoom = 100;
 
 // download the pdf
 function downloadOutput() {
@@ -22,21 +24,21 @@ function downloadOutput() {
     return downloadFile(url, outputbase);
 }
 
-// function get the right src url for the preview imageholder
-function getimageholderSrc(download = false) {
-    let h= 'pdf/getpdf.php?file=' +
-        encodeURIComponent(window.outputfile) + '&ts=' +
-        (new Date()).getTime().toString();
-    // mark as download if requested
-    if (download) { h += '&download=true' };
-    return h;
+function getPDFPageURL() {
+    return 'pdf/getpdfpage.php?filename=' +
+        encodeURIComponent(window.outputfile) +
+        '&page=' + (window.pdfpage).toString() +
+        '&ts=' + (new Date()).getTime().toString();
 }
 
 window.onload = function() {
     window.panel = document.getElementById("toppanel");
     window.viewerparent = document.getElementById("viewerparent");
-    window.pdfimageholder = newElem('imageholder', window.viewerparent);
-    window.pdfimageholder.src = getimageholderSrc(false);
+    window.pdfimageholder = newElem('div', window.viewerparent);
+    window.pdfimageholder.id = 'pdfimageholder';
+    window.pdfpage = newElem('img', window.pdfimageholder);
+    window.pdfpage.id = 'pdfpage';
+    window.pdfpage.src = getPDFPageURL();
     window.panel.downloadButton = panelButton({
         "normal" : {
             icon: "download",
