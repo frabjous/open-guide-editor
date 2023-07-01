@@ -2,6 +2,11 @@
 // Public License along with this program. If not, see
 // https://www.gnu.org/licenses/.
 
+/////////////////////// editor.js //////////////////////////////////////
+// The script that creates the core codemirror instance and interacts //
+// with its extensions, keymaps, settings, etc.                       //
+////////////////////////////////////////////////////////////////////////
+
 //
 // Modules
 //
