@@ -197,6 +197,9 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
                     e.preventDefault();
                 }
             }
+            window.onmessage = function(e) {
+                console.log(e);
+            }
             window.setTitle = function(changed) {
                 let bn = (window.basename == '') ? '⟨untitled⟩' :
                     window.basename;

@@ -18,10 +18,10 @@ function getIframeSrc() {
 window.onload = function() {
     window.viewerparent = document.getElementById("viewerparent");
     window.htmliframe = newElem('iframe', window.viewerparent);
-    window.htmliframe.src = getIframeSrc();
-       
+    window.viewerrefresh();
 }
 
-window.onmessage() {
-
+window.viewerrefresh = function(opts) {
+    window.htmliframe.src = getIframeSrc();
+    window.sendmessage({ refreshed: true });
 }

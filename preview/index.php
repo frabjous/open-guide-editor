@@ -136,8 +136,34 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
 
         <script>
             //LICENSE: GNU GPL v3
-                window.ogeSettings = <?php echo json_encode($settings); ?>;
-                window.outputfile = '<?php echo $outputfull; ?>';
+            window.accesskey = '<?php echo $accesskey; ?>';
+            window.ogeSettings = <?php echo json_encode($settings); ?>;
+            window.outputfile = '<?php echo $outputfull; ?>';
+            window.onmessage = function(e) {
+                // sanity and security checks
+                if (!e.data) { return false; }
+                if (!e.data.accesskey) { return false; }
+                if (e.data.accesskey != window.accesskey) { return false; }
+                // refresh if asked
+                if (e.data.messagecmd == 'refresh' && window.viewerrefresh) {
+                    return window.viewerrefresh((e.data?.opts ?? {}));
+                }
+                // handle other messages if need be
+                if (window.msghandler) {
+                    return window.msghandler(e.data);
+                }
+                // if fell through to here, it was a weird message
+                return false;
+            }
+            window.sendmessage = function(d) {
+                // ensure window has an opener
+                if (window?.opener?.postMessage) {
+                    // send message
+                    return window.opener.postMessage(d, "*");
+                }
+                // if no opener, return false
+                return false;
+            }
         </script>
 
         <style>
