@@ -139,6 +139,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
             window.accesskey = '<?php echo $accesskey; ?>';
             window.ogeSettings = <?php echo json_encode($settings); ?>;
             window.outputfile = '<?php echo $outputfull; ?>';
+            window.postprocessdata = '<?php echo ($_GET["postprocessdata"] ?? ''); ?>';
             window.onmessage = function(e) {
                 // sanity and security checks
                 if (!e.data) { return false; }
