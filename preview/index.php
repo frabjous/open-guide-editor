@@ -90,6 +90,7 @@ if (isset($routine->outputfile)) {
 
 // used in title, etc.
 $outputbase = basename($outputfile);
+$outputfull = realpath($outputfile);
 
 // ensure we can actually preview the kind of file in question
 if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
@@ -130,13 +131,13 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
         <!-- <script type="text/javascript" charset="utf-8" src="/kcklib/kckdialog.js"></script> -->
 
         <script charset="utf-8" src="../js/panel.js"></script>
-        <script type="module" charset="utf-8" src="open-guide-misc/fetch.mjs"></script>
+        <script type="module" charset="utf-8" src="../open-guide-misc/fetch.mjs"></script>
         <script type="module" charset="utf-8" src="<?php echo $outputext; ?>/viewer.mjs"></script>
 
         <script>
             //LICENSE: GNU GPL v3
                 window.ogeSettings = <?php echo json_encode($settings); ?>;
-                window.outputfile = '<?php echo $outputfile; ?>';
+                window.outputfile = '<?php echo $outputfull; ?>';
         </script>
 
         <style>
