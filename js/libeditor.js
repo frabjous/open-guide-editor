@@ -63,36 +63,41 @@ function powerUpEditor() {
     //
     // Turn autoprocessing on or off
     ogEditor.autoprocess = function(onoff) {
+        // set window state to right thing
         window.autoprocessing = onoff;
+        // cancel any previous autoprocess timer
         if (typeof window.autoprocessTimeOut == 'number') {
             clearTimeout(autoprocessTimeOut);
         }
+        // if turning it on, start a process right away
         if (onoff) {
-            window.autoprocessing = true;
             ogEditor.autoprocessButton.makeState("active");
             ogEditor.triggerAutoprocess();
             return;
         }
-        // turn it off
+        // turn it off; make TimeOut not even a thing
         if (typeof window.autoprocessTimeOut == 'number') {
-            clearTimeout(window.autoprocessTimeOut);
             window.autoprocessTimeOut = {};
         }
-        window.autoprocessing = false;
         ogEditor.autoprocessButton.makeState("inactive");
     }
 
     // get text, etc. from current selection
     ogEditor.getfirstselection = function() {
+        // default values
         let selectedtext = '';
         let selectedfrom = 0;
         let selectedto = 0;
+        // get all current selections
         let rr = ogEditor.state.selection.ranges;
         // look for first selection with distinct anchors/heads
         for (let r of rr) {
+            // pay attention to those actually containing text, i.e.,
+            // a different to and from
             if (r.to != r.from) {
                 selectedfrom = r.from;
                 selectedto = r.to;
+                // get text in the selected range
                 selectedtext = ogEditor.state.doc
                     .slice(r.from, r.to).toString();
                 break;
@@ -105,9 +110,10 @@ function powerUpEditor() {
         }
     }
     //
-    // get contents of file from server
-    // 
+    // get contents of file from server; currently unused?
+    //
     ogEditor.grabcontents = async function(dir, fn) {
+        // do a json fetch of the file
         let grab = await postData('php/getfilecontents.php',
             { dirname: dir, basename: fn }
         );
@@ -119,11 +125,13 @@ function powerUpEditor() {
                 (grab?.respObj.errMsg ?? ''));
             return;
         }
+        // check we actually got what we asked for from server
         if (!("filecontents" in grab.respObj)) {
             ogEditor.openButton.makeState("error");
             ogDialog.errdiag("No file contents sent.");
             return;
         }
+        // check it told us what we're now viewing
         if ((!("newdir" in grab.respObj)) ||
             (!("newfn" in grab.respObj))) {
             ogEditor.openButton.makeState("error");
@@ -144,9 +152,12 @@ function powerUpEditor() {
     // OPEN FUNCTION
     //
     ogEditor.openfile = function(opts = {}) {
+        // make button indicate opening
         ogEditor.openButton.makeState("opening");
+        // check if there are unsaved changes
         if ((window.numchanges > window.lastsavedat) &&
-            ((!("bypass" in opts)) || (!opts.bypass))) {
+            ((!("bypass" in opts)) || (!opts.bypass)) &&
+            (window.reloadonsave)) {
             ogDialog.yesno('You have unsaved changes. ' +
                 'Open a new file anyway?',
             function() {
@@ -157,12 +168,15 @@ function powerUpEditor() {
             });
             return;
         }
+        // choose the file to open
         window.ogDialog.filechoose(
             function(dir, fn) {
+                // get back this silly stuff when cancelled
                 if (dir == '---' && fn == '---') {
                     ogEditor.openButton.makeState("normal");
                     return;
                 }
+                // redirect to new file
                 let url = 'php/redirect.php?dirname=' +
                     encodeURIComponent(dir) + '&basename=' +
                     encodeURIComponent(fn);
@@ -364,7 +378,11 @@ function powerUpEditor() {
                 ogEditor.processButton.makeState('normal');
             }
             window.processedonce[outputext] = true;
-            // TODO: postprocessing
+            // why process without viewing? If viewer has not been
+            // opened, open it now
+            if (!window.viewedonce) {
+                ogEditor.preview(true);
+            }
         }
     }
 
