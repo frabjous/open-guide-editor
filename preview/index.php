@@ -51,7 +51,41 @@ if (isset($settings->rootdocument)) {
     $rootdocument = $settings->rootdocument;
 }
 $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
+$fullroot = full_document_root($dirname, $rootdocument);
 
+// determine output file from extension given; default to html
+$outputext = $_GET["outputext"] ?? 'html';
+
+// go to directory of root folder
+// ensure that it exists
+if (!file_exists($fullroot)) {
+    header("HTTP/1.1 404 Not Found");
+    exit;
+}
+
+// go into folder of root document
+$rootdir = dirname($fullroot);
+chdir($rootdir);
+
+// since we are in its folder, let's use its basename
+$rootbase = basename($fullroot);
+
+$routine = new StdClass();
+if (isset($settings->routines->{$rootextension}->{$outputext})) {
+    $routine = $settings->routines->{$rootextension}->{$outputext};
+}
+
+// determine the outputfile
+$outputfile = mb_ereg_replace($rootextension . '$', $outputext,
+       $fullbase));
+
+// allow overriding the output file in the settings
+if (isset($routine->outputfile)) {
+    $outputfile = $opts->routine->outputfile;
+}
+
+// used in title, etc.
+$outputbase = basename($outputfile);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -74,7 +108,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
 
         <!-- web icon -->
         <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-        <title>preview | </title>
+        <title><?php echo $outputbase; ?> | <?php echo $projectname; ?> preview</title>
 
         <!-- css files -->
         <link rel="stylesheet" type="text/css" href="../style/colors.css">
