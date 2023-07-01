@@ -144,6 +144,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
         <script>
             window.filecontents = <?php echo json_encode($file_contents); ?>;
             window.poweruser = <?php echo json_encode($poweruser); ?>;
+            window.accesskey = '<?php echo $accesskey; ?>';
             window.dirname = '<?php echo $dirname; ?>';
             window.basename = '<?php echo $basename; ?>';
             window.ogeSettings = <?php echo json_encode($settings); ?>;
@@ -160,7 +161,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.autoprocessTimeOut = {};
             window.processedonce = {};
             window.viewedonce = false;
-            window.viewerwindow = {};
+            window.viewerwindow = false;
             window.onload = function() {
                 powerUpEditor();
                 // start autosave timer if applicable

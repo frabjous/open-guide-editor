@@ -16,5 +16,9 @@
                 "command": "pandoc -f markdown -t pdf %rootdocument% %outputfile%"
             }
         }
+    },
+    "viewer": {
+        "height": 500,
+        "width": 900
     }
 }

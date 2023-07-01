@@ -149,7 +149,25 @@ function powerUpEditor() {
         );
     }
     ogEditor.launchviewer(opts) {
-        window.pre
+        // if we already had a viewing window, close it
+        if (window.viewerwindow !== false) {
+            ogEditor.closeviewer();
+        }
+        let url='preview/';
+        url += '?accesskey=' + encodeURIComponent(window.accesskey);
+        for (let opt in opts) {
+            url += '&' + opt + '=' + encodeURIComponent(opts[opt]);
+        }
+        // open the viewerwindow
+        window.viewerwindow = window.open(
+            url,
+            'preview',
+            'popup,width=' +
+                ((ogeSettings?.viewer?.width ?? 900).toString()) +
+            ',height=' +
+                ((ogeSettings?.viewer?.height ?? 500).toString()),
+            
+        );
     }
     //
     // OPEN FUNCTION
