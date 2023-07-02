@@ -23,6 +23,11 @@
     },
     "viewer": {
         "height": 500,
-        "width": 900
+        "width": 900,
+        "pdf": {
+            "convertcommand": "mutool draw -F svg -o - %outputfile% %page%",
+            "convertextension": "svg",
+            "convertmimetype": "image/svg+xml"
+        }
     }
 }

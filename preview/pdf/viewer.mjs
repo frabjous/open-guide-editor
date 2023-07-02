@@ -30,6 +30,8 @@ function getPDFPageURL() {
     return 'pdf/getpdfpage.php?filename=' +
         encodeURIComponent(window.outputfile) +
         '&page=' + (window.pdfpage).toString() +
+        '&rootfile=' + encodeURIComponent(window.rootfile) +
+        '&editedfile=' + encodeURIComponent(window.filename) +
         '&ts=' + (new Date()).getTime().toString();
 }
 

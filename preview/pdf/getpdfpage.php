@@ -9,22 +9,18 @@
 
 session_start();
 
+// change directory to be consistent in requiring
 chdir('../..');
 require_once('php/libauthentication.php');
 
 // read filename
 $filename = $_GET["file"] ?? false;
 
-// downloadmode is off by default; can be turned on with almost
-// anything
-$downloadmode = false;
-if (isset($_GET["download"])) {
-    $downloadparam = $_GET["download"];
-    if ($downloadparam != "off" && $downloadparam != "no" &&
-        $downloadparam != "false") {
-        $downloadmode = true;
-    }
-}
+// read page; default to 1
+$page = $_GET["page"] ?? 1;
+
+// read timestamp or make out
+$ts = $_GET["ts"] ?? (time().toString());
 
 // ensure file exists
 if (!$filename || !file_exists($filename)) {
@@ -38,13 +34,17 @@ if (!has_authentication($filename)) {
     exit;
 }
 
+// get conversion commands from settings
+
+// defines the command for filling in variables in commands
+require_once 'php/libprocessing.php';
 // defines the servelet_send command
 require_once 'open-guide-misc/libservelet.php';
 
 servelet_send(array(
-    "download" => $downloadmode,
-    "filename" => $filename,
-    "mimetype" => "text/html"
+    "command" => ,
+    "filename" => ,
+    "mimetype" => ""
 ));
 
 // output the file
