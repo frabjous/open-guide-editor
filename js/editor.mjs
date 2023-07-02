@@ -24,12 +24,13 @@ import {
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
 import {indentUnit} from '@codemirror/language';
-import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
-import {texSyntax} from "lang-tex";
-
+// languages
+import {markdown} from '@codemirror/lang-markdown';
+import {html} from '@codemirror/lang-html';
+import {css} from '@codemirror/lang-css';
 //
 // Keymap and new commands for keymap
 //
@@ -97,10 +98,11 @@ const additionalKeymap = [
 const langExtensions = [];
 if (window.thisextension == 'md') {
     langExtensions.push(markdown());
-} else if (window.thisextension == 'tex') {
-    langExtensions.push(texSyntax());
+} if (window.thisextension == 'css') {
+    langExtensions.push(css());
+} if ((window.thisextension == 'html') || (window.thisextension == 'html')) {
+    langExtensions.push(html());
 }
-
 
 //
 // Editor
@@ -131,6 +133,12 @@ let extensions = [
     langExtensions
 ];
 
+// create the editor
+let editor = new EditorView({
+    doc: window.filecontents,
+    extensions: extensions,
+    parent: document.getElementById("editorparent")
+});
 
 
 // may need to fix this so it doesn't necessarily use original
