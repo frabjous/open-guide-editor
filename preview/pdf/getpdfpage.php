@@ -16,7 +16,7 @@ require_once('php/libauthentication.php');
 $opts = new StdClass();
 
 // read filenames
-$opts->outputfile = $_GET["file"] ?? false;
+$opts->outputfile = $_GET["filename"] ?? false;
 $filename = $opts->outputfile;
 // probably not needed for anything, so no insistence
 $opts->rootdocument = $_GET["rootfile"] ?? 'xxxx';
@@ -40,10 +40,9 @@ if (!has_authentication($filename)) {
     exit;
 }
 
-
 // get conversion commands from settings
 if ($opts->savedfile != 'yyyy') {
-    $settings = merge_projectsettings(dirname());
+    $settings = merge_projectsettings(dirname($opts->savedfile));
 }
 $opts->routine = new StdClass();
 $opts->routine->command = '';
@@ -66,10 +65,14 @@ require_once 'php/libprocessing.php';
 // defines the servelet_send command
 require_once 'open-guide-misc/libservelet.php';
 
+error_log("here");
+
 // fill in the variables
 $cmd = fill_processing_variables($opts, false);
 
-$tsname = 'pdfpage-' . $opts->page . '-' . $ts . '.' +
+error_log("cmd is $cmd");
+
+$tsname = 'pdfpage-' . $opts->page . '-' . $ts . '.' .
     $convertextension;
 
 servelet_send(array(
@@ -78,6 +81,4 @@ servelet_send(array(
     "mimetype" => $mimetype
 ));
 
-// output the file
-readfile($filename);
 exit(0);
