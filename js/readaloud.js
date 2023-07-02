@@ -53,13 +53,16 @@ function makeReadAloudButton() {
             let r = ogEditor.state.selection.ranges[0];
             texttoread = ogEditor.state.doc.lineAt(r.from).text;
             // don't continue afterwards if this is the last line
-            console.log(r.from, ogEditor.state.doc.lines);
-            if (r.from == ogEditor.state.doc.lines) {
+            if (ogEditor.state.doc.lineAt(r.from).number
+                    == ogEditor.state.doc.lines) {
                 ogEditor.continuenextline = false;
             }
         }
-        // don't play blank lines
-        if (!(/[A-Za-z]/.test(texttoread))) { ogEditor.playNextLine(); return; }
+        // Only play lines with letters in them
+        if (!(/[A-Za-z]/.test(texttoread))) {
+            ogEditor.playNextLine();
+            return;
+        }
         // create the audio element if need be
         if (!ogEditor.readaudio) {
             ogEditor.readaudio = newElem('audio',document.body);
