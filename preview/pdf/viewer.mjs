@@ -72,6 +72,7 @@ function setPDFPage(n, forced = false) {
     } else {
         window.panel.nextButton.makeState("normal");
     }
+    window.slider.setValue();
 }
 
 function zoomChange(amt) {
@@ -163,7 +164,24 @@ window.onload = function() {
     });
     window.panel.downloadButton.makeState("normal");
 
-
+    let rightbuttons = document.getElementById("toppanelrightbuttons");
+    let sliderlabel = newElem("span", rightbuttons, ['indicator'], "PAGE: ");
+    window.currpageind = newElem("span", rightbuttons, ['indicator'],
+        window.pdfpage.toString());
+    let slash = newElem("span", rightbuttons, ['indicator'], " / ");
+    window.totalpageind = newElem("span", rightbuttons, ['indicator'],
+        window.numpdfpages.toString());
+    window.slider = newElem("input", rightbuttons, ['slider']);
+    window.slider.type = "range";
+    window.slider.min = 1;
+    window.slider.max = window.numpdfpages;
+    window.slider.setValue = function () {
+        window.slider.value = window.pdfpage;
+        window.slider.max = window.numpdfpages;
+        window.totalpageind.innerHTML = window.numpdfpages.toString();
+        window.currpageind.innerHTML = window.pdfpage.toString();
+    }
+    window.slider.setValue();
     // open first page of PDF
     setPDFPage(window.pdfpage, true);
     window.sendmessage({ loaded: true });

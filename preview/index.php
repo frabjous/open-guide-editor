@@ -174,6 +174,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
                 margin: 0;
                 padding: 0;
                 font-size: 16px;
+                font-family: 'Arimo', 'TeX Gyre Heros', 'Helvetica', 'Arial', sans-serif;
                 background-color: white;
                 color: black;
             }
