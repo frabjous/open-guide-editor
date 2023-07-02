@@ -23,12 +23,11 @@ import {
     insertBlankLine,
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
-import {indentUnit} from '@codemirror/language';
+import {syntaxHighlighting,indentUnit} from '@codemirror/language';
 import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
-import { oneDarkTheme } from '@codemirror/theme-one-dark';
 //
 // Keymap and new commands for keymap
 //
@@ -78,10 +77,6 @@ const toggleWrap = function(view) {
     view.wrapoff();
 }
 
-oneDark["&.cm-focused .cm-selectionBackground, ::selection"] = {
-      backgroundColor: "#074",
-    };
-
 const additionalKeymap = [
     { key: "Ctrl-d", run: copyLineDown, preventDefault: true },
     { key: "Ctrl-x", run: smartDeleteLine },
@@ -111,9 +106,6 @@ let extensions = [
                     editor.saveButton.makeState('changed');
                 }
             }
-            if (document.title) {
-                window.setTitle(true);
-            }
             if (window.autoprocessing && ogEditor.triggerAutoprocess) {
                 ogEditor.triggerAutoprocess();
             }
@@ -123,7 +115,6 @@ let extensions = [
     keymap.of([indentWithTab]),
     EditorView.lineWrapping,
     markdown(),
-    oneDarkTheme
 ];
 
 let editor = new EditorView({
