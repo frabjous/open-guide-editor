@@ -63,7 +63,6 @@ if (!is_dir(dirname($filename))) {
 }
 // actually save the file
 $putresult = file_put_contents($filename, $buffer);
-error_log(strval($putresult));
 if ($putresult === false) {
     rage_quit(new StdClass(), 'saving of file failed.');
 }

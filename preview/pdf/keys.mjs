@@ -9,11 +9,6 @@
 // e.ctrlKey, metaKey, shiftKey, capsLock
 
 document.body.addEventListener('keydown', function(e) {
-    console.log(e.key,
-        e.ctrlKey,
-        e.metaKey,
-        e.shiftKey,
-        e.getModifierState('CapsLock'));
     //pageup, pagedown changes pages
     if (e.key == 'PageDown') {
         e.preventDefault();
@@ -39,7 +34,6 @@ document.body.addEventListener('keydown', function(e) {
         return;
     }
     if (e.key == 'ArrowRight') {
-        console.log("got here");
         e.preventDefault();
         window.viewerparent.scrollLeft =
             (window.viewerparent.scrollLeft + 50);

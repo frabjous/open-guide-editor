@@ -136,7 +136,7 @@ chdir($dirsave);
         <script charset="utf-8" src="../js/panel.js"></script>
         <script type="module" charset="utf-8" src="../open-guide-misc/fetch.mjs"></script>
         <script type="module" charset="utf-8" src="<?php echo $outputext; ?>/viewer.mjs"></script>
-<?php $keyfile = $outputext . '/keys.mjs'; error_log($keyfile);
+<?php $keyfile = $outputext . '/keys.mjs';
     if (file_exists('preview/' . $keyfile)) { ?>
         <script type="module" charset="utf-8" src="<?php echo $keyfile; ?>"></script>
 <?php } ?>
