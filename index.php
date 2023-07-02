@@ -70,6 +70,14 @@ if (isset($settings->rootdocument)) {
 }
 $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
 
+// check if readloud should be done
+$thisextension = pathinfo($basename, PATHINFO_EXTENSION);
+$readaloud = false;
+if (isset($settings->readaloud->{$thisextension})) {
+    $readaloud = true;
+}
+
+
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -104,6 +112,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
         <script charset="utf-8" src="js/filetypeicons.js"></script>
         <script charset="utf-8" src="js/panel.js"></script>
         <script charset="utf-8" src="js/libeditor.js"></script>
+        <?php if ($readaloud) { ?><script charset="utf-8" src="js/readaloud.js"></script><?php } ?>
         <script type="module" charset="utf-8" src='open-guide-misc/fetch.mjs'></script>
         <script type="module" charset="utf-8" src='open-guide-misc/dialog.mjs'></script>
         <script type="module" charset="utf-8">
@@ -165,6 +174,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.dirname = '<?php echo $dirname; ?>';
             window.basename = '<?php echo $basename; ?>';
             window.ogeSettings = <?php echo json_encode($settings); ?>;
+            window.thisextension = '<?php echo $thisextension; ?>';
             window.rootextension = '<?php echo $rootextension; ?>';
             window.rootdocument = window.dirname + '/' + window.basename;
             window.forcelaunch = false;

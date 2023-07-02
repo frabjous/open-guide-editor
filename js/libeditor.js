@@ -788,6 +788,7 @@ function powerUpEditor() {
         ogEditor.previewButton.makeState("inactive");
     }
     // TODO: speak aloud button
+    if (window.readaloud) { makeReadAloudButton(); }
 }
 
 function stdErrorInclusion(stderr) {
