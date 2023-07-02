@@ -15,7 +15,6 @@ import {
     cursorLineBoundaryBackward,
     copyLineDown,
     cursorCharLeft,
-    cursorLineDown,
     cursorLineUp,
     cursorMatchingBracket,
     deleteLine,
@@ -24,14 +23,11 @@ import {
     insertBlankLine,
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
-import {syntaxHighlighting, indentUnit} from '@codemirror/language';
+import {indentUnit} from '@codemirror/language';
+import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
-
-//languages
-import {markdown} from '@codemirror/lang-markdown';
-import {texSyntax} from "lang-tex/lib/tex.js";
 
 //
 // Keymap and new commands for keymap
@@ -51,8 +47,6 @@ const insertBlankLineUp = function(view) {
     cursorCharLeft(view);
 }
 
-// deletes entire line if nothing selected, otherwise cuts what is
-// selected
 const smartDeleteLine = function(view) {
     if (!view.getfirstselection) { return false; }
     let sel = view.getfirstselection();
@@ -98,16 +92,8 @@ const additionalKeymap = [
     { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
-// Determine langauge
-const langExtensions = [];
-if (window.thisextension == 'md') {
-    langExtensions.push(markdown());
-} else if (window.thisextension == 'tex') {
-    langExtensions.push(texSyntax())
-}
-
 //
-// Editor extension list
+// Editor
 //
 let extensions = [
     keymap.of(additionalKeymap),
@@ -121,6 +107,9 @@ let extensions = [
                     editor.saveButton.makeState('changed');
                 }
             }
+            if (document.title) {
+                window.setTitle(true);
+            }
             if (window.autoprocessing && ogEditor.triggerAutoprocess) {
                 ogEditor.triggerAutoprocess();
             }
@@ -129,18 +118,17 @@ let extensions = [
     indentUnit.of('    '),
     keymap.of([indentWithTab]),
     EditorView.lineWrapping,
-    langExtensions
+    markdown()
 ];
 
-// create the editor
 let editor = new EditorView({
     doc: window.filecontents,
     extensions: extensions,
     parent: document.getElementById("editorparent")
 });
 
-//attach certain functions to the editor so they can be called in other
-//scripts
+// may need to fix this so it doesn't necessarily use original
+// extensions
 editor.wrapoff = function() {
     let newextensions = [];
     for (let ext of extensions) {
@@ -156,6 +144,7 @@ editor.wrapoff = function() {
     }
 }
 
+// attach certain commands to be useable in other scripts
 editor.wrapon = function() {
     editor.dispatch({
         effects: StateEffect.reconfigure.of(extensions)
@@ -173,8 +162,9 @@ editor.closesearch = function() {
     closeSearchPanel(this);
 }
 
-editor.linedown = function() {
-    cursorLineDown(this);
+editor.pipedialog = function() {
+    this.dispatch(
+    )
 }
 
 window.ogEditor = editor;
