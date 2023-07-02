@@ -53,6 +53,7 @@ function makeReadAloudButton() {
             let r = ogEditor.state.selection.ranges[0];
             texttoread = ogEditor.state.doc.lineAt(r.from).text;
             // don't continue afterwards if this is the last line
+            console.log(r.from, ogEditor.state.doc.lines);
             if (r.from == ogEditor.state.doc.lines) {
                 ogEditor.continuenextline = false;
             }
