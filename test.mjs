@@ -1,8 +1,8 @@
-import {basicSetup} from "codemirror";
-import {texSyntax} from 'lang-tex';
+import {EditorView, basicSetup} from "codemirror";
+import {texSyntax} from "lang-tex";
 
 let editor = new EditorView({
-    extensions: [basicSetup, textSyntax()],
+    extensions: [basicSetup, texSyntax()],
     parent: document.getElementById("editorparent")
 });
 

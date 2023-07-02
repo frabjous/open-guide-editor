@@ -28,6 +28,7 @@ import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
+import {texSyntax} from "lang-tex";
 
 //
 // Keymap and new commands for keymap
@@ -92,6 +93,15 @@ const additionalKeymap = [
     { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
+// determine filetype
+const langExtensions = [];
+if (window.thisextension == 'md') {
+    langExtensions.push(markdown());
+} else if (window.thisextension == 'tex') {
+    langExtensions.push(texSyntax());
+}
+
+
 //
 // Editor
 //
@@ -118,14 +128,10 @@ let extensions = [
     indentUnit.of('    '),
     keymap.of([indentWithTab]),
     EditorView.lineWrapping,
-    markdown()
+    langExtensions
 ];
 
-let editor = new EditorView({
-    doc: window.filecontents,
-    extensions: extensions,
-    parent: document.getElementById("editorparent")
-});
+
 
 // may need to fix this so it doesn't necessarily use original
 // extensions
