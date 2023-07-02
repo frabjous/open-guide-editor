@@ -170,9 +170,8 @@ editor.closesearch = function() {
     closeSearchPanel(this);
 }
 
-editor.pipedialog = function() {
-    this.dispatch(
-    )
+editor.linedown = function() {
+    cursorLineDown(this);
 }
 
 window.ogEditor = editor;

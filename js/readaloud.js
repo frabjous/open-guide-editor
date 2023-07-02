@@ -1,3 +1,10 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+/////////////////////////////// readaloud.js //////////////////////////////
+// creates a button for playing the text of the edited document out loud //
+///////////////////////////////////////////////////////////////////////////
 
 window.readaloud = true;
 
@@ -11,49 +18,61 @@ function makeReadAloudButton() {
             clickfn: function() { ogEditor.startReadAloud(); }
         },
         "active": {
-            icon: "pause_circle,
+            icon: "pause_circle",
             tooltip: "stop reading aloud",
             clickfn: function() { ogEditor.stopReadAloud(); }
         }
-    });
+    },true);
     ogEditor.readaloudButton.makeState("inactive");
 
     ogEditor.startReadAloud = function() {
+        // mark as playable
         ogEditor.readaloudButton.makeState("active");
-        let sel = ogEditor.getfirstselection();
+        // initiate variables
         let texttoread = '';
         let continuenextline = true;
+        // see if we have selected text
+        let sel = ogEditor.getfirstselection();
+        // if something is selected, it is the text we use
         if (sel.selectedtext != '') {
             texttoread = sel.selectedtext;
             continuenextline = false;
+        } else {
+            // if nothing is selected, we get the current line
+            let r = ogEditor.state.selection.ranges[0];
+            texttoread = ogEditor.state.doc.lineAt(r.from).text;
+            // don't continue afterwards if this is the last line
+            if (r.from == ogEditor.state.doc.lines) {
+                continuenextline = false;
+            }
         }
-        if (
+        // create the audio element if need be
         if (!ogEditor.readaudio) {
             ogEditor.readaudio = newElem('audio',document.body);
             ogEditor.readaudio.controls = false;
         }
+        // get mp3 data from PHP
         ogEditor.readaudio.src = 'php/getaudio.php?text=' +
             encodeURIComponent(texttoread) +
             '&accesskey=' + encodeURIComponent(window.accesskey);
-        ogEditor.audiosrc.play();
+        // start over from start of selected text
+        ogEditor.readaudio.currentTime = 0;
+        // set to continue to next line on end, or stop
+        ogEditor.readaudio.onended = () => {
+            if (!continuenextline) {
+                ogEditor.stopReadAloud();
+                return;
+            }
+            this.linedown();
+            ogEditor.startReadAloud()
+        }
+        // play audio
+        ogEditor.readaudio.play();
     }
 
-/*
-        if (!view.getfirstselection) { return false; }
-    let sel = view.getfirstselection();
-    if (sel.selectedtext == '') {
-        // nothing selected, get text of current line, copy to clipboard
-        if (navigator?.clipboard) {
-            let r = view.state.selection.ranges[0];
-            if (r.from == r.to) {
-                let txt = view.state.doc.lineAt(r.from).text;
-                navigator.clipboard.writeText(txt);
-            }
-        }
-        // delete the line
-        deleteLine(view);
-        return true;
+    ogEditor.stopReadAloud = function() {
+        if (ogEditor.readaudio) { ogEditor.readaudio.pause(); }
+        ogEditor.readaloudButton.makeState("inactive");
     }
-    // returning false passes through to next binding
-    return false;*/
+
 }
