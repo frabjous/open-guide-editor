@@ -65,12 +65,8 @@ require_once 'php/libprocessing.php';
 // defines the servelet_send command
 require_once 'open-guide-misc/libservelet.php';
 
-error_log("here");
-
 // fill in the variables
 $cmd = fill_processing_variables($opts, false);
-
-error_log("cmd is $cmd");
 
 $tsname = 'pdfpage-' . $opts->page . '-' . $ts . '.' .
     $convertextension;

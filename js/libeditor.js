@@ -36,7 +36,7 @@ function powerUpEditor() {
     ogEditor.closeviewer = function(opts) {
         // close the viewer window unless closing anyway
         if ((!(opts?.closingonown)) && (window.viewerwindow !== false)) {
-            window.viewerwindow.close();
+            //window.viewerwindow.close();
         }
         // set the viewerwindow back to false
         window.viewerwindow == false;
@@ -138,6 +138,7 @@ function powerUpEditor() {
     ogEditor.launchviewer =function(opts = {}) {
         // if we already had a viewing window, close it
         if (window.viewerwindow !== false) {
+            console.log("closing b/c launch");
             ogEditor.closeviewer();
         }
         // get output extension, if nothing, then stop
@@ -280,20 +281,13 @@ function powerUpEditor() {
                     outputext = ogEditor.outputSelectButton.mystate;
                 }
             }
-            // if there is an outputextension, and it hasn't
-            // been processed before, process it first
+            // let the view be launched by the process function
             if (outputext != '') {
-                if ((!(outputext in window.processedonce)) ||
-                    (!window.processedonce[outputext])) {
-                    let r = await ogEditor.process(opts);
-                    // if that opened the viewer window, we're good
-                    if (window.viewerwindow) {
-                        return true;
-                    }
-                    // if not we launch it below
-                }
+                opts.launch = true;
+                let r = await ogEditor.process(opts);
+                // if that opened the viewer window, we're good
             }
-            return ogEditor.launchviewer(opts);
+            return;
         }
         return ogEditor.closeviewer({});
     }
@@ -485,10 +479,12 @@ function powerUpEditor() {
                     postprocessdata = respObj.processResult
                         .postProcessResult.stdout;
                 }
-                if ((!window.viewedonce) &&
+                if (opts?.launch ||
+                    ((!window.viewedonce) &&
                     (outputext in window.outputextensions) &&
-                    (window.outputextensions[outputext].viewable)) {
-                    return ogEditor.preview(true,
+                    (window.outputextensions[outputext].viewable))) {
+                    console.log("launching " + (new Date()).getTime());
+                    return ogEditor.launchviewer(
                         { postprocessdata: postprocessdata }
                     );
                 }
@@ -697,7 +693,7 @@ function powerUpEditor() {
             }
             b.makeState(window.outputopts[pos]);
             if ((b.mystate != st) && (window.viewerwindow !== false)) {
-                ogEditor.launchviewer();
+                ogEditor.preview(true, { launch: true });
             }
         }
         //  hide the button if there is only one possibility
