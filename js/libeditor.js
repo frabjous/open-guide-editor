@@ -477,14 +477,14 @@ function powerUpEditor() {
                     postprocessdata = respObj.processResult
                         .postProcessResult.stdout;
                 }
-                if (opts?.launch || window.lastViewerLoaded != opts.outputext ||
+                if ((opts?.launch || window.lastViewerLoaded != opts.outputext ||
                     ((!window.viewedonce) &&
                     (outputext in window.outputextensions) &&
-                    (window.outputextensions[outputext].viewable))) {
+                    (window.outputextensions[outputext].viewable))) &&
+                    (!opts?.download)) {
                     return ogEditor.launchviewer(
                         { postprocessdata: postprocessdata }
                     );
-                    window.forcelaunch = false;
                 }
                 // if viewer is currently open, refresh it
                 if ((outputext in window.outputextensions) &&
@@ -676,7 +676,13 @@ function powerUpEditor() {
         }
         // create button
         ogEditor.outputSelectButton = panelButton(outputSelectButtonOpts);
-        ogEditor.outputSelectButton.makeState(window.outputopts[0]);
+        if (ogeSettings?.routines?.[window.rootextension]?.defaultext) {
+            ogEditor.outputSelectButton.makeState(
+                ogeSettings.routines[window.rootextension].defaultext
+            );
+        } else {
+            ogEditor.outputSelectButton.makeState(window.outputopts[0]);
+        }
         // create function for changing the outputextension
         ogEditor.changeOutputExt = function() {
             // shorter name for button
