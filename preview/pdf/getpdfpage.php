@@ -13,11 +13,17 @@ session_start();
 chdir('../..');
 require_once('php/libauthentication.php');
 
-// read filename
-$filename = $_GET["file"] ?? false;
+$opts = new StdClass();
+
+// read filenames
+$opts->outputfile = $_GET["file"] ?? false;
+$filename = $opts->outputfile;
+// probably not needed for anything, so no insistence
+$opts->rootdocument = $_GET["rootfile"] ?? 'xxxx';
+$opts->savedfile = $_GET["editedfile"] ?? 'yyyy';
 
 // read page; default to 1
-$page = $_GET["page"] ?? 1;
+$opts->page = $_GET["page"] ?? 1;
 
 // read timestamp or make out
 $ts = $_GET["ts"] ?? (time().toString());
@@ -34,17 +40,42 @@ if (!has_authentication($filename)) {
     exit;
 }
 
+
 // get conversion commands from settings
+if ($opts->savedfile != 'yyyy') {
+    $settings = merge_projectsettings(dirname());
+}
+$opts->routine = new StdClass();
+$opts->routine->command = '';
+$mimetype = '';
+$convertext = '';
+if (isset($settings->viewer->pdf->convertcommand)) {
+    $opts->routine->command = $settings->viewer->pdf->convertcommand;
+    $convertextension = $settings->viewer->pdf->convertextension;
+    $mimetype = $settings->viewer->pdf->convertmimetype;
+}
+
+if (($mimetype == '') || ($opts->routine->command == '') ||
+    ($convertextension == '')) {
+    header('Location: ../../meinongian-page.html');
+    exit(0);
+}
 
 // defines the command for filling in variables in commands
 require_once 'php/libprocessing.php';
 // defines the servelet_send command
 require_once 'open-guide-misc/libservelet.php';
 
+// fill in the variables
+$cmd = fill_processing_variables($opts, false);
+
+$tsname = 'pdfpage-' . $opts->page . '-' . $ts . '.' +
+    $convertextension;
+
 servelet_send(array(
-    "command" => ,
-    "filename" => ,
-    "mimetype" => ""
+    "command" => $cmd,
+    "filename" => $tsname,
+    "mimetype" => $mimetype
 ));
 
 // output the file

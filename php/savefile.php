@@ -170,7 +170,7 @@ if (!isset($opts->routine->postprocess)) {
 $postprocesscmd = fill_processing_variables($opts, true);
 
 // run post processing
-$rv->processResult->postProcessResult = pipe_to_cmd($cmd);
+$rv->processResult->postProcessResult = pipe_to_command($cmd);
 $rv->processResult->postProcessResult->cmdrun = $postprocesscmd;
 // if there was an error, add it to the processResult
 if ($rv->processResult->postProcessResult->returnvalue != 0) {

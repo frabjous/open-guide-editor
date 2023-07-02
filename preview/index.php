@@ -140,7 +140,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
             window.ogeSettings = <?php echo json_encode($settings); ?>;
             window.outputfile = '<?php echo $outputfull; ?>';
             window.postprocessdata = '<?php echo ($_GET["postprocessdata"] ?? ''); ?>';
-            window.rootfile = '<?php echo $fullroot ?? ''); ?>';
+            window.rootfile = '<?php echo $fullroot ?? ''; ?>';
             window.filename = '<?php echo $fullfilename; ?>';
             window.onmessage = function(e) {
                 // sanity and security checks
