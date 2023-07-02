@@ -18,12 +18,12 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] good keybindings
     - [x] auto-comment/uncomment
 - [x] implement autosaving
-- [ ] provide generic mechanisms for autopreview depending on input filetype
+- [x] provide generic mechanisms for autopreview depending on input filetype
 - [ ] support markdown as input
-    - [ ] preview html
-    - [ ] preview pdf
+    - [x] preview html
+    - [x] preview pdf
     - [ ] speak aloud
-    - [ ] download ePub
+    - [x] download ePub
 - [ ] implement api for additing citations
     - [ ] general api
     - [ ] PhilPapers specific integration

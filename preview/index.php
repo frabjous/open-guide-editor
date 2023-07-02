@@ -213,7 +213,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
             #viewerparent iframe {
                 border: none;
                 width: 100%;
-                height: 100%;
+                height: 99%;
                 margin: 0;
                 padding: 0;
                 background-color: white;
