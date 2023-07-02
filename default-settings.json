@@ -1,7 +1,7 @@
 {
     "accesskeyfile" : "/tmp/oge-accesskeys.json",
     "autoprocess" : {
-        "delay": 500
+        "delay": 800
     },
     "autosave": {
         "interval": 300000,
@@ -13,6 +13,19 @@
         }
     },
     "routines": {
+        "html": {
+            "defaultext": "html",
+            "html": {
+                "command": "touch %outputfile%"
+            },
+            "pdf": {
+                "command": "weasyprint %rootdocument% %outputfile%",
+                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l"
+            },
+            "epub": {
+                "command": "ebook-convert %rootdocument% %outputfile%"
+            }
+        },
         "md": {
             "defaultext": "pdf",
             "html": {
