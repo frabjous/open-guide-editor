@@ -19,10 +19,10 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] auto-comment/uncomment
 - [x] implement autosaving
 - [x] provide generic mechanisms for autopreview depending on input filetype
-- [ ] support markdown as input
+- [x] support markdown as input
     - [x] preview html
     - [x] preview pdf
-    - [ ] speak aloud
+    - [x] speak aloud
     - [x] download ePub
 - [ ] implement api for additing citations
     - [ ] general api

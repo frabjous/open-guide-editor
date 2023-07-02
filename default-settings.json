@@ -9,7 +9,7 @@
     },
     "readaloud": {
         "md" : {
-            "command": "flite_cmu_us_slt -t \"$(echo %text% | pandoc -f markdown -t plain | read-text-fix.sh)\" -o /dev/stdout | lame - -"
+            "command": "flite_cmu_us_slt -t \"$(echo %text% | pandoc -f markdown -t plain)\" -o /dev/stdout | lame - -"
         }
     },
     "routines": {

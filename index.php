@@ -177,7 +177,6 @@ if (isset($settings->readaloud->{$thisextension})) {
             window.thisextension = '<?php echo $thisextension; ?>';
             window.rootextension = '<?php echo $rootextension; ?>';
             window.rootdocument = window.dirname + '/' + window.basename;
-            window.forcelaunch = false;
             if (ogeSettings.rootdocument) {
                 window.rootdocument = ogeSettings.rootdocument;
             }

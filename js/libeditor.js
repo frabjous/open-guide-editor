@@ -84,45 +84,6 @@ function powerUpEditor() {
         }
     }
     //
-    // get contents of file from server; currently unused?
-    //
-    ogEditor.grabcontents = async function(dir, fn) {
-        // do a json fetch of the file
-        let grab = await postData('php/getfilecontents.php',
-            { dirname: dir, basename: fn }
-        );
-        // report errors if do not get good response from server
-        if ((grab?.error) || (grab?.respObj?.error)) {
-            ogEditor.openButton.makeState("error");
-            ogDialog.errdiag("Unable to open file: " +
-                (grab?.errMsg ?? '') + ' ' +
-                (grab?.respObj.errMsg ?? ''));
-            return;
-        }
-        // check we actually got what we asked for from server
-        if (!("filecontents" in grab.respObj)) {
-            ogEditor.openButton.makeState("error");
-            ogDialog.errdiag("No file contents sent.");
-            return;
-        }
-        // check it told us what we're now viewing
-        if ((!("newdir" in grab.respObj)) ||
-            (!("newfn" in grab.respObj))) {
-            ogEditor.openButton.makeState("error");
-            ogDialog.errdiag("No file name/location not sent.");
-            return;
-        }
-        // mark editor as saved
-        ogEditor.openButton.makeState("normal");
-        ogEditor.saveButton.makeState("unchanged");
-        // change editor to new document
-        ogEditor.switchToDocument(
-            grab.respObj.filecontents,
-            grab.respObj.newdir,
-            grab.respObj.newfn
-        );
-    }
-    //
     // HANDLE MESSAGE FUNCTION
     //
     ogEditor.handlemessage =function(data) {
@@ -594,7 +555,7 @@ function powerUpEditor() {
             clickfn: function() { ogEditor.openfile(); }
         },
         "opening" : {
-            icon: "folder_open",
+            icon: "sync",
             tooltip: "opening",
             clickfn: function() {}
         },

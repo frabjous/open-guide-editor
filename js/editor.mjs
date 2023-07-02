@@ -24,7 +24,7 @@ import {
     insertBlankLine,
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
-import {syntaxHighlighting,indentUnit} from '@codemirror/language';
+import {syntaxHighlighting, indentUnit} from '@codemirror/language';
 import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
@@ -47,6 +47,8 @@ const insertBlankLineUp = function(view) {
     cursorCharLeft(view);
 }
 
+// deletes entire line if nothing selected, otherwise cuts what is
+// selected
 const smartDeleteLine = function(view) {
     if (!view.getfirstselection) { return false; }
     let sel = view.getfirstselection();
@@ -93,7 +95,7 @@ const additionalKeymap = [
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
 //
-// Editor
+// Editor extension list
 //
 let extensions = [
     keymap.of(additionalKeymap),
@@ -118,26 +120,15 @@ let extensions = [
     markdown(),
 ];
 
+// create the editor
 let editor = new EditorView({
     doc: window.filecontents,
     extensions: extensions,
     parent: document.getElementById("editorparent")
 });
 
-editor.switchToDocument = function(newcontents, dir, fn) {
-    let state = EditorState.create({
-        doc: newcontents,
-        extensions: extensions
-    });
-    this.setState(state);
-    window.basename = fn;
-    window.dirname = dir;
-    window.lastsavedat = window.numchanges;
-    window.setTitle(false);
-}
-
-// may need to fix this so it doesn't necessarily use original
-// extensions
+//attach certain functions to the editor so they can be called in other
+//scripts
 editor.wrapoff = function() {
     let newextensions = [];
     for (let ext of extensions) {
