@@ -423,6 +423,7 @@ function powerUpEditor() {
 
         // if finished a processing run, mark the button as completed
         if ((opts?.routine) && (opts?.outputext)) {
+            console.log(respObj);
             if (ogEditor.processButton) {
                 //return processing button to normal
                 ogEditor.processButton.makeState('normal');

@@ -149,6 +149,7 @@ $cmd = fill_processing_variables($opts, false);
 // run command, record what was run
 $rv->processResult = pipe_to_command($cmd);
 $rv->processResult->cmdrun = $cmd;
+$rv->cwd = getcwd();
 $rv->processResult->outputfile = realpath($opts->outputfile);
 
 // set whether or not there was an error depending on return value
