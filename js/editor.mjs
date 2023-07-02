@@ -15,6 +15,7 @@ import {
     cursorLineBoundaryBackward,
     copyLineDown,
     cursorCharLeft,
+    cursorLineDown,
     cursorLineUp,
     cursorMatchingBracket,
     deleteLine,
