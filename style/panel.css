@@ -61,6 +61,7 @@
 }
 
 .panelbutton.inactive,
+.panelbutton.disabled,
 .panelbutton.unchanged {
     border-color: var(--gray5);
     color: var(--gray5);

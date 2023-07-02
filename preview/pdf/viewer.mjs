@@ -71,6 +71,19 @@ window.onload = function() {
             clickfn: function() { downloadOutput(); }
         }
     });
+    // create download button
+    window.panel.prevButton = panelButton({
+        "normal" : {
+            icon: "arrow_back",
+            tooltip: "previous page",
+            clickfn: function() { previousPage(); }
+        },
+        "disabled": {
+            icon: "arrow_back",
+            tooltip: "",
+            clickfn: function() {}
+        }
+    });
     window.panel.downloadButton.makeState("normal");
     // TODO: more buttons
     window.sendmessage({ loaded: true });

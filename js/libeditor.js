@@ -36,7 +36,7 @@ function powerUpEditor() {
     ogEditor.closeviewer = function(opts) {
         // close the viewer window unless closing anyway
         if ((!(opts?.closingonown)) && (window.viewerwindow !== false)) {
-            //window.viewerwindow.close();
+            window.viewerwindow.close();
         }
         // set the viewerwindow back to false
         window.viewerwindow == false;
@@ -136,11 +136,6 @@ function powerUpEditor() {
     // VIEWER LAUNCH FUNCTION
     //
     ogEditor.launchviewer =function(opts = {}) {
-        // if we already had a viewing window, close it
-        if (window.viewerwindow !== false) {
-            console.log("closing b/c launch");
-            ogEditor.closeviewer();
-        }
         // get output extension, if nothing, then stop
         let outputext = ogEditor.outputSelectButton.mystate ?? '';
         opts.outputext = outputext;
@@ -483,7 +478,6 @@ function powerUpEditor() {
                     ((!window.viewedonce) &&
                     (outputext in window.outputextensions) &&
                     (window.outputextensions[outputext].viewable))) {
-                    console.log("launching " + (new Date()).getTime());
                     return ogEditor.launchviewer(
                         { postprocessdata: postprocessdata }
                     );
@@ -512,9 +506,7 @@ function powerUpEditor() {
                 const url = 'php/downloadfile.php?filename=' +
                     encodeURIComponent(filetodl);
                 // download the file
-                console.log("got herE");
                 window.downloadFile(url, basename);
-                console.log("got there");
             }
         }
     }
@@ -794,9 +786,8 @@ function powerUpEditor() {
     // TODO: speak aloud button
 }
 
-// TODO
 function stdErrorInclusion(stderr) {
-    return '';
+    return '<br><pre class="stderr">' + stderr + '</pre><br>';
 }
 
 // function to read pipe command form and start the filter
