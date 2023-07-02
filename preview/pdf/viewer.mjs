@@ -75,8 +75,9 @@ function setPDFPage(n, forced = false) {
 }
 
 function zoomChange(amt) {
+    if (window.pdfzoom <= 10 && (amt < 0)) { return;}
     window.pdfzoom = window.pdfzoom + amt;
-    window.pdfimg.style.width = window.pdfzoom.toString() + '%';
+    window.pdfimageholder.style.width = window.pdfzoom.toString() + '%';
 }
 
 window.onload = function() {
@@ -123,15 +124,6 @@ window.onload = function() {
     } else {
         window.panel.nextButton.makeState("disabled");
     }
-    // create download button
-    window.panel.downloadButton = panelButton({
-        "normal" : {
-            icon: "download",
-            tooltip: "download pdf file",
-            clickfn: function() { downloadOutput(); }
-        }
-    });
-    window.panel.downloadButton.makeState("normal");
     // create zoom in button
     window.panel.zoominButton = panelButton({
         "normal" : {
@@ -142,6 +134,16 @@ window.onload = function() {
     });
     window.panel.zoominButton.makeState("normal");
 
+    // create zoom reset button
+    window.panel.zoomresetButton = panelButton({
+        "normal" : {
+            icon: "fit_width",
+            tooltip: "zoom reset",
+            clickfn: function() { zoomChange( 100 - window.pdfzoom  ); }
+        }
+    });
+    window.panel.zoomresetButton.makeState("normal");
+
     window.panel.zoomoutButton = panelButton({
         "normal" : {
             icon: "zoom_out",
@@ -150,6 +152,17 @@ window.onload = function() {
         }
     });
     window.panel.zoomoutButton.makeState("normal");
+
+    // create download button
+    window.panel.downloadButton = panelButton({
+        "normal" : {
+            icon: "download",
+            tooltip: "download pdf file",
+            clickfn: function() { downloadOutput(); }
+        }
+    });
+    window.panel.downloadButton.makeState("normal");
+
 
     // open first page of PDF
     setPDFPage(window.pdfpage, true);

@@ -184,7 +184,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
                 display: flex;
                 flex-direction: column;
                 align-items: stretch;
-                overflow-y: hidden;
+                overflow: hidden;
                 padding: 0;
             }
             #toppanelcontainer {
@@ -198,14 +198,16 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
                 width: 100%;
                 height: 100%;
                 max-height: 100%;
-                overflow: auto;
+                overflow: hidden;
             }
             #viewerparent {
                 width: 100%;
+                max-width: 100%;
                 height: 100%;
                 padding: 0;
                 margin: 0;
-                overflow: hidden;
+                background-color: var(--gray5);
+                overflow: auto;
             }
             #viewerparent iframe {
                 border: none;
@@ -217,10 +219,10 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
             #pdfpage {
                 width: 100%;
             }
-            #pdfimgholder {
+            #pdfimageholder {
                 width: 100%;
-                height: 100%;
-                overflow: auto;
+                display: inline-block;
+                background-color: white;
             }
         </style>
 
