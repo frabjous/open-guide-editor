@@ -56,6 +56,8 @@ if (isset($opts->autosave) && $opts->autosave) {
         str_replace('/','⁒',$filename);
 }
 
+error_log($filename);
+
 // make sure destination folder exists
 if (!is_dir(dirname($filename))) {
     mkdir(dirname($filename), 0755, true);

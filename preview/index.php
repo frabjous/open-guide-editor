@@ -232,6 +232,7 @@ chdir($dirsave);
                 display: inline-block;
                 background-color: white;
             }
+
         </style>
 
     </head>
