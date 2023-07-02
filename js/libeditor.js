@@ -344,7 +344,7 @@ function powerUpEditor() {
             // on the date and time
             if (autosave) {
                 const now = new Date();
-                const ts = now.getFullYear.toString() + '-' +
+                const ts = now.getFullYear().toString() + '-' +
                     (now.getMonth()+1).toString() + '-' +
                     now.getDate().toString() + '-' +
                     now.getTime().toString();

@@ -34,14 +34,15 @@ foreach($required as $req) {
 }
 // initiate key variables
 $rv = new StdClass();
-$dirname = $data->dirname;
-$basename = $data->basename;
+$dirname = $data->dirname ?? '';
+$basename = $data->basename ?? 'tmp.txt';
 $buffer = $data->buffer;
 $opts = $data->opts;
-$filename = realpath($dirname . '/' . $basename);
+$filename = $dirname . '/' . $basename;
 $settings = merge_projectsettings($dirname);
 
 // ensure user has authentication
+//
 if (!has_authentication($filename)) {
     rage_quit(new StdClass(), "user does not have authentication to " .
         "edit the file in quesiton");
@@ -56,14 +57,13 @@ if (isset($opts->autosave) && $opts->autosave) {
         str_replace('/','⁒',$filename);
 }
 
-error_log($filename);
-
 // make sure destination folder exists
 if (!is_dir(dirname($filename))) {
     mkdir(dirname($filename), 0755, true);
 }
 // actually save the file
 $putresult = file_put_contents($filename, $buffer);
+error_log(strval($putresult));
 if ($putresult === false) {
     rage_quit(new StdClass(), 'saving of file failed.');
 }
