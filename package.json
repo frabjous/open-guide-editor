@@ -30,6 +30,7 @@
     "@codemirror/lang-markdown": "^6.1.1",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "codemirror": "^6.0.1",
+    "lang-tex": "^0.0.3",
     "rollup": "^3.25.1"
   }
 }

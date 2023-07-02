@@ -25,10 +25,14 @@ import {
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
 import {syntaxHighlighting, indentUnit} from '@codemirror/language';
-import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
+
+//languages
+import {markdown} from '@codemirror/lang-markdown';
+import {texSyntax} from "lang-tex/lib/tex.js";
+
 //
 // Keymap and new commands for keymap
 //
@@ -94,6 +98,14 @@ const additionalKeymap = [
     { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
+// Determine langauge
+const langExtensions = [];
+if (window.thisextension == 'md') {
+    langExtensions.push(markdown());
+} else if (window.thisextension == 'tex') {
+    langExtensions.push(texSyntax())
+}
+
 //
 // Editor extension list
 //
@@ -117,7 +129,7 @@ let extensions = [
     indentUnit.of('    '),
     keymap.of([indentWithTab]),
     EditorView.lineWrapping,
-    markdown(),
+    langExtensions
 ];
 
 // create the editor
