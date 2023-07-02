@@ -422,7 +422,7 @@ function powerUpEditor() {
             processingerror += (respObj?.processResult?.errMsg ??
                 'Unknown processing error');
             // report error using its stderr output
-            if (respObj?.processingResult &&
+            if (respObj?.processResult &&
                 ("stderr" in respObj?.processResult)) {
                 processingerror + stdErrorInclusion(
                     respObj?.processResult?.stderr
@@ -452,8 +452,8 @@ function powerUpEditor() {
                     ogEditor.downloadButtons[opts.outputext]
                         .makeState('error');
                 }
+                ogEditor.processButton.title = processingerror;
             }
-            ogDialog.errdiag('Processing error: ' + processingerror);
             return false;
         }
 

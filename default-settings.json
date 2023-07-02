@@ -1,7 +1,7 @@
 {
     "accesskeyfile" : "/tmp/oge-accesskeys.json",
     "autoprocess" : {
-        "delay": 1000
+        "delay": 500
     },
     "autosave": {
         "interval": 300000,

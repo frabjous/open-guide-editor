@@ -156,6 +156,7 @@ if ($rv->processResult->returnvalue == 0) {
 } else {
     // only move on to postprocessing if successful
     $rv->processResult->error = true;
+    $rv->processResult->errMsg = 'error in processing';
     send_as_json($rv);
     exit(0);
 }
@@ -176,6 +177,7 @@ $rv->processResult->postProcessResult->cmdrun = $postprocesscmd;
 // if there was an error, add it to the processResult
 if ($rv->processResult->postProcessResult->returnvalue != 0) {
     $rv->processResult->error = true;
+    $rv->processResult->errMsg = 'error in postprocessing';
     $rv->processResult->stderr .=
         $rv->processResult->postProcessResult->stderr;
 }
