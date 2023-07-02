@@ -24,15 +24,14 @@
 
 #toppanelrightbuttons span.indicator {
     font-size: 1.2rem;
-    position: relative;
-    top: 0.25rem;
 }
 
 #toppanelrightbuttons .slider {
     margin-left: 1em;
     margin-right: 1em;
+    margin-bottom: 0.5em;
     position: relative;
-    top: 0.6rem;
+    top: 0.5rem;
 }
 
 .panelbutton {

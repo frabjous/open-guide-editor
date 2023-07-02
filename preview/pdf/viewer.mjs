@@ -37,7 +37,8 @@ function getPDFPageURL() {
 
 function nextPage() {
     if (window.pdfpage < window.numpdfpages) {
-        setPDFPage(window.pdfpage + 1);
+        let newpage = window.pdfpage + 1;
+        setPDFPage(newpage);
     }
 }
 
@@ -77,6 +78,8 @@ function setPDFPage(n, forced = false) {
 
 function zoomChange(amt) {
     if (window.pdfzoom <= 10 && (amt < 0)) { return;}
+    if (window.pdfzoom > 120) { amt = amt * 4};
+    if (window.pdfzoom > 250) { amt = amt * 10};
     window.pdfzoom = window.pdfzoom + amt;
     window.pdfimageholder.style.width = window.pdfzoom.toString() + '%';
 }
@@ -173,15 +176,23 @@ window.onload = function() {
         window.numpdfpages.toString());
     window.slider = newElem("input", rightbuttons, ['slider']);
     window.slider.type = "range";
-    window.slider.min = 1;
+    window.slider.min = (1).toString();
     window.slider.max = window.numpdfpages;
     window.slider.setValue = function () {
-        window.slider.value = window.pdfpage;
-        window.slider.max = window.numpdfpages;
+        window.slider.value = window.pdfpage.toString();
+        window.slider.max = window.numpdfpages.toString();
         window.totalpageind.innerHTML = window.numpdfpages.toString();
         window.currpageind.innerHTML = window.pdfpage.toString();
     }
     window.slider.setValue();
+    window.slider.oninput = function() {
+        window.currpageind.innerHTML = this.value.toString();
+    }
+    window.slider.onchange = function() {
+         console.log('pre',window.pdfpage);
+        setPDFPage(parseInt(this.value));
+         console.log('post',window.pdfpage);
+    }
     // open first page of PDF
     setPDFPage(window.pdfpage, true);
     window.sendmessage({ loaded: true });
