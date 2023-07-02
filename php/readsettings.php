@@ -42,11 +42,11 @@ function full_document_root($dirname, $rootdocument) {
     // if not settings file found, use the saved file's
     // director as base
     if ($gpsf === false) {
-        return realpath($dirname . '/' + $rootdocument);
+        return realpath($dirname . '/' . $rootdocument);
     }
     // otherwise use path relative to settings file
     $gpsf_dir = dirname($gpsf);
-    return realpath($gpsf_dir . '/' + $rootdocument);
+    return realpath($gpsf_dir . '/' . $rootdocument);
 }
 
 // determine where the project-specific settings file, if any

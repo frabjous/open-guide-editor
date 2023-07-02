@@ -86,7 +86,7 @@ $outputfile = mb_ereg_replace($rootextension . '$', $outputext,
 
 // allow overriding the output file in the settings
 if (isset($routine->outputfile)) {
-    $outputfile = $opts->routine->outputfile;
+    $outputfile = $routine->outputfile;
 }
 
 // used in title, etc.
