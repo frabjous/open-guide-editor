@@ -25,27 +25,40 @@ function makeReadAloudButton() {
     },true);
     ogEditor.readaloudButton.makeState("inactive");
 
+    ogEditor.playNextLine = function() {
+        // stop if this last line, or we were only doing selection
+        if (!ogEditor.continuenextline) {
+            ogEditor.stopReadAloud();
+            return;
+        }
+        // move down and play again
+        ogEditor.linedown();
+        ogEditor.startReadAloud()
+    }
+
     ogEditor.startReadAloud = function() {
         // mark as playable
         ogEditor.readaloudButton.makeState("active");
         // initiate variables
         let texttoread = '';
-        let continuenextline = true;
+        ogEditor.continuenextline = true;
         // see if we have selected text
         let sel = ogEditor.getfirstselection();
         // if something is selected, it is the text we use
         if (sel.selectedtext != '') {
             texttoread = sel.selectedtext;
-            continuenextline = false;
+            ogEditor.continuenextline = false;
         } else {
             // if nothing is selected, we get the current line
             let r = ogEditor.state.selection.ranges[0];
             texttoread = ogEditor.state.doc.lineAt(r.from).text;
             // don't continue afterwards if this is the last line
             if (r.from == ogEditor.state.doc.lines) {
-                continuenextline = false;
+                ogEditor.continuenextline = false;
             }
         }
+        // don't play blank lines
+        if (!(/[A-Za-z]/.test(texttoread))) { ogEditor.playNextLine(); return; }
         // create the audio element if need be
         if (!ogEditor.readaudio) {
             ogEditor.readaudio = newElem('audio',document.body);
@@ -54,17 +67,14 @@ function makeReadAloudButton() {
         // get mp3 data from PHP
         ogEditor.readaudio.src = 'php/getaudio.php?text=' +
             encodeURIComponent(texttoread) +
-            '&accesskey=' + encodeURIComponent(window.accesskey);
+            '&accesskey=' + encodeURIComponent(window.accesskey) +
+            '&ext=' + encodeURIComponent(window.thisextension);
         // start over from start of selected text
         ogEditor.readaudio.currentTime = 0;
         // set to continue to next line on end, or stop
         ogEditor.readaudio.onended = () => {
-            if (!continuenextline) {
-                ogEditor.stopReadAloud();
-                return;
-            }
-            this.linedown();
-            ogEditor.startReadAloud()
+            ogEditor.playNextLine();
+            return;
         }
         // play audio
         ogEditor.readaudio.play();
@@ -76,3 +86,4 @@ function makeReadAloudButton() {
     }
 
 }
+

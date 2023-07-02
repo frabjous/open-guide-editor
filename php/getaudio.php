@@ -11,7 +11,41 @@ session_start();
 chdir('..');
 require_once 'php/libauthentication.php';
 
+// get and verify the access key
 if (!isset($_GET["accesskey"])) {
     header("HTTP/1.1 403 Forbidden");
-    exit;
+    exit();
 }
+$accesskey = $_GET["accesskey"];
+
+$keydata = data_for_key($accesskey);
+if (!$keydata) {
+    header("HTTP/1.1 403 Forbidden");
+    exit();
+}
+
+$text = $_GET["text"] ?? 'nothing to play';
+$ext = $_GET["ext"] ?? '';
+
+// ensure we have a command set
+if (!isset($settings->readaloud->{$ext}->command)) {
+    header("HTTP/1.1 403 Forbidden");
+    exit();
+}
+$cmd = $settings->readaloud->{$ext}->command;
+$cmd = str_replace( '%text%', '"' . $text . '"', $cmd);
+
+require_once 'open-guide-misc/libservelet.php';
+
+// the opts should be an associative array with the following
+// "attachmentname" => "nameoffilefordownload.txt", [optional],
+// "command" => "command to output result of", [optional],
+// "download" => <boolean>, [whether to send as download; optional],
+// "filename" => "nameoffile.ext", [to send or use],
+// "mimetype" => "something/mimetype", [optional if sending file],
+servelet_send(array(
+    "command" => $cmd,
+    "filename" => microtime(true) . '.mp3',
+    "mimetype" => "audio/mpeg"
+));
+exit();

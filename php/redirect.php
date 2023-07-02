@@ -30,6 +30,8 @@ if ($accesskey === false) {
     exit;
 }
 
+$text = $_GET["text"];
+
 // redirect
 header('Location: ../?accesskey=' . $accesskey);
 exit(0);
