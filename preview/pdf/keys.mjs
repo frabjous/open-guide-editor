@@ -14,12 +14,40 @@ document.body.addEventListener('keydown', function(e) {
         e.metaKey,
         e.shiftKey,
         e.getModifierState('CapsLock'));
+    //pageup, pagedown changes pages
     if (e.key == 'PageDown') {
         e.preventDefault();
         window.nextPage();
+        return;
     }
     if (e.key == 'PageUp') {
         e.preventDefault();
-        window.prevPage();
+        window.previousPage();
+        return;
     }
+    // arrow up, down, etc. scrolls
+    if (e.key == 'ArrowUp') {
+        e.preventDefault();
+        window.viewerparent.scrollTop =
+            (window.viewerparent.scrollTop - 50);
+    }
+    if (e.key == 'ArrowDown') {
+        e.preventDefault();
+        window.viewerparent.scrollTop =
+            (window.viewerparent.scrollTop + 50);
+    }
+    if (e.key == 'ArrowRight') {
+        e.preventDefault();
+        window.viewerparent.scrollLeft =
+            (window.viewerparent.scrollTop + 50);
+    }
+    if (e.key == 'ArrowLeft') {
+        e.preventDefault();
+        window.viewerparent.scrollLeft =
+            (window.viewerparent.scrollTop - 50);
+    }
+    console.log('sh', window.viewerparent.scrollHeight, window.viewerparent.scrollWidth);
+    console.log('oh', window.viewerparent.offsetHeight, window.viewerparent.offsetWidth);
+    console.log('ch', window.viewerparent.clientHeight, window.viewerparent.clientWidth);
+    console.log('stsl', window.viewerparent.scrollTop, window.viewerparent.scrollLeft);
 });
