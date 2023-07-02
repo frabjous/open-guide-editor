@@ -48,7 +48,7 @@ window.onload = function() {
     });
     window.panel.downloadButton.makeState("normal");
     // tell the editor we've loaded
-    window.sendmessage({ loaded: true });
+    window.sendmessage({ loaded: 'html' });
 }
 
 // reload the html file

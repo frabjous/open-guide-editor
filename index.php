@@ -167,6 +167,7 @@ $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
             window.ogeSettings = <?php echo json_encode($settings); ?>;
             window.rootextension = '<?php echo $rootextension; ?>';
             window.rootdocument = window.dirname + '/' + window.basename;
+            window.forcelaunch = false;
             if (ogeSettings.rootdocument) {
                 window.rootdocument = ogeSettings.rootdocument;
             }

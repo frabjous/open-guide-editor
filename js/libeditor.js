@@ -126,6 +126,9 @@ function powerUpEditor() {
     // HANDLE MESSAGE FUNCTION
     //
     ogEditor.handlemessage =function(data) {
+        if (data.loaded) {
+            window.lastViewerLoaded = data.loaded;
+        }
         if (data?.refreshed || data?.loaded) {
             ogEditor.previewButton.makeState("active");
             window.viewedonce = true;
@@ -424,7 +427,7 @@ function powerUpEditor() {
             // report error using its stderr output
             if (respObj?.processResult &&
                 ("stderr" in respObj?.processResult)) {
-                processingerror + stdErrorInclusion(
+                processingerror += stdErrorInclusion(
                     respObj?.processResult?.stderr
                 );
             }
@@ -474,13 +477,14 @@ function powerUpEditor() {
                     postprocessdata = respObj.processResult
                         .postProcessResult.stdout;
                 }
-                if (opts?.launch ||
+                if (opts?.launch || window.lastViewerLoaded != opts.outputext ||
                     ((!window.viewedonce) &&
                     (outputext in window.outputextensions) &&
                     (window.outputextensions[outputext].viewable))) {
                     return ogEditor.launchviewer(
                         { postprocessdata: postprocessdata }
                     );
+                    window.forcelaunch = false;
                 }
                 // if viewer is currently open, refresh it
                 if ((outputext in window.outputextensions) &&
@@ -787,7 +791,7 @@ function powerUpEditor() {
 }
 
 function stdErrorInclusion(stderr) {
-    return '<br><pre class="stderr">' + stderr + '</pre><br>';
+    return stderr;
 }
 
 // function to read pipe command form and start the filter

@@ -197,7 +197,7 @@ window.onload = function() {
     }
     // open first page of PDF
     setPDFPage(window.pdfpage, true);
-    window.sendmessage({ loaded: true });
+    window.sendmessage({ loaded: 'pdf' });
 }
 
 window.viewerrefresh = function(opts) {
