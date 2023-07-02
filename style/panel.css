@@ -46,6 +46,10 @@
     top: 0.18rem;
 }
 
+.panelbutton.disabled:hover {
+    cursor: default;
+}
+
 .panelbutton.inactive:hover,
 .panelbutton.unchanged:hover,
 .panelbutton:hover {

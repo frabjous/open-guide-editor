@@ -35,18 +35,48 @@ function getPDFPageURL() {
         '&ts=' + (new Date()).getTime().toString();
 }
 
+function nextPage() {
+    if (window.pdfpage < window.numpdfpages) {
+        setPDFPage(window.pdfpage + 1);
+    }
+}
+
+function previousPage() {
+    if (window.pdfpage > 1) {
+        setPDFPage(window.pdfpage - 1);
+    }
+}
+
 // change string from postprocessing stdout to number
 function readNumPages(sdata) {
     return parseInt(sdata.trim());
 }
 
 // set the viewer to a certain pdf page
-function setPDFPage(n) {
+function setPDFPage(n, forced = false) {
+    let changed = (n != window.pdfpage);
     if (n > window.numpdfpages) { n = window.numpdfpages; }
     if (n < 1) { n = 1; }
     // TODO: page widgets
     window.pdfpage = n;
-    window.pdfimg.src = getPDFPageURL();
+    if (changed || forced) {
+        window.pdfimg.src = getPDFPageURL();
+    }
+    if (n==1) {
+        window.panel.prevButton.makeState("disabled");
+    } else {
+        window.panel.prevButton.makeState("normal");
+    }
+    if (n == window.numpdfpages) {
+        window.panel.nextButton.makeState("disabled");
+    } else {
+        window.panel.nextButton.makeState("normal");
+    }
+}
+
+function zoomChange(amt) {
+    window.pdfzoom = window.pdfzoom + amt;
+    window.pdfimg.style.width = window.pdfzoom.toString() + '%';
 }
 
 window.onload = function() {
@@ -61,17 +91,7 @@ window.onload = function() {
     window.pdfimg.id = 'pdfpage';
     // set number of pages based on postprocessdata
     window.numpdfpages = readNumPages(window.postprocessdata);
-    // open first page of PDF
-    setPDFPage(window.pdfpage);
-    // create download button
-    window.panel.downloadButton = panelButton({
-        "normal" : {
-            icon: "download",
-            tooltip: "download pdf file",
-            clickfn: function() { downloadOutput(); }
-        }
-    });
-    // create download button
+    // create previous page button
     window.panel.prevButton = panelButton({
         "normal" : {
             icon: "arrow_back",
@@ -84,8 +104,55 @@ window.onload = function() {
             clickfn: function() {}
         }
     });
+    window.panel.prevButton.makeState("normal");
+    // create next page button
+    window.panel.nextButton = panelButton({
+        "normal" : {
+            icon: "arrow_forward",
+            tooltip: "previous page",
+            clickfn: function() { nextPage(); }
+        },
+        "disabled": {
+            icon: "arrow_forward",
+            tooltip: "",
+            clickfn: function() {}
+        }
+    });
+    if (window.numpdfpages > 1) {
+        window.panel.nextButton.makeState("normal");
+    } else {
+        window.panel.nextButton.makeState("disabled");
+    }
+    // create download button
+    window.panel.downloadButton = panelButton({
+        "normal" : {
+            icon: "download",
+            tooltip: "download pdf file",
+            clickfn: function() { downloadOutput(); }
+        }
+    });
     window.panel.downloadButton.makeState("normal");
-    // TODO: more buttons
+    // create zoom in button
+    window.panel.zoominButton = panelButton({
+        "normal" : {
+            icon: "zoom_in",
+            tooltip: "zoom in",
+            clickfn: function() { zoomChange(10); }
+        }
+    });
+    window.panel.zoominButton.makeState("normal");
+
+    window.panel.zoomoutButton = panelButton({
+        "normal" : {
+            icon: "zoom_out",
+            tooltip: "zoom out",
+            clickfn: function() { zoomChange(-10); }
+        }
+    });
+    window.panel.zoomoutButton.makeState("normal");
+
+    // open first page of PDF
+    setPDFPage(window.pdfpage, true);
     window.sendmessage({ loaded: true });
 }
 

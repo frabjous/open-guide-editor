@@ -217,6 +217,11 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
             #pdfpage {
                 width: 100%;
             }
+            #pdfimgholder {
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+            }
         </style>
 
     </head>
