@@ -35,14 +35,14 @@ function getPDFPageURL() {
         '&ts=' + (new Date()).getTime().toString();
 }
 
-function nextPage() {
+window.nextPage = function() {
     if (window.pdfpage < window.numpdfpages) {
         let newpage = window.pdfpage + 1;
         setPDFPage(newpage);
     }
 }
 
-function previousPage() {
+window.previousPage = function() {
     if (window.pdfpage > 1) {
         setPDFPage(window.pdfpage - 1);
     }

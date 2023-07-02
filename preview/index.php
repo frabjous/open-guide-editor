@@ -10,6 +10,7 @@
 session_start();
 // move to parent folder for easier access to the libraries
 chdir('..');
+$dirsave = getcwd();
 require_once 'php/libauthentication.php';
 
 // read access key
@@ -98,6 +99,8 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
     exit;
 }
 
+// return to folder for file checking
+chdir($dirsave);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -133,7 +136,10 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
         <script charset="utf-8" src="../js/panel.js"></script>
         <script type="module" charset="utf-8" src="../open-guide-misc/fetch.mjs"></script>
         <script type="module" charset="utf-8" src="<?php echo $outputext; ?>/viewer.mjs"></script>
-
+<?php $keyfile = $outputext . '/keys.mjs'; error_log($keyfile);
+    if (file_exists('preview/' . $keyfile)) { ?>
+        <script type="module" charset="utf-8" src="<?php echo $keyfile; ?>"></script>
+<?php } ?>
         <script>
             //LICENSE: GNU GPL v3
             window.accesskey = '<?php echo $accesskey; ?>';
