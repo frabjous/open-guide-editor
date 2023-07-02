@@ -30,24 +30,25 @@ document.body.addEventListener('keydown', function(e) {
         e.preventDefault();
         window.viewerparent.scrollTop =
             (window.viewerparent.scrollTop - 50);
+        return;
     }
     if (e.key == 'ArrowDown') {
         e.preventDefault();
         window.viewerparent.scrollTop =
             (window.viewerparent.scrollTop + 50);
+        return;
     }
     if (e.key == 'ArrowRight') {
+        console.log("got here");
         e.preventDefault();
         window.viewerparent.scrollLeft =
-            (window.viewerparent.scrollTop + 50);
+            (window.viewerparent.scrollLeft + 50);
+        return;
     }
     if (e.key == 'ArrowLeft') {
         e.preventDefault();
         window.viewerparent.scrollLeft =
-            (window.viewerparent.scrollTop - 50);
+            (window.viewerparent.scrollLeft - 50);
+        return;
     }
-    console.log('sh', window.viewerparent.scrollHeight, window.viewerparent.scrollWidth);
-    console.log('oh', window.viewerparent.offsetHeight, window.viewerparent.offsetWidth);
-    console.log('ch', window.viewerparent.clientHeight, window.viewerparent.clientWidth);
-    console.log('stsl', window.viewerparent.scrollTop, window.viewerparent.scrollLeft);
 });

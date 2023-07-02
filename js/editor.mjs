@@ -28,6 +28,7 @@ import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
+import { oneDark } from '@codemirror/theme-one-dark';
 //
 // Keymap and new commands for keymap
 //
@@ -117,6 +118,7 @@ let extensions = [
     indentUnit.of('    '),
     keymap.of([indentWithTab]),
     EditorView.lineWrapping,
+    oneDark,
     markdown()
 ];
 
