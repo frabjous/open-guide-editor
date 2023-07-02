@@ -28,7 +28,7 @@ import {markdown} from '@codemirror/lang-markdown';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap} from "@codemirror/view";
-import { oneDark } from '@codemirror/theme-one-dark';
+import { oneDarkTheme } from '@codemirror/theme-one-dark';
 //
 // Keymap and new commands for keymap
 //
@@ -78,6 +78,10 @@ const toggleWrap = function(view) {
     view.wrapoff();
 }
 
+oneDark["&.cm-focused .cm-selectionBackground, ::selection"] = {
+      backgroundColor: "#074",
+    };
+
 const additionalKeymap = [
     { key: "Ctrl-d", run: copyLineDown, preventDefault: true },
     { key: "Ctrl-x", run: smartDeleteLine },
@@ -118,8 +122,8 @@ let extensions = [
     indentUnit.of('    '),
     keymap.of([indentWithTab]),
     EditorView.lineWrapping,
-    oneDark,
-    markdown()
+    markdown(),
+    oneDarkTheme
 ];
 
 let editor = new EditorView({
