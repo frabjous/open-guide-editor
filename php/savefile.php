@@ -91,9 +91,10 @@ if (!isset($opts->outputext)) {
 // put filename in opts
 $opts->savedfile = $filename;
 
-// take root document from opts if present
-if (!isset($opts->rootdocument)) {
-    $opts->rootdocument = $filename;
+// take root document from settings if present
+$opts->rootdocument = $filename;
+if (isset($settings->rootdocument)) {
+    $opts->rootdocument = $settings->rootdocument;
 }
 
 // determine input and put extension
@@ -120,12 +121,15 @@ chdir($rootdir);
 $opts->origroot = $opts->rootdocument;
 $opts->rootdocument = basename($opts->fullroot);
 
+error_log('-------------------'.$opts->rootdocument);
+
 // $determine the outputfile
 //
 // note: since we are in the root document's folder, we will
 // use its basename to determine the root of the output file
 $opts->outputfile = mb_ereg_replace($inext . '$', $outext,
         basename($opts->fullroot));
+
 
 // allow overriding the output file in the settings
 if (isset($opts->routine->outputfile)) {
