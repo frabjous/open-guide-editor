@@ -216,6 +216,7 @@ if (!file_exists("$whereiwas/preview/$outputext/viewer.mjs")) {
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                background-color: white;
             }
             #pdfpage {
                 width: 100%;

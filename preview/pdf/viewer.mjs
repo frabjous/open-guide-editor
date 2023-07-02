@@ -76,11 +76,15 @@ function setPDFPage(n, forced = false) {
     window.slider.setValue();
 }
 
-function zoomChange(amt) {
-    if (window.pdfzoom <= 10 && (amt < 0)) { return;}
-    if (window.pdfzoom > 120) { amt = amt * 4};
-    if (window.pdfzoom > 250) { amt = amt * 10};
-    window.pdfzoom = window.pdfzoom + amt;
+function zoomChange(amt, reset = false) {
+    if (!reset) {
+        if (window.pdfzoom <= 10 && (amt < 0)) { return;}
+        if (window.pdfzoom > 120) { amt = amt * 4};
+        if (window.pdfzoom > 250) { amt = amt * 10};
+        window.pdfzoom = window.pdfzoom + amt;
+    } else {
+        window.pdfzoom = 100;
+    }
     window.pdfimageholder.style.width = window.pdfzoom.toString() + '%';
 }
 
@@ -143,7 +147,7 @@ window.onload = function() {
         "normal" : {
             icon: "fit_width",
             tooltip: "zoom reset",
-            clickfn: function() { zoomChange( 100 - window.pdfzoom  ); }
+            clickfn: function() { zoomChange(0, true); }
         }
     });
     window.panel.zoomresetButton.makeState("normal");
@@ -189,9 +193,7 @@ window.onload = function() {
         window.currpageind.innerHTML = this.value.toString();
     }
     window.slider.onchange = function() {
-         console.log('pre',window.pdfpage);
         setPDFPage(parseInt(this.value));
-         console.log('post',window.pdfpage);
     }
     // open first page of PDF
     setPDFPage(window.pdfpage, true);
@@ -204,6 +206,6 @@ window.viewerrefresh = function(opts) {
     if ("postprocessdata" in opts) {
         window.numpdfpages = readNumPages(opts.postprocessdata);
     }
-    setPDFPage(window.pdfpage);
+    setPDFPage(window.pdfpage, true);
     window.sendmessage({ refreshed: true });
 }
