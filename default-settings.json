@@ -7,6 +7,11 @@
         "interval": 300000,
         "directory": "/tmp"
     },
+    "readaloud": {
+        "md" : {
+            "command": "flite_cmu_us_slt -t \"%text%\" -o /dev/stdout | lame - -"
+        }
+    },
     "routines": {
         "md": {
             "html": {
