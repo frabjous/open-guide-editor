@@ -35,7 +35,11 @@ if (!isset($settings->readaloud->{$ext}->command)) {
 $cmd = $settings->readaloud->{$ext}->command;
 $cmd = str_replace( '%text%', '"' . $text . '"', $cmd);
 
-require_once 'open-guide-misc/libservelet.php';
+require_once('open-guide-misc/pipe.php');
+$res = pipe_to_command($cmd, '');
+
+/*
+require_once 'open-guide-misc/stream.php';
 
 // the opts should be an associative array with the following
 // "attachmentname" => "nameoffilefordownload.txt", [optional],
@@ -47,5 +51,9 @@ servelet_send(array(
     "command" => $cmd,
     "filename" => microtime(true) . '.mp3',
     "mimetype" => "audio/mpeg"
-));
+));*/
+
+require_once('open-guide-misc/stream.php');
+
+stream('/tmp/oge-audio.mp3');
 exit();

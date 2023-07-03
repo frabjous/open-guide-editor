@@ -71,16 +71,13 @@ function makeReadAloudButton() {
         // strip double quotation marks that might screw up cmd
         texttoread = texttoread.replace('"','');
         // get mp3 data from PHP
-        try {
         ogEditor.readaudio.src = 'php/getaudio.php?text=' +
             encodeURIComponent(texttoread) +
             '&accesskey=' + encodeURIComponent(window.accesskey) +
             '&ext=' + encodeURIComponent(window.thisextension);
-        } catch(err) {
-            console.log("catching");
-        }
         // start over from start of selected text
         ogEditor.readaudio.currentTime = 0;
+        ogEditor.readaudio.preload = true;
         // set to continue to next line on end, or stop
         ogEditor.readaudio.onended = () => {
             ogEditor.playNextLine();
@@ -91,11 +88,7 @@ function makeReadAloudButton() {
             return;
         }
         // play audio
-        try {
-            ogEditor.readaudio.play();
-        } catch(err) {
-            console.log("errprrrr");
-        }
+        ogEditor.readaudio.play();
     }
 
     ogEditor.stopReadAloud = function() {
