@@ -75,12 +75,23 @@ function makeReadAloudButton() {
             encodeURIComponent(texttoread) +
             '&accesskey=' + encodeURIComponent(window.accesskey) +
             '&ext=' + encodeURIComponent(window.thisextension);
+        console.log("here at " + (new Date()).getTime());
         // start over from start of selected text
         ogEditor.readaudio.currentTime = 0;
         // set to continue to next line on end, or stop
         ogEditor.readaudio.onended = () => {
             ogEditor.playNextLine();
             return;
+        }
+        ogEditor.readaudio.onerror = () => {
+            console.log("error");
+            ogEditor.playNextLine();
+            return;
+        }
+        ogEditor.readaudio.ondurationchange = (e) => {
+            if (isNaN(ogEditor.readaudio.duration)) {
+                ogEditor.playNextLine();
+            }
         }
         // play audio
         ogEditor.readaudio.play();
