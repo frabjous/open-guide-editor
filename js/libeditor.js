@@ -651,8 +651,11 @@ function powerUpEditor() {
     ogEditor.jumpButton.showOrHide = function() {
         const inext = window.rootextension;
         const outext = ogEditor?.outputSelectButton?.mystate ?? '';
-        if (("forwardjump" in ogeSettings?.routines?.[inext]?.[outext])
-            && (ogEditor?.previewButton.mystate == 'active')) {
+        if (("routines" in ogeSettings) &&
+            (inext in ogeSettings?.routines) &&
+            (outext in ogeSetttings?.routines?.[inext]) &&
+            ("forwardjump" in ogeSettings?.routines?.[inext]?.[outext]) &&
+            (ogEditor?.previewButton?.mystate == 'active')) {
             this.style.display = 'inline-block';
             return;
         }
