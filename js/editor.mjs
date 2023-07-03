@@ -24,6 +24,7 @@ import {
     insertBlankLine,
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
+import {CompletionContext} from "@codemirror/autocomplete";
 import {indentUnit} from '@codemirror/language';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
@@ -99,11 +100,29 @@ const additionalKeymap = [
     { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
+
+
+// bibliography completion
+function bibCompletions(context) {
+    let word = context.matchBefore(/@\w*/)
+    return {
+        from: word.from,
+        options: [
+            {label: "@abba", type: "text", detail: "authority always wins" },
+            {label: "@bard", type: "type" },
+            {label: "@abacus", type: "keyword" }
+        ]
+    }
+}
+
+
 // determine filetype
 const langExtensions = [];
 const ext = window.thisextension;
 if (ext == 'md') {
     langExtensions.push(markdown());
+    langExtensions.push(EditorState.languageData.of(( ) =>
+        [{autocomplete: bibCompletions}]));
 } else if (ext == 'css') {
     langExtensions.push(css());
 } else if ((ext == 'html') || (ext == 'html')) {
@@ -118,6 +137,7 @@ if (ext == 'md') {
 /*else if (ext == 'tex') {
     langExtensions.push(texSyntax());
 }*/
+
 
 //
 // Editor
