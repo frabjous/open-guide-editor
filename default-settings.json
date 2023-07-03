@@ -9,10 +9,10 @@
     },
     "readaloud": {
         "html" : {
-            "command": "flite_cmu_us_slt -t \"$(echo %text% | pandoc -f html -t plain)\" -o /dev/stdout | lame - -"
+            "command": "T=\"$(pandoc -f html -t plain <<< %text%)\" ; if [[ -n \"$T\" ]] ; then flite_cmu_us_slt -t \"$T\" -o /dev/stdout | lame - - ; else echo no ; fi"
         },
         "md" : {
-            "command": "flite_cmu_us_slt -t \"$(echo %text% | pandoc -f markdown -t plain)\" -o /dev/stdout | lame - -"
+            "command": "T=\"$(pandoc -f markdown -t plain <<< %text%)\" ; if [[ -n \"$T\" ]] ; then flite_cmu_us_slt -t \"$T\" -o /dev/stdout | lame - - ; else echo no ; fi"
         }
     },
     "routines": {
