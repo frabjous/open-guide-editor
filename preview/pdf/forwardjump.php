@@ -56,7 +56,7 @@ $opts->routine->command =
 require_once('php/libprocessing.php');
 require_once('open-guide-misc/pipe.php');
 
-$cmd = fill_processing_variables($opts)
+$cmd = fill_processing_variables($opts);
 
 $result = pipe_to_command($cmd);
 

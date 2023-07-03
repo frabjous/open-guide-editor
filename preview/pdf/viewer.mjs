@@ -89,7 +89,6 @@ function zoomChange(amt, reset = false) {
 }
 
 window.msghandler = async function(msg) {
-    console.log("received message", msg);
     if ((msg?.messagecmd == 'jump') && ("linenum" in msg)) {
         let response = await postData('pdf/forwardjump.php',{
             accesskey: window.accesskey,
@@ -98,7 +97,9 @@ window.msghandler = async function(msg) {
             outputfile: window.outputfile,
             linenum: msg.linenum
         });
-        console.log(response);
+        if (response?.respObj?.page >= 1) {
+            setPDFPage(response.respObj.page);
+        }
     }
 }
 
@@ -211,6 +212,15 @@ window.onload = function() {
     }
     // open first page of PDF
     setPDFPage(window.pdfpage, true);
+    window.pdfimg.ondblclick = function(e) {
+        let x = e.layerX;
+        let y = e.layerY;
+        let w = e.target.clientWidth;
+        let h = e.target.clientHeight;
+        let xperc = x/w;
+        let yperc = y/h;
+        let page = window.pdfpage;
+    }
     window.sendmessage({ loaded: 'pdf' });
 }
 
