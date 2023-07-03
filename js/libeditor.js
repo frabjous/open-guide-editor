@@ -59,7 +59,6 @@ function powerUpEditor() {
     ogEditor.forwardjump = function() {
         let r = ogEditor.state.selection.ranges[0];
         let linenum = ogEditor.state.doc.lineAt(r.from).number;
-        console.log("Sending message");
         ogEditor.sendmessage({ messagecmd: 'jump', linenum: linenum });
     }
 
@@ -109,7 +108,11 @@ function powerUpEditor() {
             let linenum = data.reverseJumpLine;
             if (data.reverseJumpFile  == (window.dirname + '/' +
                 window.basename)) {
-                console.log('go to line ' + linenum);
+                let pos = ogEditor.state.doc.line(linenum).from
+                ogEditor.dispatch(ogEditor.state.update({
+                    selection: { anchor: pos, head: pos },
+                    scrollIntoView: true
+                }));
             } else {
                 ogDialog.alertdiag('Jump spot is line ' +
                     linenum.toString() + ' in ' +

@@ -207,7 +207,7 @@ if (isset($settings->readaloud->{$thisextension})) {
             }
             window.onbeforeunload = function(e) {
                 // close viewer window when closing this window
-                if (window.viewerwindow !== false) {
+                if (window.viewerwindow) {
                     window.viewerwindow.close();
                 }
                 // prevent losing saved data

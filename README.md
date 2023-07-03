@@ -39,7 +39,7 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] smart quotes
     - [ ] error reports
     - [x] preview pdf
-    - [ ] synctex support
+    - [x] synctex support
 - [x] support html as input
     - [x] preview (itself)
 - [ ] templates
