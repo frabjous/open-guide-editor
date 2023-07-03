@@ -88,6 +88,19 @@ function zoomChange(amt, reset = false) {
     window.pdfimageholder.style.width = window.pdfzoom.toString() + '%';
 }
 
+window.msghandler = async function(msg) {
+    if ((msg?.messagecmd == 'jump') && ("linenum" in msg)) {
+        let response = await postData('pdf/forwardjump.php',{
+            accesskey: window.accesskey,
+            rootfile: window.rootfile,
+            filename: window.filename,
+            outputfile: window.outputfile,
+            linenum: msg.linenum
+        });
+        console.log(response);
+    }
+}
+
 window.onload = function() {
     // create the panel and put into place
     window.panel = document.getElementById("toppanel");
