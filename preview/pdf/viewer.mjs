@@ -228,7 +228,8 @@ window.onload = function() {
             xperc: xperc,
             yperc: yperc
         });
-        console.log("response");
+        console.log("response", response);
+    }
     window.sendmessage({ loaded: 'pdf' });
 }
 

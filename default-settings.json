@@ -53,9 +53,9 @@
             "pdf": {
                 "command": "pdflatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%",
                 "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
-                "getpagedimensions": "O=\"$(mutool pages %outputfile% %page% | grep '^<MediaBox')\" ; W=\"${O#*r=\\\"}\" ; W=\"${W%%\\\"*}\" ; echo $W ; H=\"${O#*t=\\\"}\" ; H=\"${H%%\\\"*}\" ; echo $H"
+                "getpagedimensions": "O=\"$(mutool pages %outputfile% %page% | grep '^<MediaBox')\" ; W=\"${O#*r=\\\"}\" ; W=\"${W%%\\\"*}\" ; echo $W ; H=\"${O#*t=\\\"}\" ; H=\"${H%%\\\"*}\" ; echo $H",
                 "forwardjump": "synctex view -i %line%:1:%savedfile% -o %outputfile% | grep -m 1 '^Page:' | sed 's/[^0-9]//g'",
-                "reversejump": ""
+                "reversejump": "synctex edit -o %page%:%x%:%y%:%outputfile%"
             },
             "epub": {
                  "command": "pandoc -f latex -t epub %rootdocument% -o %outputfile%"

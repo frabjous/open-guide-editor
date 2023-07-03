@@ -36,6 +36,7 @@ $linenum = $data->linenum ?? false;
 $xperc = $data->xperc;
 $yperc = $data->yperc;
 $page = $data->page;
+$opts->page = $page;
 
 $keydata = data_for_key($accesskey);
 if (!$keydata) {
@@ -48,30 +49,46 @@ $settings = merge_projectsettings(dirname($filename));
 $rootextension = pathinfo($rootfile, PATHINFO_EXTENSION);
 $outputextension = pathinfo($outputfile, PATHINFO_EXTENSION);
 
-if (!isset($settings->routines->{$rootextension}->{$outputextension}->forwardjump)) {
-    rage_quit(new StdClass(), 'No forward jump routine set for routine.');
+if (!isset($settings->routines->{$rootextension}->{$outputextension}->reversejump)) {
+    rage_quit(new StdClass(), 'No reverse jump command set for routine.');
+}
+if (!isset($settings->routines->{$rootextension}->{$outputextension}->getpagedimensions)) {
+    rage_quit(new StdClass(), 'No page dimensions command set for routine.');
 }
 $opts->routine = new StdClass();
 $opts->routine->command =
-    $settings->routines->{$rootextension}->{$outputextension}->forwardjump;
+    $settings->routines->{$rootextension}->{$outputextension}->getpagedimensions;
+$opts->routine->postprocess =
+    $settings->routines->{$rootextension}->{$outputextension}->reversejump;
 
 require_once('php/libprocessing.php');
 require_once('open-guide-misc/pipe.php');
 
-$cmd = fill_processing_variables($opts);
+$dcmd = fill_processing_variables($opts);
 
-$result = pipe_to_command($cmd);
+$page_dimen_result = pipe_to_command($dcmd);
 
-$page = trim($result->stdout);
+$dimens = explode("\n",trim($page_dimen_result->stdout));
 
-if ($page == '') { $page = '-1'; };
+if (count($dimens) < 2) {
+    rage_quit(new StdClss(), 'Unable to read page dimensions.');
+}
 
-$page = intval($page);
+$width = floatval($dimens[0]);
+$height = floatval($dimens[1]);
+
+$opts->x = ($width * $xperc);
+$opts->y = ($height * $yperc);
+
+$jcmd = fill_processing_variables($opts, true);
+
+$jumpresult = pipe_to_command($jcmd);
 
 $rv = new StdClass();
 
-$rv->page = $page;
-$rv->command = $cmd;
+$rv->line = $jumpresult->stdout;
+$rv->getpagedimensionscommand = $dcmd;
+$rv->reversejump = $jcmd;
 $rv->stdout = $result->stdout;
 $rv->stderr = $result->stderr;
 

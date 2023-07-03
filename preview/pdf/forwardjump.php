@@ -47,7 +47,7 @@ $rootextension = pathinfo($rootfile, PATHINFO_EXTENSION);
 $outputextension = pathinfo($outputfile, PATHINFO_EXTENSION);
 
 if (!isset($settings->routines->{$rootextension}->{$outputextension}->forwardjump)) {
-    rage_quit(new StdClass(), 'No forward jump routine set for routine.');
+    rage_quit(new StdClass(), 'No forward jump command set for routine.');
 }
 $opts->routine = new StdClass();
 $opts->routine->command =

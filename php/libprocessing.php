@@ -8,7 +8,9 @@
 ///////////////////////////////////////////////////////////////////////
 
 require_once 'open-guide-misc/pipe.php';
-$swapvariables = array('outputfile', 'page', 'rootdocument', 'savedfile', 'line');
+$swapvariables = array(
+    'outputfile', 'page', 'rootdocument', 'savedfile', 'line', 'x', 'y'
+);
 
 function fill_processing_variables($opts, $postprocess = false) {
     global $swapvariables;
