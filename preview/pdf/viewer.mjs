@@ -212,15 +212,23 @@ window.onload = function() {
     }
     // open first page of PDF
     setPDFPage(window.pdfpage, true);
-    window.pdfimg.ondblclick = function(e) {
+    window.pdfimg.ondblclick = async function(e) {
         let x = e.layerX;
         let y = e.layerY;
         let w = e.target.clientWidth;
         let h = e.target.clientHeight;
         let xperc = x/w;
         let yperc = y/h;
-        let page = window.pdfpage;
-    }
+        let response = await postData('pdf/reversejump.php', {
+            accesskey: window.accesskey,
+            rootfile: window.rootfile,
+            filename: window.filename,
+            outputfile: window.outputfile,
+            page: window.pdfpage,
+            xperc: xperc,
+            yperc: yperc
+        });
+        console.log("response");
     window.sendmessage({ loaded: 'pdf' });
 }
 
