@@ -228,7 +228,14 @@ window.onload = function() {
             xperc: xperc,
             yperc: yperc
         });
-        console.log("response", response);
+        if (("respObj" in response) && ("line" in response.respObj) &&
+            ("jumpfile" in response.respObj) &&
+            (response.respObj.line >= 1)) {
+            window.sendmessage({
+                reverseJumpLine: response.respObj.line,
+                reverseJumpFile: response.respObj.jumpfile
+            });
+        }
     }
     window.sendmessage({ loaded: 'pdf' });
 }

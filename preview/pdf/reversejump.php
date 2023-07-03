@@ -68,7 +68,7 @@ $dcmd = fill_processing_variables($opts);
 
 $page_dimen_result = pipe_to_command($dcmd);
 
-$dimens = explode("\n",trim($page_dimen_result->stdout));
+$dimens = explode(PHP_EOL,trim($page_dimen_result->stdout));
 
 if (count($dimens) < 2) {
     rage_quit(new StdClss(), 'Unable to read page dimensions.');
@@ -86,9 +86,27 @@ $jumpresult = pipe_to_command($jcmd);
 
 $rv = new StdClass();
 
-$rv->line = $jumpresult->stdout;
+$outlines = explode(PHP_EOL, trim($jumpresult->stdout));
+
+$jumpfile = '';
+$line = '';
+
+foreach($outlines as $outline) {
+    if (substr($outline,0,6) == 'Input:') {
+        $jumpfile = trim(substr($outline,6));
+    }
+    if (substr($outline,0,5) == 'Line:') {
+        $line = trim(substr($outline,5));
+    }
+}
+
+$line = intval($line) ?? -1;
+$jumpfile = realpath($jumpfile);
+
+$rv->line = $line;
+$rv->jumpfile = $jumpfile;
 $rv->getpagedimensionscommand = $dcmd;
-$rv->reversejump = $jcmd;
+$rv->reversejumpcommand = $jcmd;
 $rv->stdout = $result->stdout;
 $rv->stderr = $result->stderr;
 

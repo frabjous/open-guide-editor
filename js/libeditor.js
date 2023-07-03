@@ -105,6 +105,17 @@ function powerUpEditor() {
             window.viewedonce = true;
             ogEditor.jumpButton.showOrHide();
         }
+        if ((data?.reverseJumpLine) && (data?.reverseJumpFile)) {
+            let linenum = data.reverseJumpLine;
+            if (data.reverseJumpFile  == (window.dirname + '/' +
+                window.basename)) {
+                console.log('go to line ' + linenum);
+            } else {
+                ogDialog.alertdiag('Jump spot is line ' +
+                    linenum.toString() + ' in ' +
+                    data.reverseJumpFile);
+            }
+        }
         return true;
     }
     //
