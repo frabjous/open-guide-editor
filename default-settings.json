@@ -44,6 +44,19 @@
             "epub": {
                 "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%"
             }
+        },
+        "tex": {
+            "defaultext": "pdf",
+            "html": {
+                "command": "pandoc -f latex -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
+            },
+            "pdf": {
+                "command": "pdflatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%",
+                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l"
+            },
+            "epub": {
+                 "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%"
+            }
         }
     },
     "viewer": {
