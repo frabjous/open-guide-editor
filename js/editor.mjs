@@ -188,12 +188,14 @@ editor.closesearch = function() {
 }
 
 editor.linedown = function() {
-    cursorLineDown(this);
-}
-
-editor.pipedialog = function() {
-    this.dispatch(
-    )
+    const r = this.state.selection.ranges[0];
+    const ln = this.state.doc.lineAt(r.from).number;
+    const linenum = ln +1;
+    const pos = this.state.doc.line(linenum).from;
+    this.dispatch(this.state.update({
+        selection: { anchor: pos, head: pos },
+        scrollIntoView: true
+    }));
 }
 
 window.ogEditor = editor;

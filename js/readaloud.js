@@ -69,7 +69,7 @@ function makeReadAloudButton() {
             ogEditor.readaudio.controls = false;
         }
         // strip double quotation marks that might screw up cmd
-        texttoread = texttoread.replace('"','');
+        texttoread = texttoread.replaceAll('"','');
         // get mp3 data from PHP
         ogEditor.readaudio.src = 'php/getaudio.php?text=' +
             encodeURIComponent(texttoread) +

@@ -653,7 +653,7 @@ function powerUpEditor() {
         const outext = ogEditor?.outputSelectButton?.mystate ?? '';
         if (("routines" in ogeSettings) &&
             (inext in ogeSettings?.routines) &&
-            (outext in ogeSetttings?.routines?.[inext]) &&
+            (outext in ogeSettings?.routines?.[inext]) &&
             ("forwardjump" in ogeSettings?.routines?.[inext]?.[outext]) &&
             (ogEditor?.previewButton?.mystate == 'active')) {
             this.style.display = 'inline-block';
