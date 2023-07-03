@@ -104,14 +104,10 @@ const additionalKeymap = [
 
 // bibliography completion
 function bibCompletions(context) {
-    let word = context.matchBefore(/@\w*/)
+    let word = context.matchBefore(/@[a-zA-Z0-9_-]*/)
     return {
         from: word.from,
-        options: [
-            {label: "@abba", type: "text", detail: "authority always wins" },
-            {label: "@bard", type: "type", info: "i fight authority" },
-            {label: "@abacus", type: "keyword" }
-        ]
+        options: window.bibcompletions
     }
 }
 

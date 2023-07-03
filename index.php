@@ -81,7 +81,40 @@ if (isset($settings->readaloud->{$thisextension})) {
 // check if there is a bibliography
 $bibcompletions = [];
 if (isset($settings->bibliographies)) {
-    $
+    $rdirname = dirname($rootdocument);
+    foreach ($settings->bibliographies as $bibfile) {
+        $fullbibfile = $rdirname . '/' . $bibfile;
+        $bibfilecontents = file_get_contents($fullbibfile) ?? false;
+        if (!$bibfilecontents) { continue; }
+        $bibentries = json_decode($bibfilecontents) ?? false;
+        if (!$bibentries) { continue; }
+        foreach ($bibentries as $bibentry) {
+            $completion = new StdClass();
+            if (!isset($bibentry->id)) { continue; }
+            $completion->label = '@' . $bibentry->id;
+            $completion->type = 'text';
+            $detail = '';
+            if (isset($bibentry->author)) {
+                $lastnames = array_map( function($ae) {
+                    return $ae->family ?? '';
+                }, $bibentry->author);
+                $detail = implode('; ',$lastnames);
+            }
+            if ($detail == '') {
+                if (isset($bibentry->editor)) {
+                    $lastnames = array_map ( function($ee) {
+                        return $ee->family ?? '';
+                    }, $bibentry->editor);
+                    $detail .= implode('; ',$lastnames) . ', eds.';
+                }
+            }
+            if (isset($bibentry->title)) {
+                $detail .= ' – ' . $bibentry->title;
+            }
+            $completion->detail = $detail;
+            array_push($bibcompletions, $completion);
+        }
+    }
 }
 
 
@@ -176,6 +209,7 @@ if (isset($settings->bibliographies)) {
 
         <script>
             window.filecontents = <?php echo json_encode($file_contents); ?>;
+            window.bibcompletions = <?php echo json_encode($bibcompletions); ?>;
             window.poweruser = <?php echo json_encode($poweruser); ?>;
             window.accesskey = '<?php echo $accesskey; ?>';
             window.dirname = '<?php echo $dirname; ?>';
