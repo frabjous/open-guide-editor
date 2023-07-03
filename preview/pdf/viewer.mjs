@@ -89,6 +89,7 @@ function zoomChange(amt, reset = false) {
 }
 
 window.msghandler = async function(msg) {
+    console.log("received message", msg);
     if ((msg?.messagecmd == 'jump') && ("linenum" in msg)) {
         let response = await postData('pdf/forwardjump.php',{
             accesskey: window.accesskey,

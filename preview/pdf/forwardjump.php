@@ -3,9 +3,9 @@
 // Public License along with this program. If not, see
 // https://www.gnu.org/licenses/.
 
-////////////////////// gethtml.php ////////////////////////////////////
-// gets an html file on the system if authenticated and outputs it   //
-///////////////////////////////////////////////////////////////////////
+////////////////////// forwardjump.php ////////////////////////////////////
+// determines from the line number what page to go to in the PDF         //
+///////////////////////////////////////////////////////////////////////////
 
 session_start();
 
@@ -23,7 +23,7 @@ if ($data === false) {
     rage_quit(new StdClass(), 'Could not parse posted JSON.',400);
 }
 
-let $opts = new StdClass();
+$opts = new StdClass();
 //populate opts
 $accesskey = $data->accesskey ?? false;
 $rootfile = $data->rootfile ?? false;
@@ -49,41 +49,29 @@ $outputextension = pathinfo($outputfile, PATHINFO_EXTENSION);
 if (!isset($settings->routines->{$rootextension}->{$outputextension}->forwardjump)) {
     rage_quit(new StdClass(), 'No forward jump routine set for routine.');
 }
-$cmd = 
-
-
-}
 $opts->routine = new StdClass();
-$opts->routine->command = '';
-$mimetype = '';
-$convertext = '';
-if (isset($settings->viewer->pdf->convertcommand)) {
-    $opts->routine->command = $settings->viewer->pdf->convertcommand;
-    $convertextension = $settings->viewer->pdf->convertextension;
-    $mimetype = $settings->viewer->pdf->convertmimetype;
-}
+$opts->routine->command =
+    $settings->routines->{$rootextension}->{$outputextension}->forwardjump;
 
-if (($mimetype == '') || ($opts->routine->command == '') ||
-    ($convertextension == '')) {
-    header('Location: ../../meinongian-page.html');
-    exit(0);
-}
+require_once('php/libprocessing.php');
+require_once('open-guide-misc/pipe.php');
 
-// defines the command for filling in variables in commands
-require_once 'php/libprocessing.php';
-// defines the servelet_send command
-require_once 'open-guide-misc/libservelet.php';
+$cmd = fill_processing_variables($opts)
 
-// fill in the variables
-$cmd = fill_processing_variables($opts, false);
+$result = pipe_to_command($cmd);
 
-$tsname = 'pdfpage-' . $opts->page . '-' . $ts . '.' .
-    $convertextension;
+$page = trim($result->stdout);
 
-servelet_send(array(
-    "command" => $cmd,
-    "filename" => $tsname,
-    "mimetype" => $mimetype
-));
+if ($page == '') { $page = '-1'; };
 
+$page = intval($page);
+
+$rv = new StdClass();
+
+$rv->page = $page;
+$rv->command = $cmd;
+$rv->stdout = $result->stdout;
+$rv->stderr = $result->stderr;
+
+send_as_json($rv);
 exit(0);

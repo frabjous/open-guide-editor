@@ -59,6 +59,7 @@ function powerUpEditor() {
     ogEditor.forwardjump = function() {
         let r = ogEditor.state.selection.ranges[0];
         let linenum = ogEditor.state.doc.lineAt(r.from).number;
+        console.log("Sending message");
         ogEditor.sendmessage({ messagecmd: 'jump', linenum: linenum });
     }
 
