@@ -104,7 +104,8 @@ const additionalKeymap = [
 
 // bibliography completion
 function bibCompletions(context) {
-    let word = context.matchBefore(/@[a-zA-Z0-9_-]*/)
+    let word = context.matchBefore(/@[0-9A-Za-z_-]*/);
+    if (!word) {return false};
     return {
         from: word.from,
         options: window.bibcompletions
