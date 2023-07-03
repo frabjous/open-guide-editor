@@ -11,8 +11,11 @@
         "html" : {
             "command": "flite_cmu_us_slt -t \"$(pandoc -f html -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
         },
-        "md" : {
+        "md": {
             "command": "flite_cmu_us_slt -t \"$(pandoc -f markdown -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
+        },
+        "tex": {
+            "command": "flite_cmu_us_slt -t \"$(pandoc -f latex -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
         }
     },
     "routines": {

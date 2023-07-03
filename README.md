@@ -24,7 +24,7 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] preview pdf
     - [x] speak aloud
     - [x] download ePub
-- [ ] implement api for additing citations
+- [ ] implement api for adding citations
     - [ ] general api
     - [ ] PhilPapers specific integration
 - [ ] good documentation
@@ -40,13 +40,13 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] error reports
     - [ ] preview pdf
     - [ ] synctex support
-- [ ] support html as input
-    - [ ] preview (itself)
+- [x] support html as input
+    - [x] preview (itself)
 - [ ] templates
 - [ ] edit supplementary files with preview
-    - [ ] proper syntax highlighting for type of file
-    - [ ] css/svg for html/markdown
-    - [ ] latex package, bibtex database or included file
+    - [ ] proper syntax highlighting for type of file (partial)
+    - [x] css/svg for html/markdown
+    - [x] latex package, bibtex database or included file
 - [ ] provide git integration
     - [ ] doing a commit
     - [ ] revert to earlier commit

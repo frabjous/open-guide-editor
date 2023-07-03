@@ -37,7 +37,7 @@ $cmd = str_replace( '%text%', '"' . $text . '"', $cmd);
 
 require_once('open-guide-misc/pipe.php');
 $res = pipe_to_command($cmd, '');
-
+error_log($cmd);
 /*
 require_once 'open-guide-misc/stream.php';
 

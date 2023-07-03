@@ -32,6 +32,9 @@ import {keymap} from "@codemirror/view";
 import {markdown} from '@codemirror/lang-markdown';
 import {html} from '@codemirror/lang-html';
 import {css} from '@codemirror/lang-css';
+import {xml} from '@codemirror/lang-xml';
+import {json} from '@codemirror/lang-json';
+import {javascript} from '@codemirror/lang-javascript';
 //
 // Keymap and new commands for keymap
 //
@@ -97,12 +100,19 @@ const additionalKeymap = [
 ]
 // determine filetype
 const langExtensions = [];
-if (window.thisextension == 'md') {
+const ext = window.thisextension;
+if (ext == 'md') {
     langExtensions.push(markdown());
-} if (window.thisextension == 'css') {
+} else if (ext == 'css') {
     langExtensions.push(css());
-} if ((window.thisextension == 'html') || (window.thisextension == 'html')) {
+} else if ((ext == 'html') || (ext == 'html')) {
     langExtensions.push(html());
+} else if ((ext == 'svg') || (ext == 'xml')) {
+    langExtensions.push(xml());
+} else if (ext == 'json') {
+    langExtensions.push(json());
+} else if ((ext == 'js') || (ext == 'mjs')) {
+    langExtensions.push(javascript());
 }
 
 //
