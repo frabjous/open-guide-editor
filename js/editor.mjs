@@ -109,7 +109,7 @@ function bibCompletions(context) {
         from: word.from,
         options: [
             {label: "@abba", type: "text", detail: "authority always wins" },
-            {label: "@bard", type: "type" },
+            {label: "@bard", type: "type", info: "i fight authority" },
             {label: "@abacus", type: "keyword" }
         ]
     }

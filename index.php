@@ -68,6 +68,7 @@ $rootdocument = $fullfilename;
 if (isset($settings->rootdocument)) {
     $rootdocument = $settings->rootdocument;
 }
+$rootdocument = full_document_root($dirname, $rootdocument);
 $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
 
 // check if readloud should be done
@@ -75,6 +76,12 @@ $thisextension = pathinfo($basename, PATHINFO_EXTENSION);
 $readaloud = false;
 if (isset($settings->readaloud->{$thisextension})) {
     $readaloud = true;
+}
+
+// check if there is a bibliography
+$bibcompletions = [];
+if (isset($settings->bibliographies)) {
+    $
 }
 
 
