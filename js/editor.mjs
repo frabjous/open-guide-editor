@@ -15,6 +15,7 @@ import {
     cursorLineBoundaryBackward,
     copyLineDown,
     cursorCharLeft,
+    cursorLineDown,
     cursorLineUp,
     cursorMatchingBracket,
     deleteLine,
@@ -174,6 +175,10 @@ editor.opensearch = function() {
 
 editor.closesearch = function() {
     closeSearchPanel(this);
+}
+
+editor.linedown = function() {
+    cursorLineDown(this);
 }
 
 editor.pipedialog = function() {

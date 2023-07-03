@@ -8,6 +8,9 @@
         "directory": "/tmp"
     },
     "readaloud": {
+        "html" : {
+            "command": "flite_cmu_us_slt -t \"$(echo %text% | pandoc -f html -t plain)\" -o /dev/stdout | lame - -"
+        },
         "md" : {
             "command": "flite_cmu_us_slt -t \"$(echo %text% | pandoc -f markdown -t plain)\" -o /dev/stdout | lame - -"
         }
