@@ -42,6 +42,7 @@ function powerUpEditor() {
         window.viewerwindow == false;
         // set the button to off
         ogEditor.previewButton.makeState('inactive');
+        ogEditor.jumpButton.showOrHide();
     }
     //
     // Download function
@@ -51,6 +52,14 @@ function powerUpEditor() {
             download: true,
             outputext: outputext
         });
+    }
+    //
+    // Forward jump function
+    //
+    ogEditor.forwardjump = function() {
+        let r = ogEditor.state.selection.ranges[0];
+        let linenum = ogEditor.state.doc.lineAt(r.from).number;
+        ogEditor.sendmessage({ messagecmd: 'jump', linenum: linenum });
     }
 
     //
@@ -93,6 +102,7 @@ function powerUpEditor() {
         if (data?.refreshed || data?.loaded) {
             ogEditor.previewButton.makeState("active");
             window.viewedonce = true;
+            ogEditor.jumpButton.showOrHide();
         }
         return true;
     }
@@ -619,13 +629,19 @@ function powerUpEditor() {
         "normal" : {
             icon: "jump_to_element",
             tooltip: "jump to line output in preview",
-            clickfn: function() { ogeditor.forwardjump({}); }
+            clickfn: function() { ogEditor.forwardjump({}); }
         }
     });
     ogEditor.jumpButton.makeState("normal");
     ogEditor.jumpButton.showOrHide = function() {
+        const inext = window.rootextension;
+        const outext = ogEditor?.outputSelectButton?.mystate ?? '';
+        if (("forwardjump" in ogeSettings?.routines?.[inext]?.[outext])
+            && (ogEditor?.previewButton.mystate == 'active')) {
+            this.style.display = 'inline-block';
+            return;
+        }
         this.style.display = 'none';
-        this.style.display = 'inline-block';
     }
 
     // create button for picking what output routine to use
@@ -669,6 +685,7 @@ function powerUpEditor() {
                 pos = 0;
             }
             b.makeState(window.outputopts[pos]);
+            ogEditor.jumpButton.showOrHide();
             if ((b.mystate != st) && (window.viewerwindow !== false)) {
                 ogEditor.preview(true, { launch: true });
             }
@@ -768,6 +785,7 @@ function powerUpEditor() {
         });
         ogEditor.previewButton.makeState("inactive");
     }
+    ogEditor.jumpButton.showOrHide();
     // TODO: speak aloud button
     if (window.readaloud) { makeReadAloudButton(); }
 }
