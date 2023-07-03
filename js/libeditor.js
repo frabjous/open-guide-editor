@@ -593,7 +593,7 @@ function powerUpEditor() {
     ogEditor.findButton.makeState("normal");
 
     if (window.poweruser) {
-        // button for wrap
+        // button for piping to unix command
         ogEditor.pipeButton = panelButton({
             "normal" : {
                 icon: "terminal",
@@ -612,6 +612,20 @@ function powerUpEditor() {
             }
         });
         ogEditor.pipeButton.makeState("normal");
+    }
+
+    // button for forward jump
+    ogEditor.jumpButton = panelButton({
+        "normal" : {
+            icon: "jump_to_element",
+            tooltip: "jump to line output in preview",
+            clickfn: function() { ogeditor.forwardjump({}); }
+        }
+    });
+    ogEditor.jumpButton.makeState("normal");
+    ogEditor.jumpButton.showOrHide = function() {
+        this.style.display = 'none';
+        this.style.display = 'inline-block';
     }
 
     // create button for picking what output routine to use

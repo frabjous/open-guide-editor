@@ -52,10 +52,12 @@
             },
             "pdf": {
                 "command": "pdflatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%",
-                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l"
+                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
+                "forwardjump": "",
+                "reversejump": ""
             },
             "epub": {
-                 "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%"
+                 "command": "pandoc -f latex -t epub %rootdocument% -o %outputfile%"
             }
         }
     },

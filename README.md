@@ -35,10 +35,10 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] installation locally
     - [ ] server installation
     - [ ] security model
-- [ ] support LaTeX as input
+- [x] support LaTeX as input
     - [ ] smart quotes
     - [ ] error reports
-    - [ ] preview pdf
+    - [x] preview pdf
     - [ ] synctex support
 - [x] support html as input
     - [x] preview (itself)
