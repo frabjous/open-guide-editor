@@ -164,6 +164,9 @@ let extensions = [
             if (editor?.saveButton) {
                 if (editor.saveButton.mystate == 'unchanged') {
                     editor.saveButton.makeState('changed');
+                    if (editor.gitButton) {
+                        editor.gitButton.makeState("disabled");
+                    }
                 }
             }
             if (document.title) {

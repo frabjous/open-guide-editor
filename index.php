@@ -119,7 +119,7 @@ if (isset($settings->bibliographies)) {
 
 // check if git enabled
 $gitenabled = false;
-if (is_dir($rdirname + '/.git')) {
+if (is_dir($rdirname . '/.git')) {
     $gitenabled = true;
 }
 

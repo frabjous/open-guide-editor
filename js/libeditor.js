@@ -99,7 +99,7 @@ function powerUpEditor() {
             '<div><input type="text" id="gitentry"></div>' +
             '<div><button type="button" onclick="submitGitCmd()">make commit</button></div>' +
             '</div>';
-        window.gitDiv = ogDialog.popupform(formhtml,true);
+        window.gitBDiv = ogDialog.popupform(formhtml,true);
     }
     //actually process git commit
     ogEditor.gitcommit = async function(opts = {}, msg) {
@@ -108,7 +108,8 @@ function powerUpEditor() {
         // if there is a selection we only pipe it
         // post request to pipe to server
         let gitresult = await postData('php/gitcommit.php', {
-            msg: msg, opts: opts
+            msg: msg, opts: opts, accesskey: accesskey,
+            dirname: window.dirname, rootdocument: window.rootdocument
         });
         // respond to errors
         if (gitresult?.error
@@ -920,7 +921,7 @@ function submitGitCmd() {
     // close the form
     window.gitBDiv.closeMe();
     // don't process an empty command
-    if (cmd == '') { return; }
+    if (msg == '') { return; }
     // run filter
     ogEditor.gitcommit({},msg);
 }
