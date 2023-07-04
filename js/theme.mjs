@@ -49,7 +49,7 @@ const cursor = brightpurple;
 const selection = gray3;
 const selectionfg = white;
 const foreground = white;
-const background = gray1;
+const background = black;
 
 /// The editor theme styles for One Dark.
 export const ogeColorTheme = EditorView.theme({
@@ -85,10 +85,10 @@ export const ogeColorTheme = EditorView.theme({
         color: gray2,
     },
     ".cm-panels.cm-panels-top": {
-        borderBottom: "2px solid var(--black)"
+        borderBottom: "2px solid " + black
     },
     ".cm-panels.cm-panels-bottom": {
-        borderTop: "2px solid var(--black)"
+        borderTop: "2px solid " + black
     },
     ".cm-searchMatch": {
         backgroundColor: cyan + "33",
@@ -98,7 +98,7 @@ export const ogeColorTheme = EditorView.theme({
     },
 
     ".cm-activeLine": {
-        backgroundColor: '#0000002f'
+        backgroundColor: '#ffffff11'
     },
     ".cm-selectionMatch": {
         backgroundColor: green + "1a"
@@ -109,7 +109,7 @@ export const ogeColorTheme = EditorView.theme({
     },
 
     ".cm-gutters": {
-        backgroundColor: gray3,
+        backgroundColor: gray2,
         color: gray5,
         border: "none"
     },
@@ -122,7 +122,8 @@ export const ogeColorTheme = EditorView.theme({
     ".cm-foldPlaceholder": {
         backgroundColor: "transparent",
         border: "none",
-        color: gray6
+        color: white,
+        fontWeight: 'bold'
     },
 
     ".cm-tooltip": {
@@ -148,7 +149,7 @@ export const ogeColorTheme = EditorView.theme({
 /// The highlighting style for code in the One Dark theme.
 export const ogeHighlightStyle = HighlightStyle.define([
     {tag: t.keyword,
-        color: purple},
+        color: magenta},
     {tag: [t.name, t.deleted, t.character, t.propertyName, t.macroName],
         color: cyan},
     {tag: [t.function(t.variableName), t.labelName],
@@ -159,8 +160,8 @@ export const ogeHighlightStyle = HighlightStyle.define([
         color: foreground},
     {tag: [t.typeName, t.className, t.number, t.changed, t.annotation, t.modifier, t.self, t.namespace],
         color: yellow},
-    {tag: [t.operator, t.operatorKeyword, t.url, t.escape, t.regexp, t.link, t.special(t.string)],
-        color: magenta},
+    {tag: [t.operator, t.operatorKeyword, t.url, t.escape, t.regexp, t.special(t.string)],
+        color: purple},
     {tag: [t.meta, t.comment],
         color: gray4},
     {tag: t.strong,
@@ -170,9 +171,9 @@ export const ogeHighlightStyle = HighlightStyle.define([
     {tag: t.strikethrough,
         textDecoration: "line-through", color: gray4},
     {tag: t.link,
-        textDecoration: "underline", color: blue},
+        color: blue},
     {tag: t.heading,
-        fontWeight: "bold", textDecoration: "underline", color: purple },
+        fontWeight: "bold", textDecoration: "underline", color: magenta },
     {tag: [t.atom, t.bool, t.special(t.variableName)],
         color: orange },
     {tag: [t.processingInstruction, t.string, t.inserted],
