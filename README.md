@@ -89,7 +89,7 @@ The project is in early development and is not fully usable yet. More documentat
 
 **Alt-mouse click + drag**: Creates a “rectangular” selection, useful for working with, e.g., columns of a table.
 
-**Code folding:** If there are little arrow markers next to a line number of the left, these can be used to fold (hide) or unfold (show) parts of a document. This is not particularly useful in markdown except in yaml blocks, code blocks and quotations.
+**Code folding:** If there are little arrow markers next to a line number of the left, these can be used to fold (hide) or unfold (show) parts of a document. This is not particularly useful in markdown except in yaml blocks, code blocks and quotations, though it is possible to hide whole sections of the document as well.
 
 VIM KEY BINDS
 
