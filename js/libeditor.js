@@ -914,8 +914,21 @@ function powerUpEditor() {
         ogEditor.previewButton.makeState("inactive");
     }
     ogEditor.jumpButton.showOrHide();
-    // TODO: speak aloud button
+    // speak aloud button
     if (window.readaloud) { makeReadAloudButton(); }
+
+    ////////////////////////
+    // Keys on panel      //
+    ////////////////////////
+    // try to always maintain focus on the editor
+    let bd = document.body;
+    bd.addEventListener("mouseenter", function(e) {
+        ogEditor.focus();
+    });
+    let pc = document.getElementById("toppanelcontainer");
+    pc.addEventListener("click", function(e) {
+        ogEditor.focus();
+    });
 }
 
 function stdErrorInclusion(stderr) {

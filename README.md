@@ -54,6 +54,7 @@ The project is in early development and is not fully usable yet. More documentat
 - [ ] “Frege-ifier” integration
 - [ ] spellcheck
 - [ ] jump marks
+- [ ] swap out custom dialogs with codemirror panels
 - [ ] probably unimportant things
     - [ ] support other colorschemes
     - [ ] make find button grayed out when search panel inactive
