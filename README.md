@@ -52,9 +52,9 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] more?
 - [x] symbol picker
 - [ ] “Frege-ifier” integration
-- [ ] spellcheck
+- [x] spellcheck through browser’s native spellcheck
 - [ ] jump marks
-- [ ] swap out custom dialogs with codemirror panels
+- [x] swap out custom dialogs with codemirror panels (mostly done, could do more)
 - [ ] probably unimportant things
     - [ ] support other colorschemes
     - [ ] make find button grayed out when search panel inactive
@@ -97,10 +97,6 @@ VIM KEY BINDS
 {
                 modifiers = {},
                 keys = {
-                    ['Tab'] = 'indent/autocomplete',
-                    ['F1']  = 'fzf help search',
-                    ['F2']  = 'show syntax',
-                    ['F3']  = 'switch window',
                     ['F5']  = 'knap refresh',
                     ['F6']  = 'close viewer',
                     ['F7']  = 'toggle autopreview',
