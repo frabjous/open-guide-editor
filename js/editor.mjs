@@ -22,6 +22,8 @@ import {
     cursorMatchingBracket,
     deleteLine,
     deleteToLineEnd,
+    indentLess,
+    indentMore,
     indentWithTab,
     insertBlankLine,
     insertNewlineAndIndent,
@@ -97,14 +99,35 @@ const toggleWrap = function(view) {
     view.wrapoff();
 }
 
+// marks the current line number as the jump-to position
+const markJump = function(view) {
+    let cpos = view?.state?.selection?.main?.anchor ?? 0;
+    window.jumpline = view.state.doc.lineAt(cpos).number;
+    return true;
+    //TODO acknowledge or mark line
+}
+
+
+// jumps to the marked line number
+const jumpToMark = function(view) {
+    if (view.gotoline) { view.gotoline(window?.jumpline ?? 1); }
+}
+
 const additionalKeymap = [
     { key: "Ctrl-d", run: copyLineDown, preventDefault: true },
+    { key: "Ctrl-j", run: joinLines, preventDefault: true },
     { key: "Ctrl-x", run: smartDeleteLine },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
     { key: "Alt-5", run: cursorMatchingBracket, preventDefault: true },
+    { key: "Alt-j", run: jumpToMark, preventDefault: true },
+    { key: "Alt-m", run: markJump, preventDefault: true },
     { key: "Alt-n", run: gotoLineDiag, preventDefault: true },
     { key: "Alt-/", run: toggleComment, preventDefault: true },
     { key: "Alt-\\", run: pipeCmd, preventDefault: true },
+    { key: "Alt-,", run: indentLess, preventDefault: true },
+    { key: "Alt-<", run: indentLess, preventDefault: true },
+    { key: "Alt-.", run: indentMore, preventDefault: true },
+    { key: "Alt->", run: indentMore, preventDefault: true },
     { key: "Ctrl-\\", run: pipeCmd, preventDefault: true },
     { key: "Ctrl-|", run: pipeCmd, preventDefault: true },
     { key: "Ctrl-s", run: saveCmd, preventDefault: true },

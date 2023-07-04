@@ -241,6 +241,7 @@ if (is_dir($rdirname . '/.git')) {
             window.processedonce = {};
             window.viewedonce = false;
             window.viewerwindow = false;
+            window.jumpline = 1;
             window.onload = function() {
                 powerUpEditor();
                 // start autosave timer if applicable

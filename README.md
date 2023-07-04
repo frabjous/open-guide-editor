@@ -67,13 +67,17 @@ The project is in early development and is not fully usable yet. More documentat
 <!--
 
 | **Alt-5**: Move to matching bracket/parenthesis
+| **Alt-j**: Jump to last line marked with Alt-m
 | **Alt-l**: Select current line
+| **Alt-m**: Mark line as jump-to position
 | **Alt-n**: Go to specific line
 | **Alt-w**: Toggle line wrapping
 | **Alt-/**: Toggle comment
 | **Alt-\\**: Pipe text to unix command
 | **Alt-↑**: Move current line up
 | **Alt-↓**: Move current line down
+| **Alt-<**: Indent less
+| **Alt->**: Indent more
 | **Ctrl-a**: Select all
 | **Ctrl-d**: Duplicate current line
 | **Ctrl-k**: Delete to end of line
