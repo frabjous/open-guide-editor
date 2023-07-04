@@ -157,7 +157,9 @@ if (isset($settings->bibliographies)) {
         <script type="module" charset="utf-8" src='open-guide-misc/dialog.mjs'></script>
         <script type="module" charset="utf-8">
             import downloadFile from './open-guide-misc/download.mjs';
+            import symbolPicker from './open-guide-misc/symbol-picker.mjs';
             window.downloadFile = downloadFile;
+            window.symbolPicker = symbolPicker;
         </script>
         <style>
             html, body {
