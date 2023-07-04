@@ -103,13 +103,28 @@ const additionalKeymap = [
 
 
 // bibliography completion
-function bibCompletions(context) {
-    let word = context.matchBefore(/@[0-9A-Za-z_-]*/);
-    if (!word) {return false};
+function symCompletions(context) {
+    if (!context.explicit) {return null};
     return {
         from: word.from,
-        options: window.bibcompletions
+        options:[ 
+            {label: "→", detail: "arrow right"},
+            {label: "↑", detail: "arrow up"},
+            {label: "¬", detail: "negation"}
+        ]
     }
+}
+
+// bibliography completion
+function ogeCompletions(context) {
+    let word = context.matchBefore(/@[0-9A-Za-z_-]*/);
+    if (word) {
+        return {
+            from: word.from,
+            options: window.bibcompletions
+        };
+    }
+    if (!context.explicit) { return null; }
 }
 
 
@@ -119,7 +134,7 @@ const ext = window.thisextension;
 if (ext == 'md') {
     langExtensions.push(markdown());
     langExtensions.push(EditorState.languageData.of(( ) =>
-        [{autocomplete: bibCompletions}]));
+        [{autocomplete: ogeCompletions}]));
 } else if (ext == 'css') {
     langExtensions.push(css());
 } else if ((ext == 'html') || (ext == 'html')) {
