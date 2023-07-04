@@ -6,7 +6,7 @@ This is a sequel to, and will supersede, my earlier [K(ev)E(dit)](https://bitbuc
 
 The project is in early development and is not fully usable yet. More documentation to come.
 
-## TODO
+## Roadmap TODO
 
 - [x] implement authentication model for who is allowed to edit which files
 - [x] implement basic codemirror v6 editor with top panel
@@ -30,6 +30,7 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] basic usage
     - [ ] buttons
     - [ ] keybindings
+    - [ ] custom settings
     - [ ] installation locally
     - [ ] server installation
     - [ ] security model
@@ -45,7 +46,7 @@ The project is in early development and is not fully usable yet. More documentat
     - [ ] proper syntax highlighting for type of file (partial)
     - [x] css/svg for html/markdown
     - [x] latex package, bibtex database or included file
-- [ ] provide git integration
+- [x] provide git integration
     - [x] doing a commit
     - [ ] revert to earlier commit
     - [ ] more?

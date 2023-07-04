@@ -112,9 +112,10 @@ function powerUpEditor() {
             dirname: window.dirname, rootdocument: window.rootdocument
         });
         // respond to errors
-        if (("respObj" in gitresult) &&
-            ("nothing to commit" in gitresult.respObj) &&
-            (gitresult.respObj.nothingtocommit)) {
+        let didnothing = (("respObj" in gitresult) &&
+            ("nothingtocommit" in gitresult.respObj) &&
+            (gitresult.respObj.nothingtocommit));
+        if (didnothing) {
             ogDialog.alertdiag("Nothing to commit. Working tree clean.");
         } else {
             // respond to errors
@@ -136,7 +137,9 @@ function powerUpEditor() {
         } else {
             ogEditor.gitButton.makeState("disabled");
         }
-        ogDialog.alertdiag('Git commit “' + msg + '” successful.');
+        if (!didnothing) {
+            ogDialog.alertdiag('Git commit “' + msg + '” successful.');
+        }
     }
 
 

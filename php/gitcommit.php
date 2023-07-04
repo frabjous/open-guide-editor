@@ -68,7 +68,7 @@ if ($rv->result->returnvalue == 0) {
     $rv->error = false;
 } else {
     // could have failed because nothing to commit
-    if (strpos($rv->stdout,'working tree clean') !== false) {
+    if (strpos($rv->result->stdout,'working tree clean') !== false) {
         $rv->nothingtocommit = true;
         $rv->error = false;
     } else {
