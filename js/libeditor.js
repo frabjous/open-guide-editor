@@ -92,6 +92,46 @@ function powerUpEditor() {
             to: selectedto
         }
     }
+    // git dialog
+    ogEditor.gitcommitdialog = function() {
+        let formhtml = '<div class="oge-pipeform">' +
+            '<div><label for="gitentry">Git commit label/message:</label></div>' +
+            '<div><input type="text" id="gitentry"></div>' +
+            '<div><button type="button" onclick="submitGitCmd()">make commit</button></div>' +
+            '</div>';
+        window.gitDiv = ogDialog.popupform(formhtml,true);
+    }
+    //actually process git commit
+    ogEditor.gitcommit = async function(opts = {}, msg) {
+        // make button active
+        ogEditor.gitButton.makeState("processing");
+        // if there is a selection we only pipe it
+        // post request to pipe to server
+        let gitresult = await postData('php/gitcommit.php', {
+            msg: msg, opts: opts
+        });
+        // respond to errors
+        if (gitresult?.error
+            || (!("respObj" in gitresult))
+            || gitresult?.respObj?.error
+            || (!gitresult?.respObj)
+            || (!("replacement" in gitresult?.respObj))) {
+            ogEditor.gitButton.makeState("error");
+            ogDialog.errdiag("Error doing git commit. " +
+                (gitresult?.errMsg ?? '') + ' ' +
+                (gitresult?.respObj?.errMsg ?? ''));
+            return;
+        }
+        // change back to normal
+        if (ogEditor.saveButton.mystate == "unchanged") {
+            ogEditor.gitButton.makeState("enabled");
+        } else {
+            ogEditor.gitButton.makeState("disabled");
+        }
+        ogDialog.alertdiag('Git commit “' + msg + '” successful.');
+    }
+
+
     //
     // HANDLE MESSAGE FUNCTION
     //
@@ -312,6 +352,9 @@ function powerUpEditor() {
         const autosave = (("autosave" in opts) && (opts.autosave));
         if (!autosave) {
             ogEditor.saveButton.makeState("saving");
+            if (ogEditor.gitButton) {
+                ogEditor.gitButton.makeState("disabled");
+            }
         }
         // if also processing, then mark its button as such
         if (("routine" in opts) && (ogEditor?.processButton)) {
@@ -342,6 +385,9 @@ function powerUpEditor() {
                         // crazy response if filename choice canceled
                         if (dn == '---' && bn == '---') {
                             ogEditor.saveButton.makeState("changed");
+                            if (ogEditor.gitButton) {
+                                ogEditor.gitButton.makeState("disabled");
+                            }
                             return;
                         }
                         // start again with the filename chosen
@@ -389,6 +435,9 @@ function powerUpEditor() {
                 // mark as saved if no new changes were make
                 if (window.numchanges <= window.lastsavedat) {
                     ogEditor.saveButton.makeState('unchanged');
+                    if (ogEditor.gitButton) {
+                        ogEditor.gitButton.makeState("enabled");
+                    }
                     window.setTitle(false);
                 }
                 // if we have a new filename, so reload to it
@@ -422,6 +471,9 @@ function powerUpEditor() {
         // if there were errors saving the file, report them
         if (saveerror != '') {
             ogEditor.saveButton.makeState('error');
+            if (ogEditor.gitButton) {
+                ogEditor.gitButton.makeState("disabled");
+            }
             ogDialog.errdiag('Unable to save. ' + saveerror);
             // mark as no longer processing
             if ("routine" in opts) {
@@ -572,6 +624,32 @@ function powerUpEditor() {
         }
     });
     ogEditor.saveButton.makeState("unchanged");
+
+    if (window.gitenabled) {
+            ogEditor.gitButton = panelButton({
+            "disabled" : {
+                icon: "verified",
+                tooltip: "git commit (save first)",
+                clickfn: function() {}
+            },
+            "enabled" : {
+                icon: "verified",
+                tooltip: "git commit",
+                clickfn: function() { ogEditor.gitcommitdialog({}); }
+            },
+            "processing" : {
+                icon: "sync",
+                tooltip: "processing",
+                clickfn: function() {}
+            },
+            "error" : {
+                icon: "verified",
+                tooltip: "git error",
+                clickfn: function() { ogEditor.gitcommitdialog({}); }
+            }
+        });
+        ogEditor.gitButton.makeState("enabled");
+    }
 
     // button for opening
     ogEditor.openButton = panelButton({
@@ -831,6 +909,20 @@ function powerUpEditor() {
 
 function stdErrorInclusion(stderr) {
     return stderr;
+}
+
+// function to read pipe command form and start the filter
+function submitGitCmd() {
+    // ensure that the input field exists and read its value
+    let gitentry = document.getElementById("gitentry");
+    if (!gitentry) { return; }
+    let msg = gitentry.value.trim();
+    // close the form
+    window.gitBDiv.closeMe();
+    // don't process an empty command
+    if (cmd == '') { return; }
+    // run filter
+    ogEditor.gitcommit({},msg);
 }
 
 // function to read pipe command form and start the filter

@@ -70,6 +70,7 @@ if (isset($settings->rootdocument)) {
 }
 $rootdocument = full_document_root($dirname, $rootdocument);
 $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
+$rdirname = dirname($rootdocument);
 
 // check if readloud should be done
 $thisextension = pathinfo($basename, PATHINFO_EXTENSION);
@@ -81,7 +82,6 @@ if (isset($settings->readaloud->{$thisextension})) {
 // check if there is a bibliography
 $bibcompletions = [];
 if (isset($settings->bibliographies)) {
-    $rdirname = dirname($rootdocument);
     foreach ($settings->bibliographies as $bibfile) {
         $fullbibfile = $rdirname . '/' . $bibfile;
         $bibfilecontents = file_get_contents($fullbibfile) ?? false;
@@ -117,6 +117,11 @@ if (isset($settings->bibliographies)) {
     }
 }
 
+// check if git enabled
+$gitenabled = false;
+if (is_dir($rdirname + '/.git')) {
+    $gitenabled = true;
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -219,6 +224,7 @@ if (isset($settings->bibliographies)) {
             window.ogeSettings = <?php echo json_encode($settings); ?>;
             window.thisextension = '<?php echo $thisextension; ?>';
             window.rootextension = '<?php echo $rootextension; ?>';
+            window.gitenabled = <?php echo json_encode($gitenabled); ?>;
             window.rootdocument = window.dirname + '/' + window.basename;
             if (ogeSettings.rootdocument) {
                 window.rootdocument = ogeSettings.rootdocument;

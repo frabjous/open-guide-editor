@@ -24,9 +24,7 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] preview pdf
     - [x] speak aloud
     - [x] download ePub
-- [ ] implement api for adding citations
-    - [ ] general api
-    - [ ] PhilPapers specific integration
+- [x] implement api for adding citations
 - [ ] good documentation
     - [x] initial todo on readme
     - [ ] basic usage
@@ -43,15 +41,15 @@ The project is in early development and is not fully usable yet. More documentat
 - [x] support html as input
     - [x] preview (itself)
 - [ ] templates
-- [ ] edit supplementary files with preview
+- [x] edit supplementary files with preview
     - [ ] proper syntax highlighting for type of file (partial)
     - [x] css/svg for html/markdown
     - [x] latex package, bibtex database or included file
 - [ ] provide git integration
-    - [ ] doing a commit
+    - [x] doing a commit
     - [ ] revert to earlier commit
     - [ ] more?
-- [ ] symbol/emoji picker
+- [x] symbol picker
 - [ ] “Frege-ifier” integration
 - [ ] spellcheck
 - [ ] jump marks
