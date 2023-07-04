@@ -29,12 +29,12 @@ function createPnl(view) {
     }
     window.ogePanel.innerHTML = '';
     window.ogePanel.className = "cm-oge-panel";
-    return { top: true, window.ogePanel };
+    return { top: true, dom: window.ogePanel };
 }
 
 export function toggleOgePanel(view) {
     view.dispatch({
-        effects: togglePnl.of(!view.state.field(pnlState));
+        effects: togglePnl.of(!view.state.field(pnlState))
     });
     return true;
 }

@@ -94,12 +94,14 @@ function powerUpEditor() {
     }
     // git dialog
     ogEditor.gitcommitdialog = function() {
-        let formhtml = '<div class="oge-pipeform">' +
-            '<div><label for="gitentry">Git commit label/message:</label></div>' +
-            '<div><input type="text" id="gitentry"></div>' +
-            '<div><button type="button" onclick="submitGitCmd()">make commit</button></div>' +
+        ogEditor.togglePanel();
+        if (!window.ogePanel) { return; }
+        window.ogePanel.innerHTML = '<div class="oge-formpanel">' +
+            '<span title="close" onclick="ogEditor.togglePanel();" style="float:right; cursor: pointer;">×</span>' +
+            '<div><label for="gitentry">Git commit label/message:</label> ' +
+            '<input type="text" id="gitentry"> ' +
+            '<button type="button" onclick="submitGitCmd()">make commit</button></div>' +
             '</div>';
-        window.gitBDiv = ogDialog.popupform(formhtml,true);
     }
     //actually process git commit
     ogEditor.gitcommit = async function(opts = {}, msg) {
@@ -252,12 +254,14 @@ function powerUpEditor() {
     //
     // create form for getting pipe command
     ogEditor.pipedialog = function() {
-        let formhtml = '<div class="oge-pipeform">' +
-            '<div><label for="pipeentry">Unix pipe command to filter through:</label></div>' +
-            '<div><input type="text" id="pipeentry"></div>' +
-            '<div><button type="button" onclick="submitPipeCmd()">run filter</button></div>' +
+        ogEditor.togglePanel();
+        if (!window.ogePanel) { return; }
+        window.ogePanel.innerHTML = '<div class="oge-formpanel">' +
+            '<span title="close" onclick="ogEditor.togglePanel();" style="float:right; cursor: pointer;">×</span>' +
+            '<div><label for="pipeentry">Unix pipe command to filter through:</label> ' +
+            '<input type="text" id="pipeentry"> ' +
+            '<button type="button" onclick="submitPipeCmd()">run filter</button></div>' +
             '</div>';
-        window.pipeBDiv = ogDialog.popupform(formhtml,true);
     }
 
     //actually process the pipe command
@@ -943,7 +947,7 @@ function submitGitCmd() {
     if (!gitentry) { return; }
     let msg = gitentry.value.trim();
     // close the form
-    window.gitBDiv.closeMe();
+    ogEditor.togglePanel();
     // don't process an empty command
     if (msg == '') { return; }
     // run filter
@@ -957,7 +961,7 @@ function submitPipeCmd() {
     if (!pipeentry) { return; }
     let cmd = pipeentry.value.trim();
     // close the form
-    window.pipeBDiv.closeMe();
+    ogEditor.togglePanel();
     // don't process an empty command
     if (cmd == '') { return; }
     // run filter

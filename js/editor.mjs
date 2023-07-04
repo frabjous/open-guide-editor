@@ -41,7 +41,7 @@ import {javascript} from '@codemirror/lang-javascript';
 
 // my package
 import { ogeTheme } from './theme.mjs';
-import { ogePanel, toggleOglePanel } from './cmpanels.mjs';
+import { ogePanel, toggleOgePanel } from './cmpanels.mjs';
 
 // Keymap and new commands for keymap
 //
@@ -232,7 +232,11 @@ editor.linedown = function() {
 }
 
 editor.goright = function() {
-    cursorCharRight(editor);
+    cursorCharRight(this);
+}
+
+editor.togglePanel = function() {
+    toggleOgePanel(this);
 }
 
 window.ogEditor = editor;
