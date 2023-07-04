@@ -213,7 +213,7 @@ chdir($dirsave);
                 height: 100%;
                 padding: 0;
                 margin: 0;
-                background-color: var(--gray5);
+                background-color: var(--gray2);
                 overflow: auto;
             }
             #viewerparent iframe {
