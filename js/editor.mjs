@@ -41,6 +41,7 @@ import {javascript} from '@codemirror/lang-javascript';
 
 // my package
 import { ogeTheme } from './theme.mjs';
+import { ogePanel, toggleOglePanel } from './cmpanels.mjs';
 
 // Keymap and new commands for keymap
 //
@@ -145,6 +146,7 @@ if (ext == 'md') {
 // Editor
 //
 let extensions = [
+    ogePanel(),
     keymap.of(additionalKeymap),
     search({ top: true }),
     EditorView.updateListener.of((update) => {
