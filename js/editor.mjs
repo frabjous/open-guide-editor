@@ -25,12 +25,12 @@ import {
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
 import {CompletionContext} from "@codemirror/autocomplete";
-import {indentUnit} from '@codemirror/language';
+import {indentUnit, syntaxHighlighting} from '@codemirror/language';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap, scrollPastEnd} from "@codemirror/view";
 // languages
-import {markdown} from '@codemirror/lang-markdown';
+import {markdown, markdownLanguage} from '@codemirror/lang-markdown';
 import {html} from '@codemirror/lang-html';
 import {css} from '@codemirror/lang-css';
 import {xml} from '@codemirror/lang-xml';
@@ -132,7 +132,7 @@ function ogeCompletions(context) {
 const langExtensions = [];
 const ext = window.thisextension;
 if (ext == 'md') {
-    langExtensions.push(markdown());
+    langExtensions.push(markdown({base: markdownLanguage}));
     langExtensions.push(EditorState.languageData.of(( ) =>
         [{autocomplete: ogeCompletions}]));
 } else if (ext == 'css') {
