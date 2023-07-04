@@ -435,6 +435,7 @@ function powerUpEditor() {
         if (processingerror != '') {
             if (ogEditor.processButton) {
                 ogEditor.processButton.makeState('error');
+                console.log(respObj);
                 // make download button error if download
                 if ((opts?.download) &&
                     (ogEditor?.downloadButtons?.[opts.outputext])) {
@@ -606,6 +607,26 @@ function powerUpEditor() {
         }
     });
     ogEditor.wrapButton.makeState("active");
+
+    // button for glyph
+    ogEditor.glyphButton = panelButton({
+        "active" : {
+            icon: "glyphs",
+            tooltip: "insert special character or symbol",
+            clickfn: function() { window.symbolPicker(function (c) {
+                let sel = ogEditor.state.selection.ranges[0];
+                ogEditor.dispatch(ogEditor.state.update({
+                    changes: {
+                        from: sel.from,
+                        to: sel.to,
+                        insert: c
+                    }
+                }));
+            }, 24)}
+        }
+    });
+    ogEditor.glyphButton.makeState("active");
+
 
     // button for find
     ogEditor.findButton = panelButton({

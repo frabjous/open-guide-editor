@@ -121,8 +121,6 @@ chdir($rootdir);
 $opts->origroot = $opts->rootdocument;
 $opts->rootdocument = basename($opts->fullroot);
 
-error_log('-------------------'.$opts->rootdocument);
-
 // $determine the outputfile
 //
 // note: since we are in the root document's folder, we will
