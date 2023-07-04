@@ -74,6 +74,16 @@ export const ogeColorTheme = EditorView.theme({
         color: foreground,
         fontFamily: 'sans-serif'
     },
+    ".cm-panel .cm-textfield": {
+        backgroundColor: white,
+        color: black,
+    },
+    ".cm-panel button[name=\"close\"]": {
+        color: brightred,
+    },
+    ".cm-panel .cm-textfield::placeholder": {
+        color: gray2,
+    },
     ".cm-panels.cm-panels-top": {
         borderBottom: "2px solid var(--black)"
     },
