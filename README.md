@@ -81,6 +81,7 @@ The project is in early development and is not fully usable yet. More documentat
 | **Ctrl-a**: Select all
 | **Ctrl-d**: Duplicate current line
 | **Ctrl-k**: Delete to end of line
+| **Ctrl-j**: Join the currently selected lines into one line
 | **Ctrl-s**: Save
 | **Ctrl-x**: Cut, or cut whole line if nothing selected
 | **Ctrl-/**: Toggle comment

@@ -24,6 +24,7 @@ import {
     deleteToLineEnd,
     indentLess,
     indentMore,
+    indentSelection,
     indentWithTab,
     insertBlankLine,
     insertNewlineAndIndent,
@@ -99,6 +100,21 @@ const toggleWrap = function(view) {
     view.wrapoff();
 }
 
+const joinLines = function(view) {
+    let fr = view.state.selection.main.from;
+    let to = view.state.selection.main.to;
+    let stuff = view.state.sliceDoc(fr, to);
+    let newstuff = stuff.replace(/\s*\n\s*/g,' ');
+    view.dispatch(view.state.update({
+        changes: {
+            from: fr,
+            to: to,
+            insert: newstuff
+        }
+    }));
+    return true;
+}
+
 // marks the current line number as the jump-to position
 const markJump = function(view) {
     let cpos = view?.state?.selection?.main?.anchor ?? 0;
@@ -125,13 +141,20 @@ const additionalKeymap = [
     { key: "Alt-/", run: toggleComment, preventDefault: true },
     { key: "Alt-\\", run: pipeCmd, preventDefault: true },
     { key: "Alt-,", run: indentLess, preventDefault: true },
+    { key: "Ctrl-,", run: indentLess, preventDefault: true },
     { key: "Alt-<", run: indentLess, preventDefault: true },
+    { key: "Ctrl-<", run: indentLess, preventDefault: true },
     { key: "Alt-.", run: indentMore, preventDefault: true },
+    { key: "Ctrl-.", run: indentMore, preventDefault: true },
     { key: "Alt->", run: indentMore, preventDefault: true },
+    { key: "Ctrl->", run: indentMore, preventDefault: true },
     { key: "Ctrl-\\", run: pipeCmd, preventDefault: true },
     { key: "Ctrl-|", run: pipeCmd, preventDefault: true },
     { key: "Ctrl-s", run: saveCmd, preventDefault: true },
     { key: "Alt-w", run: toggleWrap, preventDefault: true },
+    { key: "Shift-Tab", run: indentSelection, preventDefault: true },
+    { key: "Alt-Shift-Tab", run: indentSelection, preventDefault: true },
+    { key: "Alt-Tab", run: indentSelection, preventDefault: true },
     { key: "Ctrl-ArrowUp", run: insertBlankLineUp, preventDefault: true },
     { key: "Ctrl-ArrowDown", run: insertBlankLine, preventDefault: true }
 ]
