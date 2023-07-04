@@ -41,6 +41,7 @@ import {javascript} from '@codemirror/lang-javascript';
 
 // my package
 import getOgeStyle from './highlight.mjs';
+import { myColorTheme } from './mytheme.mjs';
 
 // Keymap and new commands for keymap
 //
@@ -188,6 +189,7 @@ let extensions = [
     scrollPastEnd(),
     EditorView.lineWrapping,
     syntaxHighlighting(ogeHighlightStyle),
+    myColorTheme,
     langExtensions
 ];
 
