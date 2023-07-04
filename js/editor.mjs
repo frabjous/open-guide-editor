@@ -28,7 +28,7 @@ import {CompletionContext} from "@codemirror/autocomplete";
 import {indentUnit} from '@codemirror/language';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
-import {keymap} from "@codemirror/view";
+import {keymap, scrollPastEnd} from "@codemirror/view";
 // languages
 import {markdown} from '@codemirror/lang-markdown';
 import {html} from '@codemirror/lang-html';
@@ -179,6 +179,7 @@ let extensions = [
     }),
     indentUnit.of('    '),
     keymap.of([indentWithTab]),
+    scrollPastEnd(),
     EditorView.lineWrapping,
     langExtensions
 ];
