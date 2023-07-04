@@ -10,7 +10,7 @@
 //
 // Modules
 //
-import {indentUnit, HighlightStyle, syntaxHighlighting} from '@codemirror/language';
+import {indentUnit} from '@codemirror/language';
 import {EditorView, basicSetup} from "codemirror";
 import {
     cursorLineBoundaryBackward,
@@ -26,7 +26,6 @@ import {
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
 import {CompletionContext} from "@codemirror/autocomplete";
-import {tags} from "@lezer/highlight";
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap, scrollPastEnd} from "@codemirror/view";
@@ -40,8 +39,7 @@ import {javascript} from '@codemirror/lang-javascript';
 //import { texSyntax } from "lang-tex";
 
 // my package
-import getOgeStyle from './highlight.mjs';
-import { myColorTheme } from './mytheme.mjs';
+import { ogeTheme } from './theme.mjs';
 
 // Keymap and new commands for keymap
 //
@@ -108,19 +106,6 @@ const additionalKeymap = [
 
 
 // bibliography completion
-function symCompletions(context) {
-    if (!context.explicit) {return null};
-    return {
-        from: word.from,
-        options:[ 
-            {label: "→", detail: "arrow right"},
-            {label: "↑", detail: "arrow up"},
-            {label: "¬", detail: "negation"}
-        ]
-    }
-}
-
-// bibliography completion
 function ogeCompletions(context) {
     let word = context.matchBefore(/@[0-9A-Za-z_-]*/);
     if (word) {
@@ -131,9 +116,6 @@ function ogeCompletions(context) {
     }
     if (!context.explicit) { return null; }
 }
-
-//highstyle style
-const ogeHighlightStyle = getOgeStyle(HighlightStyle, tags);
 
 // determine filetype
 const langExtensions = [];
@@ -163,7 +145,6 @@ if (ext == 'md') {
 //
 let extensions = [
     keymap.of(additionalKeymap),
-    basicSetup,
     search({ top: true }),
     EditorView.updateListener.of((update) => {
         if (update.docChanged) {
@@ -188,8 +169,8 @@ let extensions = [
     keymap.of([indentWithTab]),
     scrollPastEnd(),
     EditorView.lineWrapping,
-    syntaxHighlighting(ogeHighlightStyle),
-    myColorTheme,
+    basicSetup,
+    ogeTheme,
     langExtensions
 ];
 

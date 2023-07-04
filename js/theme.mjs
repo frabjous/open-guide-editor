@@ -46,12 +46,12 @@ const red = "#df8787";
 const white = "#dee3e8";
 const yellow = "#ffffaf";
 const cursor = brightpurple;
-const selection = brightblue;
+const selection = gray3;
 const foreground = white;
-const background = gray1';
+const background = gray1;
 
 /// The editor theme styles for One Dark.
-export const ogeTheme = EditorView.theme({
+export const ogeColorTheme = EditorView.theme({
     "&": {
         color: foreground,
         backgroundColor: background
@@ -83,7 +83,7 @@ export const ogeTheme = EditorView.theme({
         outline: "1px solid blue"
     },
     ".cm-searchMatch.cm-searchMatch-selected": {
-        backgroundColor: brightblue +"2f"
+        backgroundColor: blue +"2f"
     },
 
     ".cm-activeLine": {
@@ -99,12 +99,13 @@ export const ogeTheme = EditorView.theme({
 
     ".cm-gutters": {
         backgroundColor: gray3,
-        color: brightgray5,
+        color: gray5,
         border: "none"
     },
 
     ".cm-activeLineGutter": {
-        backgroundColor: selection
+        backgroundColor: selection,
+        color: gray1
     },
 
     ".cm-foldPlaceholder": {
@@ -122,7 +123,7 @@ export const ogeTheme = EditorView.theme({
         borderBottomColor: "transparent"
     },
     ".cm-tooltip .cm-tooltip-arrow:after": {
-        borderTopColor: gray1
+        borderTopColor: gray1,
         borderBottomColor: gray1
     },
     ".cm-tooltip-autocomplete": {
@@ -136,41 +137,39 @@ export const ogeTheme = EditorView.theme({
 /// The highlighting style for code in the One Dark theme.
 export const ogeHighlightStyle = HighlightStyle.define([
     {tag: t.keyword,
-        color: brightpurple},
+        color: purple},
     {tag: [t.name, t.deleted, t.character, t.propertyName, t.macroName],
-        color: brightcyan},
+        color: cyan},
     {tag: [t.function(t.variableName), t.labelName],
-        color: brightblue},
+        color: blue},
     {tag: [t.color, t.constant(t.name), t.standard(t.name)],
-        color: brightorange},
+        color: orange},
     {tag: [t.definition(t.name), t.separator],
         color: foreground},
     {tag: [t.typeName, t.className, t.number, t.changed, t.annotation, t.modifier, t.self, t.namespace],
-        color: brightyellow},
+        color: yellow},
     {tag: [t.operator, t.operatorKeyword, t.url, t.escape, t.regexp, t.link, t.special(t.string)],
-        color: brightmagenta},
+        color: magenta},
     {tag: [t.meta, t.comment],
-        color: brightgray4},
+        color: gray4},
     {tag: t.strong,
-        fontWeight: "bold", color: brightblue},
+        fontWeight: "bold", color: blue},
     {tag: t.emphasis,
-        fontStyle: "italic", color: brightred},
+        fontStyle: "italic", color: red},
     {tag: t.strikethrough,
-        textDecoration: "line-through", color: brightgray4},
+        textDecoration: "line-through", color: gray4},
     {tag: t.link,
-        color: stone,
         textDecoration: "underline", color: blue},
     {tag: t.heading,
-        fontWeight: "bold", textDecoration: "underline", color: brightpurple
-        color: coral},
+        fontWeight: "bold", textDecoration: "underline", color: purple },
     {tag: [t.atom, t.bool, t.special(t.variableName)],
-        color: brightorange },
+        color: orange },
     {tag: [t.processingInstruction, t.string, t.inserted],
-        color: brightgreen},
+        color: green},
     {tag: t.invalid,
         color: red},
 ])
 
 /// Extension to enable the One Dark theme (both the editor theme and
 /// the highlight style).
-export const ogeTheme = [ogeTheme, syntaxHighlighting(ogeHighlightStyle)]
+export const ogeTheme = [ogeColorTheme, syntaxHighlighting(ogeHighlightStyle)]
