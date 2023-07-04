@@ -1,20 +1,37 @@
 
 :root {
-    --blue: #2727FF;
-    --white: #F1FAFF;
-    --purple: #770088;
-    --red: #a11;
-    --lightred: #e40;
-    --lightgreen: #CCFFBB;
-    --lightblue: #cceeff;
-    --black: #000000;
-    --gray0: #222222;
-    --gray2: #444444;
-    --gray3: #666666;
-    --gray4: #888888;
-    --gray5: #AAAAAA;
-    --gray6: #bbbbbb;
-    --gray7: #dddddd;
-    --green: #61bC42;
+    --accent: "#87afdf";
+    --brightblack: "#898a8b";
+    --brightblue: "#c3d7ef";
+    --brightcyan: "#d7efef";
+    --brightgray1: "#97989a";
+    --brightgray2: "#a6a7a9";
+    --brightgray3: "#b4b6b8";
+    --brightgray4: "#c3c5c7";
+    --brightgray5: "#d1d3d6";
+    --brightgray6: "#e0e2e4";
+    --brightgreen: "#d7efc3";
+    --brightmagenta: "#efd7ef";
+    --brightorange: "#fad7b8";
+    --brightpurple: "#c7ace4";
+    --brightred: "#efc3c3";
+    --brightwhite: "#eef1f3";
+    --brightyellow: "#ffffd7"
+    --black: "#131518";
+    --blue: "#87afdf";
+    --cyan: "#afdfdf";
+    --gray1: "#303236";
+    --gray2: "#4d5053";
+    --gray3: "#6a6d71";
+    --gray4: "#878b8f";
+    --gray5: "#a4a8ad";
+    --gray6: "#c1c6ca";
+    --green: "#afdf87";
+    --magenta: "#dfafdf";
+    --orange: "#f5af71";
+    --purple: "#8f5ac9";
+    --red: "#df8787";
+    --white: "#dee3e8";
+    --yellow: "#ffffaf"
 }
 
