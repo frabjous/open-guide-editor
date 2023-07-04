@@ -43,7 +43,8 @@
             },
             "epub": {
                 "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%"
-            }
+            },
+            "spellcheck": true
         },
         "tex": {
             "defaultext": "pdf",

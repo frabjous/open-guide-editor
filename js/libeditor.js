@@ -934,6 +934,20 @@ function powerUpEditor() {
     pc.addEventListener("click", function(e) {
         ogEditor.focus();
     });
+    /////////////////////////////////////
+    // Possibly enable spellchecking?  //
+    /////////////////////////////////////
+    if ((window.ogeSettings) &&
+        ("routines" in window.ogeSettings) &&
+        (window.thisextension in window.ogeSettings.routines) &&
+        ("spellcheck" in window.ogeSettings.routines[window.thisextension]) &&
+        (window.ogeSettings.routines[window.thisextension].spellcheck)) {
+        let cmContents = document.getElementsByClassName("cm-content");
+        if (cmContents && cmContents.length > 0) {
+            cmContents[0].spellcheck = true;
+        }
+    }
+
 }
 
 function stdErrorInclusion(stderr) {
