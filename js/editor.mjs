@@ -36,9 +36,12 @@ import {html} from '@codemirror/lang-html';
 import {css} from '@codemirror/lang-css';
 import {xml} from '@codemirror/lang-xml';
 import {json} from '@codemirror/lang-json';
-import {javascript} from '@codemirror/lang-javascript';
+import {javascript} from '@codemirror/lang-javascript'; 
 //import { texSyntax } from "lang-tex";
-//
+
+// my package
+import getOgeStyle from './highlight.mjs';
+
 // Keymap and new commands for keymap
 //
 const saveCmd = function(view) {
@@ -129,12 +132,7 @@ function ogeCompletions(context) {
 }
 
 //highstyle style
-const ogeHighlightStyle = HighlightStyle.define([
-  {tag: tags.keyword, color: "#fc6"},
-  {tag: tags.comment, color: "#f5d", fontStyle: "italic"},
-  {tag: tags.emphasis, color: "#f5d", fontStyle: "italic"},
-  {tag: tags.strong, color: "#f5d", fontStyle: "italic"},
-])
+const ogeHighlightStyle = getOgeStyle(HighlightStyle, tags);
 
 // determine filetype
 const langExtensions = [];

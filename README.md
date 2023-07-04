@@ -87,7 +87,9 @@ The project is in early development and is not fully usable yet. More documentat
 
 **Control-mouse click**: Creates another cursor instead of moving the current one. This allows you to type the same thing at multiple places. Similarly control click and selecting can be used to create multiple selections, all of which you can change. The “all” button on the Find panel similarly creates multiple selections. (Close the panel using the x on the right to return focus to the editor without moving the cursors.)
 
-**Code folding:** If there are little arrow markers next to a line number of the link, these can be used to fold (hide) or unfold (show) parts of a document. This is not particularly useful in markdown except in yaml blocks, code blocks and quotations.
+**Alt-mouse click + drag**: Creates a “rectangular” selection, useful for working with, e.g., columns of a table.
+
+**Code folding:** If there are little arrow markers next to a line number of the left, these can be used to fold (hide) or unfold (show) parts of a document. This is not particularly useful in markdown except in yaml blocks, code blocks and quotations.
 
 VIM KEY BINDS
 
