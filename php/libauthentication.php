@@ -72,10 +72,14 @@ function load_access_keys() {
 function new_access_key($dirname, $basename) {
     global $poweruser, $settings;
 
+    // use real directory
+    $dirname = realpath($dirname) ?? '';
+
     // dirname and basename cannot be blank
     if ($basename == '' || $basename == '') {
         return false;
     }
+
 
     // check for regular authentication
     $fullfilename = $dirname .'/'.$basename;

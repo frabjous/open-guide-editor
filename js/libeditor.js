@@ -112,16 +112,23 @@ function powerUpEditor() {
             dirname: window.dirname, rootdocument: window.rootdocument
         });
         // respond to errors
-        if (gitresult?.error
-            || (!("respObj" in gitresult))
-            || gitresult?.respObj?.error
-            || (!gitresult?.respObj)
-            || (!("replacement" in gitresult?.respObj))) {
-            ogEditor.gitButton.makeState("error");
-            ogDialog.errdiag("Error doing git commit. " +
-                (gitresult?.errMsg ?? '') + ' ' +
-                (gitresult?.respObj?.errMsg ?? ''));
-            return;
+        if (("respObj" in gitresult) &&
+            ("nothing to commit" in gitresult.respObj) &&
+            (gitresult.respObj.nothingtocommit)) {
+            ogDialog.alertdiag("Nothing to commit. Working tree clean.");
+        } else {
+            // respond to errors
+            if (gitresult?.error
+                || (!("respObj" in gitresult))
+                || gitresult?.respObj?.error
+                || (!gitresult?.respObj)) {
+                ogEditor.gitButton.makeState("error");
+                console.log(gitresult.respObj);
+                ogDialog.errdiag("Error doing git commit. " +
+                    (gitresult?.errMsg ?? '') + ' ' +
+                    (gitresult?.respObj?.errMsg ?? ''));
+                return;
+            }
         }
         // change back to normal
         if (ogEditor.saveButton.mystate == "unchanged") {

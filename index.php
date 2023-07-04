@@ -84,6 +84,9 @@ $bibcompletions = [];
 if (isset($settings->bibliographies)) {
     foreach ($settings->bibliographies as $bibfile) {
         $fullbibfile = $rdirname . '/' . $bibfile;
+        if (!file_exists($fullbibfile)) {
+            continue;
+        }
         $bibfilecontents = file_get_contents($fullbibfile) ?? false;
         if (!$bibfilecontents) { continue; }
         $bibentries = json_decode($bibfilecontents) ?? false;
