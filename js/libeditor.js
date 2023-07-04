@@ -452,7 +452,7 @@ function powerUpEditor() {
                     window.setTitle(false);
                 }
                 // if we have a new filename, so reload to it
-                if (window.reloadonsave) {
+                if (window.reloadonsave && !(opts?.autosave)) {
                     window.location.href = 'php/redirect.php?dirname=' +
                         encodeURIComponent(dirname) + '&basename=' +
                         encodeURIComponent(basename);
