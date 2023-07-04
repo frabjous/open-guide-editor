@@ -25,7 +25,8 @@ import {
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
 import {CompletionContext} from "@codemirror/autocomplete";
-import {indentUnit, syntaxHighlighting} from '@codemirror/language';
+import {tags} from "@lezer/highlight"
+import {indentUnit} from '@codemirror/language';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap, scrollPastEnd} from "@codemirror/view";
@@ -127,6 +128,12 @@ function ogeCompletions(context) {
     if (!context.explicit) { return null; }
 }
 
+// Highlight style
+const ogeHighlightStyle = HighlightStyle.define([
+  {tag: tags.keyword, color: "#fc6"},
+  {tag: tags.comment, color: "#f5d", fontStyle: "italic"}
+])
+
 
 // determine filetype
 const langExtensions = [];
@@ -181,6 +188,7 @@ let extensions = [
     keymap.of([indentWithTab]),
     scrollPastEnd(),
     EditorView.lineWrapping,
+    ogeHighlightStyle,
     langExtensions
 ];
 
