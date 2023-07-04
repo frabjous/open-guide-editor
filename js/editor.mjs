@@ -2,7 +2,7 @@
 // Public License along with this program. If not, see
 // https://www.gnu.org/licenses/.
 
-/////////////////////// editor.js //////////////////////////////////////
+/////////////////////// editor.mjs /////////////////////////////////////
 // The script that creates the core codemirror instance and interacts //
 // with its extensions, keymaps, settings, etc.                       //
 ////////////////////////////////////////////////////////////////////////
@@ -10,6 +10,7 @@
 //
 // Modules
 //
+import {indentUnit, HighlightStyle, syntaxHighlighting} from '@codemirror/language';
 import {EditorView, basicSetup} from "codemirror";
 import {
     cursorLineBoundaryBackward,
@@ -26,7 +27,6 @@ import {
     toggleComment } from "@codemirror/commands"
 import {CompletionContext} from "@codemirror/autocomplete";
 import {tags} from "@lezer/highlight"
-import {indentUnit} from '@codemirror/language';
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap, scrollPastEnd} from "@codemirror/view";
@@ -128,12 +128,13 @@ function ogeCompletions(context) {
     if (!context.explicit) { return null; }
 }
 
-// Highlight style
+//highstyle style
 const ogeHighlightStyle = HighlightStyle.define([
   {tag: tags.keyword, color: "#fc6"},
-  {tag: tags.comment, color: "#f5d", fontStyle: "italic"}
+  {tag: tags.comment, color: "#f5d", fontStyle: "italic"},
+  {tag: tags.emphasis, color: "#f5d", fontStyle: "italic"},
+  {tag: tags.strong, color: "#f5d", fontStyle: "italic"},
 ])
-
 
 // determine filetype
 const langExtensions = [];
@@ -188,7 +189,7 @@ let extensions = [
     keymap.of([indentWithTab]),
     scrollPastEnd(),
     EditorView.lineWrapping,
-    ogeHighlightStyle,
+    syntaxHighlighting(ogeHighlightStyle),
     langExtensions
 ];
 
