@@ -942,10 +942,16 @@ function powerUpEditor() {
         (window.thisextension in window.ogeSettings.routines) &&
         ("spellcheck" in window.ogeSettings.routines[window.thisextension]) &&
         (window.ogeSettings.routines[window.thisextension].spellcheck)) {
-        let cmContents = document.getElementsByClassName("cm-content");
-        if (cmContents && cmContents.length > 0) {
-            cmContents[0].spellcheck = true;
-        }
+        /*setInterval(function() {*/
+            let cmContents = document.getElementsByClassName("cm-content");
+            if (cmContents && cmContents.length > 0) {
+                cmContents[0].spellcheck = true;
+            }/*
+            let cmLines = document.getElementsByClassName("cm-line");
+            for (let l of cmLines) {
+                l.spellcheck = true;
+            }
+        }, 1000);*/
     }
 
 }

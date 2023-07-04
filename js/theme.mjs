@@ -79,7 +79,7 @@ export const ogeColorTheme = EditorView.theme({
         color: black,
     },
     ".cm-panel button[name=\"close\"]": {
-        color: brightred,
+        color: brightred, cursor: 'pointer'
     },
     ".cm-panel .cm-textfield::placeholder": {
         color: gray2,
