@@ -68,6 +68,7 @@ The project is in early development and is not fully usable yet. More documentat
 
 | **Alt-5**: Move to matching bracket/parenthesis
 | **Alt-l**: Select current line
+| **Alt-n**: Go to specific line
 | **Alt-w**: Toggle line wrapping
 | **Alt-/**: Toggle comment
 | **Alt-\\**: Pipe text to unix command

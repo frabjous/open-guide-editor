@@ -60,6 +60,12 @@ const insertBlankLineUp = function(view) {
     cursorCharLeft(view);
 }
 
+const gotoLineDiag = function(view) {
+    if (view.gotolinediag) {
+        view.gotolinediag();
+    }
+}
+
 const smartDeleteLine = function(view) {
     if (!view.getfirstselection) { return false; }
     let sel = view.getfirstselection();
@@ -96,6 +102,7 @@ const additionalKeymap = [
     { key: "Ctrl-x", run: smartDeleteLine },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
     { key: "Alt-5", run: cursorMatchingBracket, preventDefault: true },
+    { key: "Alt-n", run: gotoLineDiag, preventDefault: true },
     { key: "Alt-/", run: toggleComment, preventDefault: true },
     { key: "Alt-\\", run: pipeCmd, preventDefault: true },
     { key: "Ctrl-\\", run: pipeCmd, preventDefault: true },

@@ -102,6 +102,7 @@ function powerUpEditor() {
             '<input type="text" id="gitentry"> ' +
             '<button type="button" onclick="submitGitCmd()">make commit</button></div>' +
             '</div>';
+        document.getElementById("gitentry").focus();
     }
     //actually process git commit
     ogEditor.gitcommit = async function(opts = {}, msg) {
@@ -133,6 +134,7 @@ function powerUpEditor() {
                 return;
             }
         }
+
         // change back to normal
         if (ogEditor.saveButton.mystate == "unchanged") {
             ogEditor.gitButton.makeState("enabled");
@@ -144,6 +146,34 @@ function powerUpEditor() {
         }
     }
 
+    //
+    // go to specific line
+    //
+    ogEditor.gotoline = function(linenum) {
+        if (linenum < 1) { linenum = 1; }
+        if (linenum > ogEditor.state.doc.lines) {
+            linenum = ogEditor.state.doc.lines;
+        }
+        let pos = ogEditor.state.doc.line(linenum).from;
+        ogEditor.dispatch(ogEditor.state.update({
+            selection: { anchor: pos, head: pos },
+            scrollIntoView: true
+        }));
+        ogEditor.focus();
+    }
+
+    ogEditor.gotolinediag = function() {
+        ogEditor.togglePanel();
+        if (!window.ogePanel) { return; }
+        window.ogePanel.innerHTML = '<div class="oge-formpanel">' +
+            '<span title="close" onclick="ogEditor.togglePanel();" ' +
+            'style="float:right; cursor: pointer;">×</span>' +
+            '<div><label for="lineentry">Go to line: </label> ' +
+            '<input type="number" id="lineentry" onchange="ogEditor.' +
+            'gotoline(parseInt(this.value)); ogEditor.togglePanel();" ' +
+            'style="width: 4rem; text-align: center;"></div></div>';
+        document.getElementById("lineentry").focus();
+    }
 
     //
     // HANDLE MESSAGE FUNCTION
@@ -161,11 +191,7 @@ function powerUpEditor() {
             let linenum = data.reverseJumpLine;
             if (data.reverseJumpFile  == (window.dirname + '/' +
                 window.basename)) {
-                let pos = ogEditor.state.doc.line(linenum).from
-                ogEditor.dispatch(ogEditor.state.update({
-                    selection: { anchor: pos, head: pos },
-                    scrollIntoView: true
-                }));
+                ogEditor.gotoline(linenum);
             } else {
                 ogDialog.alertdiag('Jump spot is line ' +
                     linenum.toString() + ' in ' +
@@ -262,6 +288,7 @@ function powerUpEditor() {
             '<input type="text" id="pipeentry"> ' +
             '<button type="button" onclick="submitPipeCmd()">run filter</button></div>' +
             '</div>';
+        document.getElementById("pipeentry").focus();
     }
 
     //actually process the pipe command
@@ -305,6 +332,7 @@ function powerUpEditor() {
                 insert: piperesult.respObj.replacement
             }
         }));
+        ogEditor.focus();
     }
     //
     // PREVIEW ON/OFF FUNCTION
