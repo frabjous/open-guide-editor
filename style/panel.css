@@ -1,4 +1,4 @@
-@import 'colors.css';
+@charset "UTF-8";
 
 @keyframes spin {
     from { transform:rotate(0deg); }
@@ -6,12 +6,12 @@
 }
 
 #toppanelcontainer {
-    background-color: var(--gray5);
+    background-color: var(--gray4);
     padding-left: 0.4rem;
     padding-right: 0.4rem;
     padding-top: 0.2rem;
     padding-bottom: 0rem;
-    border-bottom: 1px solid var(--purple);
+    border-bottom: 1px solid var(--brightpurple);
 }
 
 #toppanelleftbuttons {
@@ -37,8 +37,8 @@
 }
 
 .panelbutton {
-    background-color: var(--gray5);
-    color: var(--gray3);
+    background-color: var(--gray6);
+    color: var(--gray2);
     display: inline-block;
     width: 2rem;
     height: 2rem;
@@ -49,7 +49,7 @@
     margin-bottom: 0.5rem;
     cursor: pointer;
     user-select: none;
-    box-shadow: 2px 2px 1px var(--gray4);
+    box-shadow: 2px 2px 1px var(--gray3);
     position: relative;
     top: 0.15rem;
 }
@@ -65,24 +65,24 @@
 }
 
 .panelbutton.inactive:hover,
-.panelbutton.unchanged:hover,
 .panelbutton:hover {
-    color: var(--green);
-    border-color: var(--green);
+    background-color: var(--brightgreen);
+}
+.panelbutton.unchanged:hover {
+    background-color: var(--gray6);
 }
 
 .panelbutton.processing,
 .panelbutton.opening,
 .panelbutton.saving {
-    border-color: var(--blue);
-    color: var(--blue);
+    background-color: var(--brightblue);
 }
 
 .panelbutton.inactive,
 .panelbutton.disabled,
 .panelbutton.unchanged {
-    border-color: var(--gray5);
-    color: var(--gray5);
+    border-color: var(--gray4);
+    color: var(--gray4);
     box-shadow: none;
 }
 
@@ -96,8 +96,7 @@
 }
 
 .panelbutton.error {
-    border-color: var(--red);
-    color: var(--red);
+    background-color: var(--brightred);
 }
 
 .cm-search.cm-panel {
