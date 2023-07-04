@@ -16,6 +16,7 @@ import {
     cursorLineBoundaryBackward,
     copyLineDown,
     cursorCharLeft,
+    cursorCharRight,
     cursorLineDown,
     cursorLineUp,
     cursorMatchingBracket,
@@ -226,6 +227,10 @@ editor.linedown = function() {
         selection: { anchor: pos, head: pos },
         scrollIntoView: true
     }));
+}
+
+editor.goright = function() {
+    cursorCharRight(editor);
 }
 
 window.ogEditor = editor;

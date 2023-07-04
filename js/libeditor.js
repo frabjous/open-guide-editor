@@ -711,7 +711,8 @@ function powerUpEditor() {
                         insert: c
                     }
                 }));
-            }, 24)}
+                ogEditor.goright();
+            })}
         }
     });
     ogEditor.glyphButton.makeState("active");
