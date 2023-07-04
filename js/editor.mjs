@@ -26,7 +26,7 @@ import {
     insertNewlineAndIndent,
     toggleComment } from "@codemirror/commands"
 import {CompletionContext} from "@codemirror/autocomplete";
-import {tags} from "@lezer/highlight"
+import {tags} from "@lezer/highlight";
 import {EditorState, StateEffect} from "@codemirror/state";
 import {search, openSearchPanel, closeSearchPanel} from '@codemirror/search';
 import {keymap, scrollPastEnd} from "@codemirror/view";
@@ -36,7 +36,7 @@ import {html} from '@codemirror/lang-html';
 import {css} from '@codemirror/lang-css';
 import {xml} from '@codemirror/lang-xml';
 import {json} from '@codemirror/lang-json';
-import {javascript} from '@codemirror/lang-javascript'; 
+import {javascript} from '@codemirror/lang-javascript';
 //import { texSyntax } from "lang-tex";
 
 // my package
