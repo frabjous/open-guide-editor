@@ -47,6 +47,7 @@ const white = "#dee3e8";
 const yellow = "#ffffaf";
 const cursor = brightpurple;
 const selection = gray3;
+const selectionfg = white;
 const foreground = white;
 const background = gray1;
 
@@ -66,11 +67,12 @@ export const ogeColorTheme = EditorView.theme({
     },
     "&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection": {
         backgroundColor: selection,
-        color: black
+        color: selectionfg
     },
     ".cm-panels": {
-        backgroundColor: background,
-        color: foreground
+        backgroundColor: gray2,
+        color: foreground,
+        fontFamily: 'sans-serif'
     },
     ".cm-panels.cm-panels-top": {
         borderBottom: "2px solid var(--black)"
@@ -79,22 +81,21 @@ export const ogeColorTheme = EditorView.theme({
         borderTop: "2px solid var(--black)"
     },
     ".cm-searchMatch": {
-        backgroundColor: cyan + "59",
-        outline: "1px solid blue"
+        backgroundColor: cyan + "33",
     },
     ".cm-searchMatch.cm-searchMatch-selected": {
-        backgroundColor: blue +"2f"
+        backgroundColor: brightgreen +"55"
     },
 
     ".cm-activeLine": {
-        backgroundColor: black
+        backgroundColor: '#0000002f'
     },
     ".cm-selectionMatch": {
         backgroundColor: green + "1a"
     },
 
     "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
-        backgroundColor: orange + "47"
+        backgroundColor: orange + "88"
     },
 
     ".cm-gutters": {
@@ -104,7 +105,7 @@ export const ogeColorTheme = EditorView.theme({
     },
 
     ".cm-activeLineGutter": {
-        backgroundColor: selection,
+        backgroundColor: blue,
         color: gray1
     },
 
@@ -129,7 +130,7 @@ export const ogeColorTheme = EditorView.theme({
     ".cm-tooltip-autocomplete": {
         "& > ul > li[aria-selected]": {
             backgroundColor: selection,
-            color: black
+            color: white
         }
     }
 }, {dark: true})
