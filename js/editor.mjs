@@ -10,7 +10,7 @@
 //
 // Modules
 //
-import {indentUnit} from '@codemirror/language';
+import {indentUnit, toggleFold} from '@codemirror/language';
 import {EditorView, basicSetup} from "codemirror";
 import {
     cursorLineBoundaryBackward,
@@ -159,7 +159,9 @@ const togglePreview = function(view) {
 
 const additionalKeymap = [
     { key: "Ctrl-d", run: copyLineDown, preventDefault: true },
+    { key: "Ctrl-r", run: openSearchPanel, preventDefault: true },
     { key: "Ctrl-j", run: joinLines, preventDefault: true },
+    { key: "Alt-t", run: toggleFold, preventDefault: true },
     { key: "Ctrl-x", run: smartDeleteLine },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
     { key: "F5", run: processDocument, preventDefault: true },

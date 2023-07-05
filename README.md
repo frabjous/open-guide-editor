@@ -83,6 +83,7 @@ The project is in early development and is not fully usable yet. More documentat
 | **Ctrl-k**: Delete to end of line
 | **Ctrl-j**: Join the currently selected lines into one line
 | **Ctrl-s**: Save
+| **Ctrl-t**: ToggleFold
 | **Ctrl-x**: Cut, or cut whole line if nothing selected
 | **Ctrl-/**: Toggle comment
 | **Ctrl-|**: Pipe text to unix command
