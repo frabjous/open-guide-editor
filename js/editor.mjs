@@ -75,6 +75,11 @@ const smartDeleteLine = function(view) {
     let smthgsel = view.state.selection.ranges.some(r => !r.empty);
     // if not, delete the line
     if (!smthgsel) {
+        if (window.navigator?.clipboard) {
+            let fr = view.state.selection.main.head;
+            let txt = view.state.doc.lineAt(fr).text.toString();
+            window.navigator.clipboard.writeText(txt + "\n");
+        }
         deleteLine(view);
         return true;
     }
