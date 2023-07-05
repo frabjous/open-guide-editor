@@ -1,8 +1,10 @@
 # open-guide-editor
 
-Web based editor based on [codemirror](https://codemirror.net/) for editing markdown and LaTeX files with live updating HTML and PDF previews.
+Highly configurable web-based text editor based on [codemirror](https://codemirror.net/) primarily designed for editing markdown, LaTeX, and html files with live-updating html and pdf previews.
 
-This is a sequel to, and will supersede, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor. It is meant for use with the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
+However, it can be used to edit other plain text files as well, including subsidiary files (CSS, JavaScript, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document. The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
+
+It was created to be used for the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
 The project is in early development and is not fully usable yet. More documentation to come.
 
@@ -71,6 +73,7 @@ The project is in early development and is not fully usable yet. More documentat
 | **Alt-l**: Select current line
 | **Alt-m**: Mark line as jump-to position
 | **Alt-n**: Go to specific line
+| **Alt-t**: Toggle fold/unfold on current block
 | **Alt-w**: Toggle line wrapping
 | **Alt-/**: Toggle comment
 | **Alt-\\**: Pipe text to unix command
@@ -83,7 +86,6 @@ The project is in early development and is not fully usable yet. More documentat
 | **Ctrl-k**: Delete to end of line
 | **Ctrl-j**: Join the currently selected lines into one line
 | **Ctrl-s**: Save
-| **Ctrl-t**: ToggleFold
 | **Ctrl-x**: Cut, or cut whole line if nothing selected
 | **Ctrl-/**: Toggle comment
 | **Ctrl-|**: Pipe text to unix command
@@ -104,100 +106,7 @@ The project is in early development and is not fully usable yet. More documentat
 
 **Code folding:** If there are little arrow markers next to a line number of the left, these can be used to fold (hide) or unfold (show) parts of a document. This is not particularly useful in markdown except in yaml blocks, code blocks and quotations, though it is possible to hide whole sections of the document as well.
 
-VIM KEY BINDS
 
-{
-                    e        = 'show errors',
-                    u        = 'unicode/emoji',
-                    v        = 'restore selection',
-                    x        = 'xelatex check',
-                    ['up']   = 'move line up',
-                    ['down'] = 'move line down',
-                    ['1..4'] = 'insert template',
-                    ['5']    = 'match paren',
-                    ['9']    = 'prev sentence',
-                    ['0']    = 'next sentence',
-                    ['(']    = 'prev sentence',
-                    [')']    = 'next sentence',
-                    ['=']    = 'increase num',
-                    ['-']    = 'decrease num',
-                    ['.']    = 'indent',
-                    [',']    = 'unindent',
-                    ['[']    = 'prev paragraph',
-                    [']']    = 'next paragraph',
-                    ['{']    = 'prev paragraph',
-                    ['}']    = 'next paragraph',
-                    ['tab']  = 'next tab',
-                    ['/']    = 'toggle comments'
-                }
-            },
-            {
-                modifiers = { alt, ctrl },
-                keys = {
-                    c = 'colorschemes',
-                    t = 'fzf open (home)'
-                }
-            },
-            {
-                modifiers = { alt, shift },
-                keys = {
-                    q        = 'force quit',
-                    ['end']  = 'select to end',
-                    ['home'] = 'select to start',
-                    ['tab']  = 'previous tab'
-                }
-            },
-            {
-                modifiers = { ctrl },
-                keys = {
-                    a         = 'select all',
-                    b         = 'clear highlights',
-                    c         = 'copy/copy line',
-                    d         = 'duplicate line',
-                    e         = 'command mode',
-                    f         = 'find',
-                    g         = 'find next',
-                    h         = 'jump last edit',
-                    j         = 'join lines',
-                    k         = 'kill remainder',
-                    l         = 'get citation key',
-                    n         = 'normal mode',
-                    q         = 'quit',
-                    r         = 'replace',
-                    s         = 'save',
-                    t         = 'fzf open (cwd)',
-                    u         = 'unicode/emoji',
-                    v         = 'paste',
-                    w         = 'toggle wrap',
-                    x         = 'cut/cut line',
-                    y         = 'redo',
-                    z         = 'undo',
-                    ['space'] = 'omnicomplete',
-                    ['up']    = 'put line above',
-                    ['down']  = 'put line below',
-                    ['\\']    = 'pipe selection',
-                    ['ins']   = 'copy',
-                    ['tab']   = 'next tab'
-                }
-            },
-            {
-                modifiers = { ctrl, shift },
-                keys = {
-                    ['tab'] = 'previous tab'
-                }
-            },
-            {
-                modifiers = { shift },
-                keys = {
-                    ['tab']    = 'autoindent selection',
-                    ['del']    = 'cut',
-                    ['insert'] = 'paste',
-                    ['F1']     = 'prev tab',
-                    ['F2']     = 'next tab'
-                }
-            }
-        }
-    },
 
 # Installation
 
@@ -299,6 +208,11 @@ Keep in mind that with auto-compilation turned on, the document is also auto-sav
 
 To conduct a SyncTeX reverse search, double click the place on the PDF preview you wish to view in the source. 
 -->
+
+## Trivia
+
+This is a sequel to, and supersedes, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor.
+
 ## License
 
 © 2018–2023 Kevin C. Klement. This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).

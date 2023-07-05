@@ -19,9 +19,10 @@
 }
 
 #toppanelrightbuttons {
-    display: inline-block;
+    display: table-cell;
     float: right;
     padding-right: 0.4rem;
+    margin-top: 0.7rem;
 }
 
 #toppanelrightbuttons span.indicator {
@@ -31,10 +32,33 @@
 #toppanelrightbuttons .slider {
     margin-left: 1em;
     margin-right: 1em;
-    margin-bottom: 0.5em;
-    position: relative;
-    top: 0.5rem;
+    -webkit-appearance: none;
+    background-color: transparent;
 }
+
+#toppanelrightbuttons .slider:focus {
+    outline: none;
+}
+
+#toppanelrightbuttons .slider::-webkit-slider-runnable-track,
+#toppanelrightbuttons .slider::-moz-range-track {
+    background:yellow;
+    height: 0.4rem;
+}
+
+
+#toppanelrightbuttons .slider::-webkit-slider-thumb,
+#toppanelrightbuttons .slider::-moz-range-thumb {
+    height: 1rem;
+    width: 1rem;
+    color: var(--blue);
+    background: var(--blue);
+    margin-top: 0rem;
+    border: 1px solid var(--gray1);
+    border-radius: 50%;
+    -webkit-appearance: none;
+}
+
 
 .panelbutton {
     background-color: var(--gray6);
