@@ -39,6 +39,7 @@ import {html} from '@codemirror/lang-html';
 import {css} from '@codemirror/lang-css';
 import {xml} from '@codemirror/lang-xml';
 import {json} from '@codemirror/lang-json';
+import {php} from '@codemirror/lang-php';
 import {javascript} from '@codemirror/lang-javascript';
 //import { texSyntax } from "lang-tex";
 
@@ -227,7 +228,9 @@ if (ext == 'md') {
     langExtensions.push(json());
 } else if ((ext == 'js') || (ext == 'mjs')) {
     langExtensions.push(javascript());
-} 
+} else if (ext == 'php') {
+    langExtensions.push(php());
+}
 /*else if (ext == 'tex') {
     langExtensions.push(texSyntax());
 }*/

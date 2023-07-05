@@ -1,14 +1,14 @@
-# open-guide-editor
+# Open Guide Editor
 
 Highly configurable web-based text editor based on [codemirror](https://codemirror.net/) primarily designed for editing markdown, LaTeX, and html files with live-updating html and pdf previews.
 
-However, it can be used to edit other plain text files as well, including subsidiary files (CSS, JavaScript, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document. The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
+However, it can be used to edit other plain text files as well, including subsidiary files (CSS, JavaScript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document. The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
 
 It was created to be used for the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
 The project is in early development and is not fully usable yet. More documentation to come.
 
-## Roadmap TODO
+## Roadmap / TODO
 
 - [x] implement authentication model for who is allowed to edit which files
 - [x] implement basic codemirror v6 editor with top panel
@@ -19,7 +19,7 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] piping selection to unix tools on server
     - [x] good keybindings
     - [x] auto-comment/uncomment
-- [x] implement autosaving
+- [x] implement autosaving with configurable timer
 - [x] provide generic mechanisms for autopreview depending on input filetype
 - [x] support markdown as input
     - [x] preview html
@@ -29,9 +29,7 @@ The project is in early development and is not fully usable yet. More documentat
 - [x] implement api for adding citations
 - [ ] good documentation
     - [x] initial todo on readme
-    - [ ] basic usage
-    - [ ] buttons
-    - [ ] keybindings
+    - [ ] basic usage, buttons and keybindings
     - [ ] custom settings
     - [ ] installation locally
     - [ ] server installation
@@ -211,8 +209,8 @@ To conduct a SyncTeX reverse search, double click the place on the PDF preview y
 
 ## Trivia
 
-This is a sequel to, and supersedes, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor.
+This is a sequel to, and supersedes, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor. I have also written a lua neovim plugin that provides similar functionality to what is provided by this editor, [KNAP](https://github.com/frabjous/knap) (Kevin’s Neovim Auto-Previewer).
 
 ## License
 
-© 2018–2023 Kevin C. Klement. This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).
+Copyright 2023 © Kevin C. Klement. This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).
