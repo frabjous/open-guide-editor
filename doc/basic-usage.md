@@ -40,3 +40,5 @@ The top panel, when full, looks like the above. They do the following:
 12. (mobile device with down arrow) Converts the file to epub format (if a routine for it is set), and downloads the resulting epub.
 
 13. (loudspeaker) Uses a TTS system to read the file being edited out loud, line by line, starting with the line the cursor is on. (This is primarily meant to help with proofreading, but could also be used for accessibility purposes.)
+
+The preview window also has buttons. For html, it currently only has a download button for the html file. For PDF, it has buttons for moving from page to page (as well as a slider), and for zooming in and out.
