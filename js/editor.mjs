@@ -71,22 +71,14 @@ const gotoLineDiag = function(view) {
 }
 
 const smartDeleteLine = function(view) {
-    if (!view.getfirstselection) { return false; }
-    let sel = view.getfirstselection();
-    if (sel.selectedtext == '') {
-        // nothing selected, get text of current line, copy to clipboard
-        if (navigator?.clipboard) {
-            let r = view.state.selection.ranges[0];
-            if (r.from == r.to) {
-                let txt = view.state.doc.lineAt(r.from).text;
-                navigator.clipboard.writeText(txt);
-            }
-        }
-        // delete the line
+    // determine whether something is selected
+    let smthgsel = view.state.selection.ranges.some(r => !r.empty);
+    // if not, delete the line
+    if (!smthgsel) {
         deleteLine(view);
         return true;
     }
-    // returning false passes through to next binding
+    // by returning false we pass on to next binding
     return false;
 }
 
@@ -173,6 +165,7 @@ const additionalKeymap = [
     { key: "Alt-t", run: toggleFold, preventDefault: true },
     { key: "Ctrl-o", run: openFile, preventDefault: true },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
+    { key: "Ctrl-x", run: smartDeleteLine },
     { key: "F5", run: processDocument, preventDefault: true },
     { key: "Ctrl-F5", run: processDocument, preventDefault: true },
     { key: "F6", run: togglePreview, preventDefault: true },
