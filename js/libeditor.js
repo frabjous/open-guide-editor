@@ -288,7 +288,6 @@ function powerUpEditor() {
             '<input type="text" id="pipeentry"> ' +
             '<button type="button" onclick="submitPipeCmd()">run filter</button></div>' +
             '</div>';
-        document.getElementById("pipeentry").focus();
     }
 
     //actually process the pipe command
