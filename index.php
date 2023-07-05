@@ -72,6 +72,15 @@ $rootdocument = full_document_root($dirname, $rootdocument);
 $rootextension = pathinfo($rootdocument, PATHINFO_EXTENSION);
 $rdirname = dirname($rootdocument);
 
+// determine outputextensions
+$outputextensions = scandir('preview');
+$outputextensions = array_values(array_filter($outputextensions, function($ext) {
+    if ($ext == '.' || $ext == '..') {
+        return false;
+    }
+    return (is_dir("preview/$ext"));
+}));
+
 // check if readloud should be done
 $thisextension = pathinfo($basename, PATHINFO_EXTENSION);
 $readaloud = false;
@@ -225,6 +234,7 @@ if (is_dir($rdirname . '/.git')) {
             window.basename = '<?php echo $basename; ?>';
             window.ogeSettings = <?php echo json_encode($settings); ?>;
             window.thisextension = '<?php echo $thisextension; ?>';
+            window.outputextensions = <?php echo json_encode($outputextensions); ?>;
             window.rootextension = '<?php echo $rootextension; ?>';
             window.gitenabled = <?php echo json_encode($gitenabled); ?>;
             window.rootdocument = window.dirname + '/' + window.basename;

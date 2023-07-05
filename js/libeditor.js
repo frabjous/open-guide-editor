@@ -127,7 +127,6 @@ function powerUpEditor() {
                 || gitresult?.respObj?.error
                 || (!gitresult?.respObj)) {
                 ogEditor.gitButton.makeState("error");
-                console.log(gitresult.respObj);
                 ogDialog.errdiag("Error doing git commit. " +
                     (gitresult?.errMsg ?? '') + ' ' +
                     (gitresult?.respObj?.errMsg ?? ''));
@@ -529,7 +528,6 @@ function powerUpEditor() {
         if (processingerror != '') {
             if (ogEditor.processButton) {
                 ogEditor.processButton.makeState('error');
-                console.log(respObj);
                 // make download button error if download
                 if ((opts?.download) &&
                     (ogEditor?.downloadButtons?.[opts.outputext])) {
@@ -811,16 +809,14 @@ function powerUpEditor() {
         window.outputopts = [];
         let routines = window.ogeSettings.routines[window.rootextension];
         // for each is that is viewable, make it a state for the button
-        for (let outputext in routines) {
-            if (outputext in window.outputextensions) {
-                if (window.outputextensions[outputext].viewable) {
-                    window.outputopts.push(outputext);
-                    outputSelectButtonOpts[outputext] = {
-                        icon: (window.outputextensions[outputext].icon ?? ''),
-                        tooltip: "change output routine",
-                        clickfn: function() {
-                            ogEditor.changeOutputExt();
-                        }
+        for (const outputext in routines) {
+            if (window.outputextensions.indexOf(outputext) != -1) {
+                window.outputopts.push(outputext);
+                outputSelectButtonOpts[outputext] = {
+                    icon: (routines[outputext].icon ?? 'star'),
+                    tooltip: "change output routine",
+                    clickfn: function() {
+                        ogEditor.changeOutputExt();
                     }
                 }
             }
