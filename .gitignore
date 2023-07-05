@@ -3,3 +3,5 @@ dist/
 package-lock.json
 settings.json
 editor.bundle.js
+doc/*.pdf
+doc/*.html
