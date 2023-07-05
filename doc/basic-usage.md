@@ -134,6 +134,10 @@ Here is a partial list of the keybindings for various functions.
 
 **Ctrl->**: Indent more
 
+**Ctrl-→**: Move to next word
+
+
+
 **Ctrl-↑**: Insert line above
 
 **Ctrl-↓**: Insert line below
@@ -149,11 +153,11 @@ Things like Home and End also behave as they should, etc.
 
 ## Citations
 
-For markdown files, if a bibliography or bibliography is set for the project in the [settings](./settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrows and enter to select one of the autocompletions.
+For markdown files, if a bibliography or bibliography is set for the project in the [settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrows and enter to select one of the autocompletions.
 
 ## Other Documentation
 
-See the other documentation files concerning configuring the editor's settings, installation, and the security model.
+See the other documentation files concerning [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), [installation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
 
 ## License
 
