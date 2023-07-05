@@ -13,7 +13,7 @@ These functions can be invoked either by clicking on buttons on the toolbar, or 
 
 Not all buttons are available for every file format. A relatively full panel looks like this:
 
-![oge-buttons.png]()
+![oge-buttons](https://github.com/frabjous/open-guide-editor/assets/305948/b145750d-8a4a-4ce8-8ef4-aa201f0de9c7)
 
 The top panel, when full, looks like the above. They do the following:
 
