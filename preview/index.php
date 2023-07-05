@@ -239,8 +239,8 @@ chdir($dirsave);
     <body>
         <div id="allcontainer">
             <div id="toppanelcontainer">
+                    <div id="toppanelrightbuttons" style="margin-top: 0.7rem;"></div>
                     <div id="toppanelleftbuttons"></div>
-                    <div id="toppanelrightbuttons"></div>
                 <div id="toppanel">
                 </div>
             </div>

@@ -179,6 +179,7 @@ const additionalKeymap = [
     { key: "Alt-n", run: gotoLineDiag, preventDefault: true },
     { key: "Alt-/", run: toggleComment, preventDefault: true },
     { key: "Alt-\\", run: pipeCmd, preventDefault: true },
+    { key: "Alt-|", run: pipeCmd, preventDefault: true },
     { key: "Alt-,", run: indentLess, preventDefault: true },
     { key: "Ctrl-,", run: indentLess, preventDefault: true },
     { key: "Alt-<", run: indentLess, preventDefault: true },
