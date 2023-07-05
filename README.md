@@ -29,7 +29,7 @@ The project is in early development and is not fully usable yet. More documentat
 - [x] implement api for adding citations
 - [ ] good documentation
     - [x] initial todo on readme
-    - [ ] basic usage, buttons and keybindings
+    - [x] basic usage, buttons and keybindings
     - [ ] custom settings
     - [ ] installation locally
     - [ ] server installation
