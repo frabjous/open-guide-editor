@@ -158,12 +158,20 @@ const togglePreview = function(view) {
     return true;
 }
 
+const openFile = function(view) {
+    if ((view.openfile) && (view.openButton)) {
+        view.openfile();
+    }
+    return true;
+}
+
 const additionalKeymap = [
     { key: "Ctrl-d", run: copyLineDown, preventDefault: true },
     { key: "Ctrl-r", run: openSearchPanel, preventDefault: true },
     { key: "Ctrl-j", run: joinLines, preventDefault: true },
     { key: "Alt-t", run: toggleFold, preventDefault: true },
-    { key: "Ctrl-x", run: smartDeleteLine },
+    { key: "Alt-t", run: toggleFold, preventDefault: true },
+    { key: "Ctrl-o", run: openFile, preventDefault: true },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
     { key: "F5", run: processDocument, preventDefault: true },
     { key: "Ctrl-F5", run: processDocument, preventDefault: true },

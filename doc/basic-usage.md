@@ -11,13 +11,15 @@ These functions can be invoked either by clicking on buttons on the toolbar, or 
 
 ## Buttons
 
+Not all buttons are available for every file format. A relatively full panel looks like this:
+
 ![oge-buttons.png]()
 
 The top panel, when full, looks like the above. They do the following:
 
 1. (disk) Saves the current file, without any processing.
 
-2. (checkmark and seal) Commits the current state of the file's git folder, assuming it has one, with a message provided to a prompt.
+2. (checkmark and seal) Commits the current state of the file's git folder, assuming it has one, with a commit message provided to a prompt.
 
 3. (open folder) Opens a new file, usually in another tab, unless the current document is unnamed and empty.
 
@@ -27,7 +29,7 @@ The top panel, when full, looks like the above. They do the following:
 
 6. (looking glass) Brings up a dialog for search/replace.
 
-7. (terminal prompt) Pipes either the selected text, or the whole file if nothing is selected, through a Unix command on the server, and changes it for the result. Useful for things like [sort](https://www.commandlinux.com/man-page/man1/sort.1.html), [grep](https://www.commandlinux.com/man-page/man1/grep.1.html) or [column](https://www.commandlinux.com/man-page/man1/column.1.html).
+7. (terminal prompt) Pipes either the selected text, or the whole file if nothing is selected, through a Unix command on the server, and changes it with the result. Useful for things like [sort](https://www.commandlinux.com/man-page/man1/sort.1.html), [grep](https://www.commandlinux.com/man-page/man1/grep.1.html) or [column](https://www.commandlinux.com/man-page/man1/column.1.html).
 
 8. (pdf/globe icon) Toggles between the available output formats for processing and preview, if more than one routine is set for the type of file being edited. The globe represents HTML output, and the PDF icon, obviously, represents PDF output.
 
@@ -41,13 +43,18 @@ The top panel, when full, looks like the above. They do the following:
 
 13. (loudspeaker) Uses a TTS system to read the file being edited out loud, line by line, starting with the line the cursor is on. (This is primarily meant to help with proofreading, but could also be used for accessibility purposes.)
 
-The preview window also has buttons. For html, it currently only has a download button for the html file. For PDF, it has buttons for moving from page to page (as well as a slider), and for zooming in and out, and resetting the zoom.
+For LaTeX input with PDF output, when the viewer is open, there is also a button for a SyncTeX forward jump that looks like an arrow pointing to a box.
+
+The preview window also has buttons. For html, it currently only has a download button for the html file. For PDF, it has buttons for moving from page to page (as well as a slider), and for zooming in and out, and resetting the zoom. Hopefully it is obvious which one is which.
 
 ## Keybindings
 
 Here is a partial list of the keybindings for various functions.
 
-| 
+| **F5/Ctrl-F5**: Process current document and update preview
+| **F6/Ctrl-F6**: Open or close the preview window
+| **F7/Ctrl-F7**: Toggle auto-process/auto-preview
+| **F8/Ctrl-F8**: SyncTeX forward jump from current line number (LaTeX→PDF only)
 | **Alt-5**: Move cursor to matching bracket/parenthesis
 | **Alt-j**: Jump to last line marked with Alt-m
 | **Alt-l**: Select current line
@@ -61,24 +68,30 @@ Here is a partial list of the keybindings for various functions.
 | **Alt-↓**: Move current line down
 | **Alt-<**: Indent less
 | **Alt->**: Indent more
+| **Alt-Tab/Shift-Tab**: Reapply indentation to current selection
 | **Ctrl-a**: Select all
 | **Ctrl-c**: Copy
 | **Ctrl-d**: Duplicate current line
 | **Ctrl-f**: Open find/replace panel
 | **Ctrl-g**: Find next
 | **Ctrl-Shift-g**: Find previous
-| **Ctrl-k**: Delete to end of line
+| **Ctrl-i**: Selects current paragraph or block
 | **Ctrl-j**: Join the currently selected lines into one line
+| **Ctrl-k**: Deletes to end of line
+| **Ctrl-o**: Open a file
 | **Ctrl-r**: Open find/replace panel
 | **Ctrl-s**: Save
+| **Ctrl-u**: Undo
 | **Ctrl-v**: Paste
 | **Ctrl-x**: Cut, or cut whole line if nothing selected
 | **Ctrl-y**: Redo
 | **Ctrl-z**: Undo
-| **Ctrl-/**: Toggle comment
+| **Ctrl-/**: Toggle selected text or current line as a comment
 | **Ctrl-|**: Pipe text to unix command
 | **Ctrl-[**: Indent less
 | **Ctrl-]**: Indent more
+| **Ctrl-<**: Indent less
+| **Ctrl->**: Indent more
 | **Ctrl-↑**: Insert line above
 | **Ctrl-↓**: Insert line below
 | **Ctrl-Alt-[**: Fold all foldable blocks
@@ -86,3 +99,7 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-Shift-[**: Fold current line’s block
 
 Things like Home and End also behave as they should, etc.
+
+Citations
+
+For markdown files, if a bibliography or bibliography is set in the [settings](./settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrows and enter to select one of the autocompletions.
