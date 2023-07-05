@@ -68,8 +68,6 @@ Here is a partial list of the keybindings for various functions.
 | **Alt-\|**            | Pipe text to unix command                                                 |   
 | **Alt-↑**             | Move current line up                                                      | 
 | **Alt-↓**             | Move current line down                                                    | 
-| **Alt-<**             | Indent less                                                               | 
-| **Alt->**             | Indent more                                                               | 
 | **Alt-Tab/Shift-Tab** | Reapply indentation to current selection                                  | 
 | **Ctrl-a**            | Select all                                                                | 
 | **Ctrl-c**            | Copy                                                                      | 
@@ -92,8 +90,8 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-\|**           | **Pipe text to unix command                                               |
 | **Ctrl-[**            | Indent less                                                               | 
 | **Ctrl-]**            | Indent more                                                               | 
-| **Ctrl-<**            | Indent less                                                               | 
-| **Ctrl->**            | Indent more                                                               | 
+| **Ctrl-</Alt-<**      | Indent less                                                               | 
+| **Ctrl->/Alt->**      | Indent more                                                               | 
 | **Ctrl-→**            | Move to next word                                                         | 
 | **Ctrl-←**            | Move to previous word                                                     | 
 | **Ctrl-↑**            | Insert line above                                                         | 
@@ -102,7 +100,7 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-Alt-]**        | Unfold all foldable blocks                                                | 
 | **Ctrl-Shift-[**      | Fold current line’s block                                                 | 
 
-Things like Home and End also behave as they should, etc.
+Things like `Home` and `End` also behave as they should, etc.
 
 ## Citations
 
