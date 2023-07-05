@@ -157,7 +157,6 @@ if (is_dir($rdirname . '/.git')) {
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> 
 
         <!-- javascript file -->
-        <script charset="utf-8" src="js/filetypeicons.js"></script>
         <script charset="utf-8" src="js/panel.js"></script>
         <script charset="utf-8" src="js/libeditor.js"></script>
         <?php if ($readaloud) { ?><script charset="utf-8" src="js/readaloud.js"></script><?php } ?>

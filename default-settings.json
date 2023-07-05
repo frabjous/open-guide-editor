@@ -1,3 +1,19 @@
+
+window.outputextensions = {
+    "pdf": {
+        "icon": "picture_as_pdf",
+        "viewable": true
+    },
+    "html": {
+        "icon": "public",
+        "viewable": true
+    },
+    "epub": {
+        "icon": "install_mobile",
+        "viewable": false
+    }
+}
+
 {
     "accesskeyfile" : "/tmp/oge-accesskeys.json",
     "autoprocess" : {
@@ -22,44 +38,53 @@
         "html": {
             "defaultext": "html",
             "html": {
-                "command": "touch %outputfile%"
+                "command": "touch %outputfile%",
+                "icon": "public"
             },
             "pdf": {
                 "command": "weasyprint %rootdocument% %outputfile%",
-                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l"
+                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
+                "icon": "picture_as_pdf"
             },
             "epub": {
-                "command": "ebook-convert %rootdocument% %outputfile%"
+                "command": "ebook-convert %rootdocument% %outputfile%",
+                "icon": "install_mobile"
             }
         },
         "md": {
             "defaultext": "pdf",
             "html": {
-                "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
+                "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
+                "icon": "public"
             },
             "pdf": {
                 "command": "pandoc -f markdown -t pdf %rootdocument% -o %outputfile%",
-                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l"
+                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
+                "icon": "picture_as_pdf"
             },
             "epub": {
-                "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%"
+                "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%",
+                "icon": "install_mobile"
             },
             "spellcheck": true
         },
         "tex": {
             "defaultext": "pdf",
             "html": {
-                "command": "pandoc -f latex -t html --embed-resources --standalone %rootdocument% -o %outputfile%"
+                "command": "pandoc -f latex -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
+                "icon": "public"
             },
             "pdf": {
                 "command": "pdflatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%",
                 "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
                 "getpagedimensions": "O=\"$(mutool pages %outputfile% %page% | grep '^<MediaBox')\" ; W=\"${O#*r=\\\"}\" ; W=\"${W%%\\\"*}\" ; echo $W ; H=\"${O#*t=\\\"}\" ; H=\"${H%%\\\"*}\" ; echo $H",
                 "forwardjump": "synctex view -i %line%:1:%savedfile% -o %outputfile% | grep -m 1 '^Page:' | sed 's/[^0-9]//g'",
-                "reversejump": "synctex edit -o %page%:%x%:%y%:%outputfile%"
+                "reversejump": "synctex edit -o %page%:%x%:%y%:%outputfile%",
+                "icon": "picture_as_pdf"
             },
             "epub": {
-                 "command": "pandoc -f latex -t epub %rootdocument% -o %outputfile%"
+                 "command": "pandoc -f latex -t epub %rootdocument% -o %outputfile%",
+                 "icon": "install_mobile"
             }
         }
     },
