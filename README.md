@@ -53,15 +53,15 @@ The project is in early development and is not fully usable yet. More documentat
 - [x] symbol picker
 - [ ] “Frege-ifier” integration
 - [x] spellcheck through browser’s native spellcheck
-- [ ] jump marks
+- [x] simple jump marks
 - [x] swap out custom dialogs with codemirror panels (mostly done, could do more)
 - [ ] probably unimportant things
     - [ ] support other colorschemes
     - [ ] make find button grayed out when search panel inactive
+    - [ ] word-processor-like interface for bold, italics, quotes, etc.
 - [ ] long term pipedreams (?)
     - [ ] split panels
     - [ ] linting
-    - [ ] word-processor-like interface for bold, italics, quotes, etc.
     - [ ] LSP integration
     - [ ] collaborative editing
 <!--
@@ -90,6 +90,11 @@ The project is in early development and is not fully usable yet. More documentat
   **Ctrl-]**: Indent more
 | **Ctrl-↑**: Insert line above
 | **Ctrl-↓**: Insert line below
+| **Ctrl-Alt-[**: Fold all foldable blocks
+| **Ctrl-Alt-]**: Unfold all foldable blocks
+| **Ctrl-Shift-[**: Fold current line’s block
+| **Ctrl-Shift-]**: Unfold current line’s block
+
 | **Ctrl-Alt-\**: indentSelection
 
 **Control-mouse click**: Creates another cursor instead of moving the current one. This allows you to type the same thing at multiple places. Similarly control click and selecting can be used to create multiple selections, all of which you can change. The “all” button on the Find panel similarly creates multiple selections. (Close the panel using the x on the right to return focus to the editor without moving the cursors.)
@@ -101,29 +106,7 @@ The project is in early development and is not fully usable yet. More documentat
 VIM KEY BINDS
 
 {
-                modifiers = {},
-                keys = {
-                    ['F5']  = 'knap refresh',
-                    ['F6']  = 'close viewer',
-                    ['F7']  = 'toggle autopreview',
-                    ['F8']  = 'synctex forward'
-                }
-            },
-            {
-                modifiers = { alt },
-                keys = {
-                    a        = 'restore selection',
-                    b        = 'suggest spelling',
-                    c        = 'clean LaTeX files',
-                    d        = 'dictionary complete',
                     e        = 'show errors',
-                    f        = 'filename complete',
-                    g        = 'add word to dict.',
-                    h        = 'jump last edit',
-                    j        = 'jump to mark…',
-                    m        = 'set mark…',
-                    o        = 'toggle opacity',
-                    t        = 'toggle fold',
                     u        = 'unicode/emoji',
                     v        = 'restore selection',
                     x        = 'xelatex check',

@@ -127,6 +127,34 @@ const markJump = function(view) {
 // jumps to the marked line number
 const jumpToMark = function(view) {
     if (view.gotoline) { view.gotoline(window?.jumpline ?? 1); }
+    return true;
+}
+
+// runs the view's process command
+const processDocument = function (view) {
+    if (view.process) { view.process({}); }
+    return true;
+}
+
+const forwardJump = function (view) {
+    if (view.forwardjump) { view.forwardjump({}); }
+    return true;
+}
+
+const toggleAutoprocessing = function(view) {
+    if ((view.autoprocess) && (view.autoprocessButton)) {
+        let turnon = (view.autoprocessButton.mystate == 'inactive');
+        view.autoprocess(turnon);
+    }
+    return true;
+}
+
+const togglePreview = function(view) {
+    if ((view.preview) && (view.previewButton)) {
+        let turnon = (view.previewButton.mystate == 'inactive');
+        view.preview(turnon);
+    }
+    return true;
 }
 
 const additionalKeymap = [
@@ -134,6 +162,14 @@ const additionalKeymap = [
     { key: "Ctrl-j", run: joinLines, preventDefault: true },
     { key: "Ctrl-x", run: smartDeleteLine },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
+    { key: "F5", run: processDocument, preventDefault: true },
+    { key: "Ctrl-F5", run: processDocument, preventDefault: true },
+    { key: "F6", run: togglePreview, preventDefault: true },
+    { key: "Ctrl-F6", run: togglePreview, preventDefault: true },
+    { key: "Ctrl-F7", run: toggleAutoprocessing, preventDefault: true },
+    { key: "F7", run: toggleAutoprocessing, preventDefault: true },
+    { key: "Ctrl-F8", run: forwardJump, preventDefault: true },
+    { key: "F8", run: forwardJump, preventDefault: true },
     { key: "Alt-5", run: cursorMatchingBracket, preventDefault: true },
     { key: "Alt-j", run: jumpToMark, preventDefault: true },
     { key: "Alt-m", run: markJump, preventDefault: true },
