@@ -1,4 +1,4 @@
-# Open Guide Editor
+# Open Guide Editor (OGE)
 
 Highly configurable web-based text editor based on [codemirror](https://codemirror.net/) primarily designed for editing markdown, LaTeX, and html files with live-updating html and pdf previews.
 
