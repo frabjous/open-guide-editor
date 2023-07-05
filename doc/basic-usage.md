@@ -51,11 +51,12 @@ The preview window also has buttons. For html, it currently only has a download 
 
 Here is a partial list of the keybindings for various functions.
 
-| --- | --- |
+| Key                   | Function                                                                  |
+| --------------------- | ------------------------------------------------------------------------- |
 | **F6/Ctrl-F6**        | Open or close the preview window                                          | 
 | **F5/Ctrl-F5**        | Process current document and update preview                               | 
 | **F7/Ctrl-F7**        | Toggle auto-process/auto-preview                                          | 
-| **F8/Ctrl-F8**        | SyncTeX forward jump from current line number (LaTeX\xe2\x86\x92PDF only) | 
+| **F8/Ctrl-F8**        | SyncTeX forward jump from current line number (LaTeX→PDF only)            | 
 | **Alt-5**             | Move cursor to matching bracket/parenthesis                               | 
 | **Alt-j**             | Jump to last line marked with Alt-m                                       | 
 | **Alt-l**             | Select current line                                                       | 
@@ -65,8 +66,8 @@ Here is a partial list of the keybindings for various functions.
 | **Alt-w**             | Toggle line wrapping                                                      | 
 | **Alt-/**             | Toggle selected text or current line as a comment                         | 
 | **Alt-\|**            | Pipe text to unix command                                                 |   
-| **Alt-\xe2\x86\x91**  | Move current line up                                                      | 
-| **Alt-\xe2\x86\x93**  | Move current line down                                                    | 
+| **Alt-↑**             | Move current line up                                                      | 
+| **Alt-↓**             | Move current line down                                                    | 
 | **Alt-<**             | Indent less                                                               | 
 | **Alt->**             | Indent more                                                               | 
 | **Alt-Tab/Shift-Tab** | Reapply indentation to current selection                                  | 
@@ -88,19 +89,18 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-y**            | Redo                                                                      | 
 | **Ctrl-z**            | Undo                                                                      | 
 | **Ctrl-/**            | Toggle selected text or current line as a comment                         | 
-| **Ctrl-\|             | **Pipe text to unix command 
+| **Ctrl-\|**           | **Pipe text to unix command                                               |
 | **Ctrl-[**            | Indent less                                                               | 
 | **Ctrl-]**            | Indent more                                                               | 
 | **Ctrl-<**            | Indent less                                                               | 
 | **Ctrl->**            | Indent more                                                               | 
-| **Ctrl-\xe2\x86\x92** | Move to next word                                                         | 
-| **Ctrl-\xe2\x86\x90** | Move to previous word                                                     | 
-| **Ctrl-\xe2\x86\x91** | Insert line above                                                         | 
-| **Ctrl-\xe2\x86\x93** | Insert line below                                                         | 
+| **Ctrl-→**            | Move to next word                                                         | 
+| **Ctrl-←**            | Move to previous word                                                     | 
+| **Ctrl-↑**            | Insert line above                                                         | 
+| **Ctrl-↓**            | Insert line below                                                         | 
 | **Ctrl-Alt-[**        | Fold all foldable blocks                                                  | 
 | **Ctrl-Alt-]**        | Unfold all foldable blocks                                                | 
-| **Ctrl-Shift-[**      | Fold current line\xe2\x80\x99s block                                      | 
-|-----------------------|---------------------------------------------------------------------------|
+| **Ctrl-Shift-[**      | Fold current line’s block                                                 | 
 
 Things like Home and End also behave as they should, etc.
 
