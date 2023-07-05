@@ -287,8 +287,8 @@ if (is_dir($rdirname . '/.git')) {
         <div id="allcontainer">
             <div id="toppanelcontainer">
                 <div id="toppanel">
-                    <div id="toppanelleftbuttons"></div>
                     <div id="toppanelrightbuttons"></div>
+                    <div id="toppanelleftbuttons"></div>
                 </div>
             </div>
             <div id="editorcontainer">

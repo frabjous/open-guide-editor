@@ -19,10 +19,9 @@
 }
 
 #toppanelrightbuttons {
-    display: table-cell;
+    display: inline-block;
     float: right;
     padding-right: 0.4rem;
-    margin-top: 0.7rem;
 }
 
 #toppanelrightbuttons span.indicator {
