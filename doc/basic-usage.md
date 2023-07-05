@@ -104,7 +104,7 @@ Things like `Home` and `End` also behave as they should, etc.
 
 ## Citations
 
-For markdown files, if a bibliography or bibliography is set for the project in the [settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrows and enter to select one of the autocompletions.
+For markdown files, if a bibliography (or bibliographies) is set for the project in the [settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrows and enter to select one of the autocompletions.
 
 ## Other Documentation
 
