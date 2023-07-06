@@ -108,7 +108,7 @@ For markdown files, if a bibliography (or bibliographies) is set for the project
 
 ## Other Documentation
 
-See the other documentation files concerning [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), [installation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+See also the other documentation files concerning [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), [installation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
 
 ## License
 
