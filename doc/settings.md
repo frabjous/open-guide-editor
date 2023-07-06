@@ -21,6 +21,8 @@ Settings from these files are merged, with the settings in (1) overriding those 
 
 To create your own `settings.json` you can copy `default-settings.json` to `settings.json`, change what you wish to change, and remove anything you wish to keep at the default setting.
 
+Creating your own settings in many cases requires knowledge of linux/unix command line utilities.
+
 ## Project-Specific Settings and Alternative Main Files for Previewing
 
 These can be achieved by creating a `oge-settings.json` file in the same folder as the files you’re working on.
@@ -126,14 +128,70 @@ You can use any file extension for the input, even those not already included in
 }
 ```
 
+You could similarly create routines for javascript (`js`/`mjs`) files or `css` files, though in such cases this is usually unnecessary, and such files are likely to be used with main or root documents that OGE already has routines for. 
 
-In addition to `"command"`, routines can set the following, though they are less likely to need customizing by the average user (except perhaps `"icon"` for new input extensions.
+In addition to the `"command"` option, routines can set the following, though they are less likely to need customizing by the average user (except perhaps `"icon"` for new input extensions.
 
 * `"icon"`: The Google Material Symbols icon name to display on the panel button to represent the output format (all lowercase with underscores instead of spaces)
 * `"postprocess"`: A command that will be executed after the processing command. Note, however, that the `"postprocess"` option for pdf outputs is expected to output the number of pages to stdout, which the preview window uses for its slider display and buttons. You can include other commands in its postprocessing joined with `;` or `&&`, but they should be configured to be silent.
 * `"forwardjump"`: a command that returns the page number corresponding to a line in the editor; this is used, e.g., for SyncTeX forward jumps with LaTeX-produced PDFs. Also respects the variable `%line%` for inserting the line the editor is currently focused on.
 * `"reversejump"`: A command that can be executed in the pdf preview window by double-clicking, which should output something similar to what is outputted by `synctex edit`. The variable `%page%`, `%x%` and `%y%` can be used for the coordinates in the pdf clicked on, with 72 points per inch.
 * `"getpagedimensions"`: The command used to get the dimensions of the pdf with 72 points per inch; it should print the number for the width on the first line of stdout, and the number for the height on the second line. This is needed before processing a reverse jump.
+
+## Other Settings Options
+
+For other settings, it is useful to compare the contents of `default-settings.json` to see what it contains. Here are the description of the other options you will find can fine-tune.
+
+```json
+"accesskeyfile": "/tmp/oge-accesskeys.json",
+```
+This sets the location of the file where OGE saves its access keys. (See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more information about this.) This you should probably change in your `settings.json`, as the `/tmp` folder is not ideal if you want these to be persistent.
+
+```
+"autosave": {
+    "interval": 300000,
+    "directory": "/tmp"
+},
+```
+OGE can be configured to create an auto-save of files being edited to avoid losing work if the browser crashes. The interval sets how often in milliseconds this happens. The default, 300000, is 5 minutes. The directory specifies where the files are saved. This too you likely want to customize. Files are saved with their full path name but with '⁒' replacing the directory separator `/`. Files that haven't been named have autosaves with a name with `⁒autosave-2023-7-4-1688470336511` specifying the date and timestamp they were autosaved. If you set the interval to 0, it will disable auto-saving.
+
+```
+"readaloud": {
+    "html" : {
+        "command": "flite_cmu_us_slt -t \"$(pandoc -f html -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
+    },
+    ⋮       
+}
+```
+The `"readaloud"` settings determine, for each input file type, how the mp3 that is read aloud by the loudspeaker button is created. The routine should take the variable `%text%`, which is the text of the line of the document being read, and create a file called `/tmp/oge-audio.mp3`. The default uses [flite](http://cmuflite.org/), or festival lite, which is easy to install on most servers, with a voice I like, along with [lame](https://lame.sourceforge.io/) for converting its output to mp3, but this option allows you to configure any TTS system that can be used to produce mp3s directly or indirectly.
+
+```
+"routines": {
+    ⋮
+}
+```
+
+Routines are discussed [above](#routines), but see also the [recommendations](#recommendations) below.
+
+```
+"viewer": {
+    "height": 500,
+    "width": 900,
+    "pdf": {
+        "convertcommand": "mutool draw -F svg -o - %outputfile% %page%",
+        "convertextension": "svg",
+        "convertmimetype": "image/svg+xml"
+    }
+}
+```
+
+These options determine the height and width of the viewer window when it is created (in pixels), though not every browser or operating system will respect them.
+
+The `"pdf"` suboption determines how the pages that are displayed in the pdf preview are converted into an image file that the browser can display. You could use a different filetype, e.g., `png`, and set its mimetype (`image/png`), and/or use different conversion program. For most pdfs, however, `svg` is ideal, as it is a vector format and thus scalable without pixelation, and converting is usually quicker. In my experience, `mutool`'s svg conversion is faster at rendering pdfs as browser-displayable images than even a browser-native pdf viewer like Mozilla's pdfjs.
+
+Pages are only converted and displayed when requested.
+
+
 
 ## Other Documentation
 
