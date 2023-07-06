@@ -233,7 +233,7 @@ For html output, only the html file itself can be viewed in the previewer.
 Separate files like css files and images will not be available (for security reasons).
 It is therefore useful to actually embed all resources needed into the html file.
 This is why the default routines for md→html and tex→html use `pandoc` with its `--standalone` and `--embed-resources` option.
-For viewing html output for html, this can be less than ideal, since it will filter everything through pandoc's conversion and you won’t be prevewing what you had meant to.
+For viewing html output for html, this can be less than ideal, since it will filter everything through pandoc's conversion and you won’t be previewing what you had meant to.
 
 You could just use `touch %outputfile%` (which in fact is the default) as your routine to view the html file itself without modification, but then it won’t have the external resources available.
 An alternative might be to install something like [inliner](https://github.com/remy/inliner) for embedding other resources, but [due to a bug it requires some hacks to get working in scripts](https://github.com/remy/inliner/issues/151).
