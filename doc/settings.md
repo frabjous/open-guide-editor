@@ -90,6 +90,8 @@ The following variables are filled in for you when the processing command is exe
 - `%outputfile%`: The name of the file. This can be explicitly set for the routine, but otherwise will be assumed to be the name of the root document with the extension change to the output extension.
 - `%savedfile%`: The file currently being edited, and saved along with the processing job.
 
+Note that quotation marks for the shell are automatically added around these variables. You should not add your own, or they will cancel each other out and possibly break the commands for filenames with spaces, etc.!
+
 In addition to output extensions, the object for a given input extension can also contain a key for `"defaultext"`, i.e., the default output extension the editor will start having set, and `"spellcheck"` which is a boolean that enables or disables the browser’s built-in spell-check capabilites.
 
 For example:
@@ -111,8 +113,6 @@ This would set pdf as the default extension for processing html files, would tur
 
 Routine commands can use any programs installed on the server which the server user can execute, and are passed through a shell, so shell operators such as pipes `|` and combinations with `&&` can be used.
 
-For output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer. Currently OGE only know how to preview html and pdf output files.
-
 You can use any file extension for the input, even those not already included in the default settings. For example, the following is a totally valid routine for previewing a simple php file that produces html, and will work as is.
 
 ```json
@@ -130,6 +130,8 @@ You can use any file extension for the input, even those not already included in
 
 You could similarly create routines for javascript (`js`/`mjs`) files or `css` files, though in such cases this is usually unnecessary, and such files are likely to be used with main or root documents that OGE already has routines for. 
 
+You can also use any file extension for the output. However, for output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer. Currently OGE only knows how to preview html and pdf output files. (But pull requests for others are welcome!)
+
 In addition to the `"command"` option, routines can set the following, though they are less likely to need customizing by the average user (except perhaps `"icon"` for new input extensions.
 
 * `"icon"`: The Google Material Symbols icon name to display on the panel button to represent the output format (all lowercase with underscores instead of spaces)
@@ -143,44 +145,54 @@ In addition to the `"command"` option, routines can set the following, though th
 For other settings, it is useful to compare the contents of `default-settings.json` to see what it contains. Here are the description of the other options you will find can fine-tune.
 
 ```json
-"accesskeyfile": "/tmp/oge-accesskeys.json",
+{
+    "accesskeyfile": "/tmp/oge-accesskeys.json"
+}
 ```
 This sets the location of the file where OGE saves its access keys. (See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more information about this.) This you should probably change in your `settings.json`, as the `/tmp` folder is not ideal if you want these to be persistent.
 
-```
-"autosave": {
-    "interval": 300000,
-    "directory": "/tmp"
-},
+```json
+{
+    "autosave": {
+        "interval": 300000,
+        "directory": "/tmp"
+    }
+}
 ```
 OGE can be configured to create an auto-save of files being edited to avoid losing work if the browser crashes. The interval sets how often in milliseconds this happens. The default, 300000, is 5 minutes. The directory specifies where the files are saved. This too you likely want to customize. Files are saved with their full path name but with '⁒' replacing the directory separator `/`. Files that haven't been named have autosaves with a name with `⁒autosave-2023-7-4-1688470336511` specifying the date and timestamp they were autosaved. If you set the interval to 0, it will disable auto-saving.
 
-```
-"readaloud": {
-    "html" : {
-        "command": "flite_cmu_us_slt -t \"$(pandoc -f html -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
-    },
-    ⋮       
+```json
+{
+    "readaloud": {
+        "html" : {
+            "command": "flite_cmu_us_slt -t \"$(pandoc -f html -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
+        },
+        ⋮       
+    }
 }
 ```
 The `"readaloud"` settings determine, for each input file type, how the mp3 that is read aloud by the loudspeaker button is created. The routine should take the variable `%text%`, which is the text of the line of the document being read, and create a file called `/tmp/oge-audio.mp3`. The default uses [flite](http://cmuflite.org/), or festival lite, which is easy to install on most servers, with a voice I like, along with [lame](https://lame.sourceforge.io/) for converting its output to mp3, but this option allows you to configure any TTS system that can be used to produce mp3s directly or indirectly.
 
-```
-"routines": {
-    ⋮
+```json
+{
+    "routines": {
+        ⋮
+    }
 }
 ```
 
 Routines are discussed [above](#routines), but see also the [recommendations](#recommendations) below.
 
-```
-"viewer": {
-    "height": 500,
-    "width": 900,
-    "pdf": {
-        "convertcommand": "mutool draw -F svg -o - %outputfile% %page%",
-        "convertextension": "svg",
-        "convertmimetype": "image/svg+xml"
+```json
+{
+    "viewer": {
+        "height": 500,
+        "width": 900,
+        "pdf": {
+            "convertcommand": "mutool draw -F svg -o - %outputfile% %page%",
+            "convertextension": "svg",
+            "convertmimetype": "image/svg+xml"
+        }
     }
 }
 ```
@@ -191,7 +203,36 @@ The `"pdf"` suboption determines how the pages that are displayed in the pdf pre
 
 Pages are only converted and displayed when requested.
 
+## Recommendations
 
+For html output, only the html file itself can be viewed in the previewer. Separate files like css files and images will not be available (for security reasons). It is therefore useful to actually embed all resources needed into the html file. This is why the default routines for md→html and tex→html use `pandoc` with its `--standalone` and `--embed-resources` option. For viewing html output for html, this can be less than ideal, since it will filter everything through pandoc's conversion and you won’t be prevewing what you had meant to.
+
+You could just use `touch %outputfile%` (which in fact is the default) as your routine to view the html file itself without modification, but then it won’t have the external resources available. An alternative might be to install something like [inliner](https://github.com/remy/inliner) for embedding other resources, but [due to a bug it requires some hacks to get working in scripts](https://github.com/remy/inliner/issues/151).
+
+You could create a shell script entitled `myinliner.sh`. (Make it executable with `chmod a+x` and put it in your `$PATH`.)
+
+```sh
+#!/usr/bin/env bash
+script --quiet --return --command 'inliner '"$1"' 2>/dev/null' /dev/null > "$2"
+```
+
+And then use:
+
+```json
+{
+    "routines": {
+        "html": {
+            "html": {
+                "command": "myinliner.sh %rootdocument% %outputfile%",
+                "outputfile": "inline-file.html"
+            }
+        }
+    }
+}
+```
+Here it is necessary to specify the output filename explicitly to avoid overwriting the edited file.
+
+Consider writing scripts and calling them in other routines if you need to do complex things with your files.
 
 ## Other Documentation
 
