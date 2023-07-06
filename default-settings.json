@@ -1,5 +1,5 @@
 {
-    "accesskeyfile" : "/tmp/oge-accesskeys.json",
+    "accesskeyfile": "/tmp/oge-accesskeys.json",
     "autoprocess" : {
         "delay": 800
     },
