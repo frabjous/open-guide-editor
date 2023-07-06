@@ -23,7 +23,7 @@ To create your own `settings.json` you can copy `default-settings.json` to `sett
 
 ## Project-Specific Settings and Alternative Main Files for Previewing
 
-This can be done by creating a `oge-settings.json` file in the same folder as the files you're working on.
+These can be achieved by creating a `oge-settings.json` file in the same folder as the files you're working on.
 
 One important use for this is setting an alternative "main" or "root" file: this is the file that will actually be processed for previewing. You might, however, be working on a subsidiary file, e.g., a LaTeX file introduced with `\include{filename}`, or a css file for styling an html or markdown file.
 
@@ -38,9 +38,14 @@ Setting a root document will result in the file set as root being the one previe
 
 You can also provide a list (array) of bibliography files, which should be CSL json files, the keys of which will be used for [citation autocompletion](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md#citations) for markdown files. See the example above.
 
-If the extension of 
+**Important note**: If the file extension of the root document differs from the file being edited, it is the *root document*'s extension that will determine what routine is used, not the extension of the file being edited. See [routines](#routines) below.
 
-However, these options need not be given and the `oge-settings.json`
+However, these options need not be given, and the `oge-settings.json` can be used to override any settings in `settings.json` or `default-settings.json` discussed below. Or if no special options or commands need to be set for the project, an `oge-settings.json` file need not be used at all.
+
+```json
+{
+
+}
 
 ## Other Documentation
 
