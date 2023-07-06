@@ -23,7 +23,7 @@ To create your own `settings.json` you can copy `default-settings.json` to `sett
 
 ## Project-Specific Settings and Alternative Main Files for Previewing
 
-These can be achieved by creating a `oge-settings.json` file in the same folder as the files you're working on.
+These can be achieved by creating a `oge-settings.json` file in the same folder as the files you’re working on.
 
 One important use for this is setting an alternative "main" or "root" file: this is the file that will actually be processed for previewing. You might, however, be working on a subsidiary file, e.g., a LaTeX file introduced with `\include{filename}`, or a css file for styling an html or markdown file.
 
@@ -42,10 +42,51 @@ You can also provide a list (array) of bibliography files, which should be CSL j
 
 However, these options need not be given, and the `oge-settings.json` can be used to override any settings in `settings.json` or `default-settings.json` discussed below. Or if no special options or commands need to be set for the project, an `oge-settings.json` file need not be used at all.
 
+For example, if you wanted to change the autoprocessing delay for one project, and make use of two bibliographies, both for autocompletion, and when processing markdown files to pdf, but without settig an alternative root/main document, one might use an `oge-settings.json` file like this:
+
+
 ```json
 {
-
+    "bibliographies": ["references.json", "bib.json"],
+    "autoprocess": { "delay": 200 },
+    "routines": {
+        "md": {
+            "pdf": {
+                "command": "pandoc -f markdown -t pdf --citeproc --bibliography references.json --bibliography bib.json %rootdocument -o %outputfile%"
+            }
+        }
+    }
 }
+```
+
+## Routines
+
+In addition to changing the main file processed, the next most likely things users will want to customize are the processing “routines”. These can be customized in the json files, either in the project’s `oge-settings.json` or the site-wide `settings.json`.
+
+Routines are listed in the json by the input file extension, and for each such extension, there is a list of possible output extensions. For example, one might use a configuration like this to use xetex instead of the default pdflatex when producing pdfs from LaTeX or markdown files:
+
+```json
+{
+    "routines" : {
+        "tex" : {
+            "pdf": {
+                "command": "xelatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%"
+            }
+        },
+        "md": {
+            "pdf": {
+                "command": "pandoc --pdf-engine xelatex %rootdocument% -o %outputfile%"
+            }      
+        }
+    }
+}
+```
+
+The following variables are filled in for you when the processing command is executed:
+
+- `%rootdocument%`: The name of the main file being processed; this will be the same as the file edited unless a different root document is specified, as described above.
+- `%outputfile%`: The name of the 
+-
 
 ## Other Documentation
 
