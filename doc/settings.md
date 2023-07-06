@@ -109,15 +109,31 @@ This would set pdf as the default extension for processing html files, would tur
 
 Routine commands can use any programs installed on the server which the server user can execute, and are passed through a shell, so shell operators such as pipes `|` and combinations with `&&` can be used.
 
-For output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer.
+For output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer. Currently OGE only know how to preview html and pdf output files.
 
-In addition to `"command"`, routines can set the following, though they are less likely to need customizing by the average user.
+You can use any file extension for the input, even those not already included in the default settings. For example, the following is a totally valid routine for previewing a simple php file that produces html, and will work as is.
+
+```json
+{
+    "routines": {
+        "php": {
+            "html": {
+                "command": "php %savedfile% > %outputfile%",
+                "icon": "public"
+            }
+        }
+    }
+}
+```
+
+
+In addition to `"command"`, routines can set the following, though they are less likely to need customizing by the average user (except perhaps `"icon"` for new input extensions.
 
 * `"icon"`: The Google Material Symbols icon name to display on the panel button to represent the output format (all lowercase with underscores instead of spaces)
 * `"postprocess"`: A command that will be executed after the processing command. Note, however, that the `"postprocess"` option for pdf outputs is expected to output the number of pages to stdout, which the preview window uses for its slider display and buttons. You can include other commands in its postprocessing joined with `;` or `&&`, but they should be configured to be silent.
 * `"forwardjump"`: a command that returns the page number corresponding to a line in the editor; this is used, e.g., for SyncTeX forward jumps with LaTeX-produced PDFs. Also respects the variable `%line%` for inserting the line the editor is currently focused on.
 * `"reversejump"`: A command that can be executed in the pdf preview window by double-clicking, which should output something similar to what is outputted by `synctex edit`. The variable `%page%`, `%x%` and `%y%` can be used for the coordinates in the pdf clicked on, with 72 points per inch.
-* `"getpagedimensions"`: The command used to get the dimensions of the pdf with 72 points per inch; it should print the number for the width on the first line of stdout, and the number for the height on the second line.
+* `"getpagedimensions"`: The command used to get the dimensions of the pdf with 72 points per inch; it should print the number for the width on the first line of stdout, and the number for the height on the second line. This is needed before processing a reverse jump.
 
 ## Other Documentation
 
