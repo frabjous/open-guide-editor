@@ -1,9 +1,9 @@
 
 # Open Guide Editor (OGE) Documentation
 
-# Basic Usage, Buttons and Keybindings
+# User Configuration and Settings
 
-
+OGE aims to be very user-configurable. Configuration is done by means of json files. Each time a file is loaded or processed, 
 
 ## Other Documentation
 
