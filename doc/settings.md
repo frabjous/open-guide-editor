@@ -5,11 +5,11 @@
 
 ## Overview
 
-OGE aims to be very user-configurable. Configuration is done by means of json files. Each time a file is loaded or processed, the following files are checked for configuration options.
+OGE aims to be very user-configurable. Configuration is done by means of [json files](https://www.json.org/json-en.html). Each time a file is loaded or processed i, the following files are checked for configuration options.
 
 1. The file `oge-settings.json` in the same folder as the file, or any parent folder to which oge has access.
-2. The file `settings.json` in the main `open-guide-editor` folder.
-3. The file `default-settings.json` in the main `open-guide-editor` folder.
+2. The file `settings.json` in the main `open-guide-editor/` folder.
+3. The file `default-settings.json` in the main `open-guide-editor/` folder.
 
 Settings from these files are merged, with the settings in (1) overriding those of (2), and with those of (2) overriding those of (3). If you do not wish to change something from the default settings, you need not include it in (1) or (2); the defaults from (3) will then be applied.
 
@@ -17,7 +17,7 @@ Settings from these files are merged, with the settings in (1) overriding those 
 
 **Site or installation-wide settings** should be done in `settings.json`.
 
-**Sane defaults** are provided for you in `default-settings.json`, though there are some recommendations for alternatives below.
+**Sane defaults** are provided for you in `default-settings.json`, though there are some [recommendations for alternatives](#recommendations) below.
 
 To create your own `settings.json` you can copy `default-settings.json` to `settings.json`, change what you wish to change, and remove anything you wish to keep at the default setting.
 
