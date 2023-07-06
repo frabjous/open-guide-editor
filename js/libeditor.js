@@ -558,16 +558,14 @@ function powerUpEditor() {
                 }
                 if ((opts?.launch || window.lastViewerLoaded != opts.outputext ||
                     ((!window.viewedonce) &&
-                    (outputext in window.outputextensions) &&
-                    (window.outputextensions[outputext].viewable))) &&
+                    (window.outputextensions.indexOf(outputext) >= 0))) &&
                     (!opts?.download)) {
                     return ogEditor.launchviewer(
                         { postprocessdata: postprocessdata }
                     );
                 }
                 // if viewer is currently open, refresh it
-                if ((outputext in window.outputextensions) &&
-                    (window.outputextensions[outputext].viewable) &&
+                if ((window.outputextensions.indexOf(outputext) >= 0) &&
                     (window.viewerwindow !== false)) {
                     ogEditor.sendmessage({
                         messagecmd: 'refresh',
@@ -853,38 +851,37 @@ function powerUpEditor() {
 
         // for non-viewable routines, create a download button
         for (let outputext in routines) {
-            if (outputext in window.outputextensions) {
-                if (!window.outputextensions[outputext].viewable) {
-                    if (!ogEditor.downloadButtons) {
-                        ogEditor.downloadButtons = {};
-                    }
-                    const icon = window.outputextensions[outputext].icon
-                        ?? 'download';
-                    const b = panelButton({
-                        "normal" : {
-                            icon: icon,
-                            tooltip: "download " + outputext,
-                            clickfn: function() {
-                                ogEditor.download(this.outputext);
-                            }
-                        },
-                        "processing" : {
-                            icon: "sync",
-                            tooltip: "processing download",
-                            clickfn: function() { }
-                        },
-                        "error" : {
-                            icon: icon,
-                            tooltip: "download processing error",
-                            clickfn: function() {
-                                ogEditor.download(this.outputext);
-                            }
-                        }
-                    }, true);
-                    b.outputext = outputext;
-                    b.makeState("normal");
-                    ogEditor.downloadButtons[outputext] = b;
+            if (outputext == 'defaultext'
+                || outputext == 'spellcheck') { continue; }
+            if (window.outputextensions.indexOf(outputext) == -1) {
+                if (!ogEditor.downloadButtons) {
+                    ogEditor.downloadButtons = {};
                 }
+                const icon = routines[outputext].icon ?? 'download';
+                const b = panelButton({
+                    "normal" : {
+                        icon: icon,
+                        tooltip: "download " + outputext,
+                        clickfn: function() {
+                            ogEditor.download(this.outputext);
+                        }
+                    },
+                    "processing" : {
+                        icon: "sync",
+                        tooltip: "processing download",
+                        clickfn: function() { }
+                    },
+                    "error" : {
+                        icon: icon,
+                        tooltip: "download processing error",
+                        clickfn: function() {
+                            ogEditor.download(this.outputext);
+                        }
+                    }
+                }, true);
+                b.outputext = outputext;
+                b.makeState("normal");
+                ogEditor.downloadButtons[outputext] = b;
             }
         }
     }
