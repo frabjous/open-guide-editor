@@ -184,6 +184,8 @@ error_log(file_exists('open-guide-misc/fetch.mjs'));
 // ensure open-guide-misc exists
 if (!file_exists('open-guide-misc/fetch.mjs')) {
     error_log("ERROR. The open-guide-misc submodule does not exist.");
+    error_log("Did you clone the repository with the" .
+       " --recurse-submodules option?");
     exit(1);
 }
 
