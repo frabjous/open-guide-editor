@@ -11,7 +11,7 @@
 // should always be required from script that calls session_start
 error_log('1' . ($_SERVER["REMOTE_ADDR"]));
 
-if ($_SERVER["SERVER_NAME"] == 'localhost') {
+if ($_SERVER["REMOTE_ADDR"] == '::1' || $_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
     $_SESSION["open-guide-editor-poweruser"] = true;
 }
 
