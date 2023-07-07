@@ -13,11 +13,19 @@
 if ((php_sapi_name() != 'cli') || isset($_SERVER["SERVER_PROTOCOL"])) {
     exit("ERROR. This script must be run from the command line.");
 }
-echo <<<EOL
- hi there
-you there
+
+function showhelp() {
+    global $argv;
+    $exename = basename($argv[0]);
+    echo <<<EOL
+Usage:
+
+{$exename} [options] filename1 [filename2 ...]
+
 EOL;
+}
+
 // move to the main open-guide-editor folder, which should be the
 // parent of where this script is
 chdir(dirname(dirname(__FILE__)));
-echo getcwd();
+showhelp();

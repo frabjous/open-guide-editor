@@ -89,7 +89,7 @@ If anyone wants me to create a `.desktop` file for OGE so it can be put into Des
 
 ## Other Documentation
 
-See also the other documentation files concerning [basic usage, buttons and keybindings,](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md), [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+See also the other documentation files concerning [basic usage, buttons and keybindings](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md), [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
 
 ## License
 
