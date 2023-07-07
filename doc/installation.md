@@ -33,7 +33,7 @@ I will cover the first use-case first.
 
     The above can probably be easily installed with your distribution's package manager, on any mainstream Linux distro. You do not need to install them all, however, if you don’t need the [routines](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md) that use them, or want to define your own using alternative tools such as, for example, the (slower but ubiquitous) [poppler](https://poppler.freedesktop.org/) utilities in place of mutool.
 
-3. You will need to have installed the programs used in the installation process, which include [git](https://git-scm.com/) and [npm](https://www.npmjs.com/), but there's a good chance that you'll have these installed already.
+3. You will need the programs used in the installation process to be installed, which include [git](https://git-scm.com/) and [npm](https://www.npmjs.com/), but there's a good chance that you'll have these installed already.
 
 4. You will need to be able to run a [PHP](https://www.php.net/)-capable web-server. For personal use, the [php testing server](https://www.php.net/manual/en/features.commandline.webserver.php) may suffice. It may work with earlier versions, but I recommend using PHP version 8.x or above.
 
@@ -116,10 +116,15 @@ To make use of OGE on such a server, when following the steps above, you merely 
 If, for example, it is placed as a subdirectory of the server's document root, it would then be available at `https://yourdomain.com/open-guide-editor/`.
 You can rename the `open-guide-editor` directory if you wish, but the `open-guide-misc/` submodule directory should not be renamed.
 
-However, when it is not accessed on `localhost`, the browser will not automatically have access to editing files on the server.
+However, when it is not accessed on `localhost` or `127.0.0.1`, the client browser will not automatically have access to editing files on the server.
 That would be a huge security hole.
 Instead, some mechanism will need to be put into place to grant access through some kind of authentication process.
-More information about doing so is provided in the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+More information about providing such a mechanism is detailed in the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+
+One that is in place, there are two ways to access a specific document.
+One would be to use the "open" button/Ctrl-O shortcut, which will be limited to those directories to which the client has been given access.
+The other would be to follow a link to the redirection page `https://yourdomain.com/open-guide-editor/php/redirect.php?dirname=[url-encoded-directory-of file]&basename=[url-encoded-basename-of-file]` where the portions in brackets are replaced by the actual url-encoded names, without brackets.
+This will generate an access key if the user should have access to the file and redirect the browser to the editor with the file in question loaded. 
 
 ## Other Documentation
 
