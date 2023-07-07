@@ -5,8 +5,7 @@
 
 
 OGE has two main use-cases. One is for personal use on one's own workstation.
-A second is as part of a larger web-based project in which it will be used remotely, such as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) it was originally written for.
-However, it could be used for other projects.
+A second is as part of a web-based project in which it could be used remotely, such as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) it was originally written for, or similar project.
 
 I will cover the first use-case first.
 
@@ -14,7 +13,7 @@ I will cover the first use-case first.
 
 #### Steps to install
 
-1. You will need to be running GNU/Linux or other Unix-like operating system. (I have only tested it on Linux but it might work on systems like FreeBSD and even MacOS; if you try, let me know your results!)
+1. You will need to be running GNU/Linux or another Unix-like operating system. (I have only tested it on Linux but it might work on systems like FreeBSD and even MacOS; if you try, let me know your results!)
 
 2. You will need to install any other programs that will be used as part of the routines and other commands you plan to use for processing and previewing.
     Below are the programs used by the default configuration, but you can configure OGE to use other programs instead.
@@ -24,11 +23,11 @@ I will cover the first use-case first.
 
     - [texlive](https://tug.org/texlive/) or another TeX distribution for processing LaTeX files
 
-    - [mutool](https://mupdf.readthedocs.io/en/latest/mupdf-command-line.html?utm_source=mupdf&utm_medium=website&utm_content=cta-header-link#mupdf-command-line-mutool) from the [mupdf project](https://mupdf.com/) for converting pdf pages to images, and other pdf-related tasks.
+    - [mutool](https://mupdf.readthedocs.io/en/latest/mupdf-command-line.html?utm_source=mupdf&utm_medium=website&utm_content=cta-header-link#mupdf-command-line-mutool) from the [mupdf project](https://mupdf.com/) for converting pdf pages to images, and other pdf-related tasks
 
     - [flite](http://cmuflite.org/) for text-to-speech capability
 
-    - [ebook-convert](https://manual.calibre-ebook.com/generated/en/ebook-convert.html), a command line program that ships with the [calibre](https://calibre-ebook.com/) ebook software suite, for converting html files to epubs.
+    - [ebook-convert](https://manual.calibre-ebook.com/generated/en/ebook-convert.html), a command line program that ships with the [calibre](https://calibre-ebook.com/) ebook software suite, for converting html files to epubs
 
     - [weasyprint](https://weasyprint.org/) for creating pdfs from html files
 
@@ -80,11 +79,11 @@ Note that when connecting on `localhost`, you can edit any files the user runnin
 
 #### Convenience script
 
-Opening files you want to edit via OGE’s “open” dialog is not very efficient.
+Opening the files you want to edit via OGE’s “open” dialog is not very efficient.
 
 For that reason, OGE comes with a script you can run from the command line, `bin/oge.php`, which will take one or more filenames on the local system as argument, and open browser tabs for each one.
 
-The script will also launch a PHP testing server if one isn’t already launched. You can specify the port, host and browser to use, either from the command line or in your `settings.json` file for OGE. Details can be found by running the script with the argument `--help`, i.e., `php bin/oge.php --help`.
+The script will also launch a PHP testing server if one isn’t already launched. You can specify the port, host, and browser to use, either from the command line or in the `settings.json` file for your installation OGE. Details can be found by running the script with the argument `--help`, i.e., `php bin/oge.php --help`.
 
 If you think you may use this often, I recommend making it executable (if git didn’t already preserve the permissions) and creating a symbolic link to it in one of the directories in your `$PATH`, e.g.:
 
@@ -95,7 +94,7 @@ ln -s "$(realpath bin/oge.php)" "$HOME/.local/bin/oge"
 
 Naming the link `oge` instead of `oge.php` will allow it to be used in a shorter way, e.g., `oge filename.md`.
 An alternative would be to create an alias such as `alias oge="php $HOME/open-guide-editor/bin/oge.php"`.
-You should not just copy the script, however, as this will interfere with it finding the resources in its parent folder it needs to function properly.
+You should not just copy the script in your `$PATH`, however, as this will interfere with it finding the resources in its parent folder it needs to function properly.
 
 The script will also create files that do not yet exist, and can be passed (or set via `settings.json`) an option for a templates folder which will be copied over to the new files at creation based on their file extensions.
 For example, `oge --templates ~/templates newfile.html` will look for a file named `~/templates/html.template` or `~/templates/html1.template` and copy it over to `newfile.html` when it is created.
@@ -103,6 +102,13 @@ Again, see `oge --help`.
 
 If anyone wants me to create a `.desktop` file for OGE so it can be put into Desktop Environment menus easily, let me know.
 
+## Installation on a Public-Facing Web-server
+
+Installation as part of a web project that allows for remote use is for the most part the same as installation for personal use.
+You can more or less follow the steps of the procedure described [above](#user-content-steps-to-install).
+The main exception is that for over-the-web use you will not want to use the PHP testing server, but instead a full featured web-server with PHP enabled like [nginx](https://www.nginx.com/) or [apache](https://httpd.apache.org/).
+
+Instructions for setting up a standard PHP-enabled web-server , but there are many guides and tutorials for doing this online for all major Linux distributions. A MySQL or other database is not needed.
 
 ## Other Documentation
 

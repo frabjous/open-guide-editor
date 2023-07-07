@@ -36,7 +36,7 @@
             }
         },
         "md": {
-            "defaultext": "pdf",
+            "defaultext": "html",
             "html": {
                 "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
                 "icon": "public"

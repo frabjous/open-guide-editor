@@ -215,7 +215,7 @@ function powerUpEditor() {
         // open the viewerwindow
         window.viewerwindow = window.open(
             url,
-            'preview',
+            'preview' + window.accesskey,
             'popup,width=' +
                 ((ogeSettings?.viewer?.width ?? 900).toString()) +
             ',height=' +
