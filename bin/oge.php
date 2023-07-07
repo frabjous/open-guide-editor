@@ -19,6 +19,7 @@ function showhelp() {
     global $argv;
     $exename = basename($argv[0]);
     echo <<<EOL
+
 Usage:
 
 {$exename} [options] filename1 [filename2 ...]
@@ -43,6 +44,7 @@ Options:
 
 Default "browser", "host", "templates", and "port" can also be
 set in your settings.json file in the open-guide-editor directory.
+
 EOL;
 }
 
@@ -112,6 +114,13 @@ while ($arg_to_read < count($argv)) {
             $arg_to_read++;
             break;
     }
+}
+
+// if no filenames given, quit
+if (count($filenames) == 0) {
+    showhelp();
+    error_log(PHP_EOL . "At least one filename must be given.");
+    exit(1);
 }
 
 // canonicalize the filenames
