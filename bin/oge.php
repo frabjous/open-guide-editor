@@ -179,8 +179,6 @@ if ($templatesdir != '' && !is_dir($templatesdir)) {
     exit(1);
 }
 
-error_log(file_exists('open-guide-misc/fetch.mjs'));
-
 // ensure open-guide-misc exists
 if (!file_exists('open-guide-misc/fetch.mjs')) {
     error_log("ERROR. The open-guide-misc submodule does not exist.");
@@ -192,8 +190,8 @@ if (!file_exists('open-guide-misc/fetch.mjs')) {
 // ensure node_modules exist; if not try to install with npm
 if (!is_dir('node_modules')) {
     error_log("Codemirror and its dependencies are not installed.");
-    error_log(" Attempting to install. This should only need to be" .
-        "done once.");
+    error_log("Attempting to install. This should only need to be" .
+        " done once.");
     exec('npm install --quiet 2>&1', $o, $e);
     if ($e != 0) {
         error_log(PHP_EOL . implode(PHP_EOL,$o) . PHP_EOL);
@@ -207,11 +205,32 @@ if (!file_exists("editor.bundle.js")) {
     error_log("Rollup bundle of codemirror libraries not found.");
     error_log("Attempting to create.");
     exec('node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve 2>&1',$o,$e);
-    if ($e !== 0) {
+    if ($e != 0) {
         error_log(PHP_EOL . implode(PHP_EOL,$o) . PHP_EOL);
         error_log("Attempt failed. OGE will not work without it.");
         exit(1);
     }
+}
+
+// check on server by trying to grab this very script
+$protocol = 'http' . (($port == 443) ? 's' : '');
+$url = $protocol . '://' . $host;
+if ($port != 443 && $port != 80) {
+    $url .= ':' . strval($port);
+}
+$url .= '/bin/oge.php';
+// start a curl session
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HEADER, false);
+$curl_result = curl_exec($curl);
+curl_close($curl);
+
+if ($curl_result == '') {
+    echo "no curl result";
+} else {
+    echo "curl result! $curl_result";
 }
 
 echo 'port - ' . strval($port) . PHP_EOL;
