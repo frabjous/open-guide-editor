@@ -32,7 +32,8 @@ Options:
                             falling back to "firefox")
 --help                   : view this help
 --host (domainname)      : specify a host domain other than "localhost"
-                           (can include '/'s for subdirectories)
+                           (can include '/'s for subdirectories, but
+                            then you should use port 80 or 443)
 --port (NN)              : specify the port to look for the server
                            (otherwise will be 8181 or what is
                             set in settings.json)
@@ -149,8 +150,8 @@ if ($templatesdir != '' && is_dir($templatesdir)) {
 chdir(dirname(dirname(__FILE__)));
 
 // if something isn't set, try to read it from settings.json
-if (($port == 0 || $browser == '' || $host == '' || $templatesdir == '') &&
-    (file_exists('settings.json'))) {
+if (($port == 0 || $browser == '' || $host == '' ||
+    $templatesdir == '') && (file_exists('settings.json'))) {
     $settings = json_decode(file_get_contents('settings.json')) ??
         (new StdClass());
     if ($port == 0 && isset($settings->port)) {
@@ -214,7 +215,8 @@ if (!is_dir('node_modules')) {
 if (!file_exists("editor.bundle.js")) {
     error_log("Rollup bundle of codemirror libraries not found.");
     error_log("Attempting to create.");
-    exec('node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve 2>&1',$o,$e);
+    exec('node_modules/.bin/rollup js/editor.mjs -f iife -o ' .
+        'editor.bundle.js -p @rollup/plugin-node-resolve 2>&1',$o,$e);
     if ($e != 0) {
         error_log(PHP_EOL . implode(PHP_EOL,$o) . PHP_EOL);
         error_log("Attempt failed. OGE will not work without it.");
@@ -224,11 +226,11 @@ if (!file_exists("editor.bundle.js")) {
 
 // check on server by trying to grab this very script
 $protocol = 'http' . (($port == 443) ? 's' : '');
-$url = $protocol . '://' . $host;
+$urlbase = $protocol . '://' . $host;
 if ($port != 443 && $port != 80) {
-    $url .= ':' . strval($port);
+    $urlbase .= ':' . strval($port);
 }
-$url .= '/bin/oge.php';
+$url = $urlbase . '/bin/oge.php';
 // start a curl session
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $url);
@@ -240,7 +242,8 @@ curl_close($curl);
 // not running; start php testing server
 if (!str_contains($curl_result, $not_cli_errmsg)) {
     error_log("starting server …");
-    shell_exec('php -S localhost:' . $port . ' >/dev/null 2>&1 &');
+    shell_exec('php -S localhost:' . $port .
+        ' >/dev/null 2>&1 & disown');
     sleep(1);
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -254,10 +257,43 @@ if (!str_contains($curl_result, $not_cli_errmsg)) {
     }
 }
 
-echo 'port - ' . strval($port) . PHP_EOL;
-echo 'browser - ' . $browser . PHP_EOL;
-echo 'host - ' . $host . PHP_EOL;
-echo 'templates = ' . $templatesdir . PHP_EOL;
+// process each file
 foreach ($filenames as $filename) {
-    echo 'filename ' . $filename . PHP_EOL;
+    // if file does not exist, look for template
+    if (!file_exists($filename) && $templatesdir != '') {
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if ($ext != '') {
+            foreach(array(
+                $templatesdir .'/'. $ext . '.template',
+                $templatesdir .'/'. $ext . '1.template'
+            ) as $posstemplate) {
+                // if template found, copy it, but quit on error
+                if (file_exists($posstemplate)) {
+                    $copyresult = copy($posstemplate, $filename);
+                    if (!$copyresult) {
+                        error_log("Failed copying template " .
+                            $posstemplate . " to " . $filename . ".");
+                        exit(1);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    // if the file still does not exist, create it.
+    if (!file_exists($filename)) {
+        $touchresult = touch($filename);
+        if (!$touchresult) {
+            error_log("Failed to create file {$filename}.");
+            exit(1);
+        }
+    }
+
+    // open a redirection to the file in the browser
+    $dirname = dirname($filename);
+    $basename = basename($filename);
+    $filelaunchurl = $urlbase . '/php/redirect.php?dirname=' .
+        rawurlencode($dirname) . '&basename=' . rawurlencode($basename);
+    shell_exec($browser . ' "' . $filelaunchurl .
+        '" >/dev/null 2>&1 & disown');
 }
