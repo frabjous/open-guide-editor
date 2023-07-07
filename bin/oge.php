@@ -179,6 +179,8 @@ if ($templatesdir != '' && !is_dir($templatesdir)) {
     exit(1);
 }
 
+error_log(file_exists('open-guide-misc/fetch.mjs'));
+
 // ensure open-guide-misc exists
 if (!file_exists('open-guide-misc/fetch.mjs')) {
     error_log("ERROR. The open-guide-misc submodule does not exist.");
