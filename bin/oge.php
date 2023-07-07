@@ -62,7 +62,8 @@ while ($arg_to_read < count($argv)) {
 
         case '--browser':
             if ($arg_to_read + 1 == count($argv)) {
-                exit('No browser specified');
+                error_log('No browser specified');
+                exit(1);
             }
             $browser = $argv[$arg_to_read + 1];
             $arg_to_read += 2;
@@ -70,7 +71,8 @@ while ($arg_to_read < count($argv)) {
 
         case '--host':
             if ($arg_to_read + 1 == count($argv)) {
-                exit('No host specified');
+                error_log('No host specified');
+                exit(1);
             }
             $host = $argv[$arg_to_read + 1];
             $arg_to_read += 2;
@@ -78,7 +80,8 @@ while ($arg_to_read < count($argv)) {
 
         case '--port':
             if ($arg_to_read + 1 == count($argv)) {
-                exit('No port specified');
+                error_log('No port specified');
+                exit(1);
             }
 
             $port = intval($argv[$arg_to_read + 1]);
@@ -87,7 +90,8 @@ while ($arg_to_read < count($argv)) {
 
         case '--templates':
             if ($arg_to_read + 1 == count($argv)) {
-                exit('No template directory specified');
+                error_log('No template directory specified');
+                exit(1);
             }
             $templatesdir = $argv[$arg_to_read + 1];
             $arg_to_read += 2;
@@ -125,13 +129,17 @@ $filenames = array_values(array_map(function($f) {
     return $cwd . '/' . $f;
 }, $filenames));
 
+// if templates set, canonicalize it
+if ($templatesdir != '' && is_dir($templatesdir)) {
+    $templatesdir = realpath($templatesdir);
+}
 
 // move to the main open-guide-editor folder, which should be the
 // parent of where this script is
 chdir(dirname(dirname(__FILE__)));
 
 // if something isn't set, try to read it from settings.json
-if (($port == 0 || $browser = '' || $host == '' || $templates == '') &&
+if (($port == 0 || $browser == '' || $host == '' || $templatesdir == '') &&
     (file_exists('settings.json'))) {
     $settings = json_decode(file_get_contents('settings.json')) ??
         (new StdClass());
@@ -147,6 +155,28 @@ if (($port == 0 || $browser = '' || $host == '' || $templates == '') &&
     if ($host == '' && isset($settings->host)) {
         $host = $settings->host;
     }
+}
+
+// handle defaults
+if ($port == 0) { $port = 8181; }
+
+// try to read browser from environmental variable
+if ($browser == '') {
+    $browser = getenv("BROWSER") ?? '';
+}
+
+// if still unset, use firefox
+if ($browser == '') {
+    $browser = 'firefox';
+}
+
+// host defaults to "localhost"
+if ($host == '') { $host = 'localhost'; }
+
+// if templates directory is set, it should exist
+if ($templatesdir != '' && !is_dir($templatesdir)) {
+    error_log("Template directory specified does not exist.");
+    exit(1);
 }
 
 echo 'port - ' . strval($port) . PHP_EOL;
