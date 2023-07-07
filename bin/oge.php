@@ -10,8 +10,9 @@
 
 // ensure that we are in fact running from the command line and not
 // via a server
+$not_cli_errmsg = "ERROR. This script must be run from the command line.";
 if ((php_sapi_name() != 'cli') || isset($_SERVER["SERVER_PROTOCOL"])) {
-    exit("ERROR. This script must be run from the command line.");
+    exit($not_cli_errmsg);
 }
 
 function showhelp() {
@@ -227,10 +228,21 @@ curl_setopt($curl, CURLOPT_HEADER, false);
 $curl_result = curl_exec($curl);
 curl_close($curl);
 
-if ($curl_result == '') {
-    echo "no curl result";
-} else {
-    echo "curl result! $curl_result";
+// not running; start php testing server
+if (!str_contains($curl_result, $not_cli_errmsg)) {
+    error_log("starting server …");
+    shell_exec('php -S localhost:' . $port . ' >/dev/null 2>&1 &');
+    sleep(1);
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    $curl_result = curl_exec($curl);
+    curl_close($curl);
+    if (!str_contains($curl_result, $not_cli_errmsg)) {
+        error_log("Could not connect to or start OGE server.");
+        exit(1);
+    }
 }
 
 echo 'port - ' . strval($port) . PHP_EOL;
