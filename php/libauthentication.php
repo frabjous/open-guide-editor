@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////////////
 
 // should always be required from script that calls session_start
+error_log('1' . ($_SERVER["SERVER_NAME"]));
 
 if ($_SERVER["SERVER_NAME"] == 'localhost') {
     $_SESSION["open-guide-editor-poweruser"] = true;

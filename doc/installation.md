@@ -46,7 +46,7 @@ I will cover the first use-case first.
 
     The corresponding package names will likely be slightly different on other distros.
 
-5. Clone this repository. Starting from the parent folder where you want it installed, run:
+5. Clone this repository. Starting from the parent directory where you want it installed, run:
 
     ```sh
     git clone --recurse-submodules --depth 1 \
@@ -94,9 +94,9 @@ ln -s "$(realpath bin/oge.php)" "$HOME/.local/bin/oge"
 
 Naming the link `oge` instead of `oge.php` will allow it to be used in a shorter way, e.g., `oge filename.md`.
 An alternative would be to create an alias such as `alias oge="php $HOME/open-guide-editor/bin/oge.php"`.
-You should not just copy the script in your `$PATH`, however, as this will interfere with it finding the resources in its parent folder it needs to function properly.
+You should not just copy the script in your `$PATH`, however, as this will interfere with it finding the resources in its parent directory it needs to function properly.
 
-The script will also create files that do not yet exist, and can be passed (or set via `settings.json`) an option for a templates folder which will be copied over to the new files at creation based on their file extensions.
+The script will also create files that do not yet exist, and can be passed (or set via `settings.json`) an option for a templates directory which will be copied over to the new files at creation based on their file extensions.
 For example, `oge --templates ~/templates newfile.html` will look for a file named `~/templates/html.template` or `~/templates/html1.template` and copy it over to `newfile.html` when it is created.
 Again, see `oge --help`.
 
@@ -108,7 +108,18 @@ Installation as part of a web project that allows for remote use is for the most
 You can more or less follow the steps of the procedure described [above](#user-content-steps-to-install).
 The main exception is that for over-the-web use you will not want to use the PHP testing server, but instead a full featured web-server with PHP enabled like [nginx](https://www.nginx.com/) or [apache](https://httpd.apache.org/).
 
-Instructions for setting up a standard PHP-enabled web-server , but there are many guides and tutorials for doing this online for all major Linux distributions. A MySQL or other database is not needed.
+Instructions for setting up a standard PHP-enabled web-server are beyond the scope of this documentation, but there are many guides and tutorials for doing this online for all major Linux distributions.
+A MySQL or other database is not needed.
+
+To make use of OGE on such a server, when following the steps above, you merely need to clone the repository into a place under the root directory served by the web-server, e.g., `/var/www`, or whatever the server is configured to use.
+
+If, for example, it is placed as a subdirectory of the server's document root, it would then be available at `https://yourdomain.com/open-guide-editor/`.
+You can rename the `open-guide-editor` directory if you wish, but the `open-guide-misc/` submodule directory should not be renamed.
+
+However, when it is not accessed on `localhost`, the browser will not automatically have access to editing files on the server.
+That would be a huge security hole.
+Instead, some mechanism will need to be put into place to grant access through some kind of authentication process.
+More information about doing so is provided in the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
 
 ## Other Documentation
 
