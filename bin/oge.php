@@ -36,9 +36,9 @@ Options:
                             set in settings.json)
 --templates (directory)  : if this is set, filenames of files that don’t
                            exist already will be created according to
-                           templates with names of the form "ext.template"
+                           templates with names of the form "ext[1].template"
                            in the directory specified, e.g. "tex.template"
-                           for LaTeX file
+                           or "tex1.template" for a LaTeX file
 
 Default "browser", "host", "templates", and "port" can also be
 set in your settings.json file in the open-guide-editor directory.

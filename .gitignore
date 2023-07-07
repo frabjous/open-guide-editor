@@ -3,5 +3,6 @@ dist/
 package-lock.json
 settings.json
 editor.bundle.js
+bundle.sh
 doc/*.pdf
 doc/*.html
