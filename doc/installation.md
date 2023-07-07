@@ -12,7 +12,7 @@ I will cover the first use-case first.
 
 ## Installation for Personal Use
 
-### Steps to install
+#### Steps to install
 
 1. You will need to be running GNU/Linux or other Unix-like operating system. (I have only tested it on Linux but it might work on systems like FreeBSD and even MacOS; if you try, let me know your results!)
 
@@ -76,7 +76,7 @@ I will cover the first use-case first.
 
     You can then visit `http://localhost:8181` in a browser, and you should see OGE.
 
-Note that when connecting on localhost, you can edit any files the user running the server has access to. See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more detail.
+Note that when connecting on `localhost`, you can edit any files the user running the server has access to. See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more detail.
 
 #### Convenience script
 
@@ -86,3 +86,11 @@ Opening files you want to edit via OGE's “open” dialog is not very efficient
 
 If anyone wants me to create a `.desktop` file for OGE so it can be put into Desktop Environment menus easily, let me know.
 
+
+## Other Documentation
+
+See also the other documentation files concerning [basic usage, buttons and keybindings,](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md), [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+
+## License
+
+Copyright 2023 © Kevin C. Klement. This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).
