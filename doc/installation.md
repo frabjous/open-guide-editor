@@ -36,7 +36,7 @@ I will cover the first use-case first.
 
 3. You will need to have installed the programs used in the installation process, which include [git](https://git-scm.com/) and [npm](https://www.npmjs.com/), but there's a good chance that you'll have these installed already.
 
-4. You will need to be able to run a [PHP](https://www.php.net/)-capable webserver. For personal use, the [php testing server](https://www.php.net/manual/en/features.commandline.webserver.php) may suffice. It may work with earlier versions, but I recommend using PHP version 8.x or above.
+4. You will need to be able to run a [PHP](https://www.php.net/)-capable web-server. For personal use, the [php testing server](https://www.php.net/manual/en/features.commandline.webserver.php) may suffice. It may work with earlier versions, but I recommend using PHP version 8.x or above.
 
    For example, on an [Arch](https://archlinux.org)-based distribution, you can get all you need for the past few steps with:
 
@@ -68,7 +68,7 @@ I will cover the first use-case first.
     node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve
     ```
 
-8. Make sure the PHP enabled webserver is running. For the testing server, you can do:
+8. Make sure the PHP enabled web-server is running. For the testing server, you can do:
 
     ```sh
     php -S localhost:8181
@@ -80,9 +80,26 @@ Note that when connecting on `localhost`, you can edit any files the user runnin
 
 #### Convenience script
 
-Opening files you want to edit via OGE's “open” dialog is not very efficient.
+Opening files you want to edit via OGE’s “open” dialog is not very efficient.
 
+For that reason, OGE comes with a script you can run from the command line, `bin/oge.php`, which will take one or more filenames on the local system as argument, and open browser tabs for each one.
 
+The script will also launch a PHP testing server if one isn’t already launched. You can specify the port, host and browser to use, either from the command line or in your `settings.json` file for OGE. Details can be found by running the script with the argument `--help`, i.e., `php bin/oge.php --help`.
+
+If you think you may use this often, I recommend making it executable (if git didn’t already preserve the permissions) and creating a symbolic link to it in one of the directories in your `$PATH`, e.g.:
+
+```
+chmod a+x bin/oge.php
+ln -s "$(realpath bin/oge.php)" "$HOME/.local/bin/oge"
+```
+
+Naming the link `oge` instead of `oge.php` will allow it to be used in a shorter way, e.g., `oge filename.md`.
+An alternative would be to create an alias such as `alias oge="php $HOME/open-guide-editor/bin/oge.php"`.
+You should not just copy the script, however, as this will interfere with it finding the resources in its parent folder it needs to function properly.
+
+The script will also create files that do not yet exist, and can be passed (or set via `settings.json`) an option for a templates folder which will be copied over to the new files at creation based on their file extensions.
+For example, `oge --templates ~/templates newfile.html` will look for a file named `~/templates/html.template` or `~/templates/html1.template` and copy it over to `newfile.html` when it is created.
+Again, see `oge --help`.
 
 If anyone wants me to create a `.desktop` file for OGE so it can be put into Desktop Environment menus easily, let me know.
 
