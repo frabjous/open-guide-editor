@@ -1,7 +1,7 @@
 
 # Open Guide Editor (OGE) Documentation
 
-# Basic Usage, Buttons and Keybindings
+# Installation
 
 
 OGE has two main use-cases. One is for personal use on one's own workstation.
@@ -80,5 +80,9 @@ Note that when connecting on localhost, you can edit any files the user running 
 
 #### Convenience script
 
+Opening files you want to edit via OGE's “open” dialog is not very efficient.
 
+
+
+If anyone wants me to create a `.desktop` file for OGE so it can be put into Desktop Environment menus easily, let me know.
 
