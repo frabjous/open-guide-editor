@@ -179,6 +179,37 @@ if ($templatesdir != '' && !is_dir($templatesdir)) {
     exit(1);
 }
 
+// ensure open-guide-misc exists
+if (!file_exists('open-guide-misc/fetch.mjs')) {
+    error_log("ERROR. The open-guide-misc submodule does not exist.");
+    exit(1);
+}
+
+// ensure node_modules exist; if not try to install with npm
+if (!is_dir('node_modules')) {
+    error_log("Codemirror and its dependencies are not installed.");
+    error_log(" Attempting to install. This should only need to be" .
+        "done once.");
+    exec('npm install --quiet 2>&1', $o, $e);
+    if ($e != 0) {
+        error_log(PHP_EOL . implode(PHP_EOL,$o) . PHP_EOL);
+        error_log("Attempt failed. Is npm installed?");
+        exit(1);
+    }
+}
+
+// ensure bundled script exists
+if (!file_exists("editor.bundle.js")) {
+    error_log("Rollup bundle of codemirror libraries not found.");
+    error_log("Attempting to create.");
+    exec('node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve 2>&1',$o,$e);
+    if ($e !== 0) {
+        error_log(PHP_EOL . implode(PHP_EOL,$o) . PHP_EOL);
+        error_log("Attempt failed. OGE will not work without it.");
+        exit(1);
+    }
+}
+
 echo 'port - ' . strval($port) . PHP_EOL;
 echo 'browser - ' . $browser . PHP_EOL;
 echo 'host - ' . $host . PHP_EOL;
