@@ -45,9 +45,6 @@ set in your settings.json file in the open-guide-editor directory.
 EOL;
 }
 
-// read the command line arguments
-$arg_to_read = 1;
-
 // initialize variables
 $browser = '';
 $host = '';
@@ -55,6 +52,8 @@ $filenames = [];
 $port = 0;
 $templatesdir = '';
 
+// read the command line arguments
+$arg_to_read = 1;
 while ($arg_to_read < count($argv)) {
 
     $argument = $argv[$arg_to_read];
@@ -69,6 +68,14 @@ while ($arg_to_read < count($argv)) {
             $arg_to_read += 2;
             break;
 
+        case '--host':
+            if ($arg_to_read + 1 == count($argv)) {
+                exit('No host specified');
+            }
+            $host = $argv[$arg_to_read + 1];
+            $arg_to_read += 2;
+            break;
+
         case '--port':
             if ($arg_to_read + 1 == count($argv)) {
                 exit('No port specified');
@@ -77,7 +84,15 @@ while ($arg_to_read < count($argv)) {
             $port = intval($argv[$arg_to_read + 1]);
             $arg_to_read += 2;
             break;
-    
+
+        case '--templates':
+            if ($arg_to_read + 1 == count($argv)) {
+                exit('No template directory specified');
+            }
+            $templatesdir = $argv[$arg_to_read + 1];
+            $arg_to_read += 2;
+            break;
+
         case '-h';
         case '-?';
         case '--h';
@@ -86,14 +101,58 @@ while ($arg_to_read < count($argv)) {
             showhelp();
             exit(0);
             break;
+
         default:
+            array_push($filenames, $argument);
             $arg_to_read++;
             break;
     }
-
 }
+
+// canonicalize the filenames
+$cwd = getcwd();
+$filenames = array_values(array_map(function($f) {
+    global $cwd;
+    // for existing files, use their real location
+    if (file_exists($f)) {
+        return realpath($f);
+    }
+    // if absolute path, return it
+    if (substr($f,0,1) == '/') {
+        return $f;
+    }
+    // otherwise combine it with $cwd
+    return $cwd . '/' . $f;
+}, $filenames));
+
 
 // move to the main open-guide-editor folder, which should be the
 // parent of where this script is
 chdir(dirname(dirname(__FILE__)));
-showhelp();
+
+// if something isn't set, try to read it from settings.json
+if (($port == 0 || $browser = '' || $host == '' || $templates == '') &&
+    (file_exists('settings.json'))) {
+    $settings = json_decode(file_get_contents('settings.json')) ??
+        (new StdClass());
+    if ($port == 0 && isset($settings->port)) {
+        $port = intval($settings->port);
+    }
+    if ($browser == '' && isset($settings->browser)) {
+        $browser = $settings->browser;
+    }
+    if ($templatesdir == '' && isset($settings->templates)) {
+        $templatesdir = $settings->templates;
+    }
+    if ($host == '' && isset($settings->host)) {
+        $host = $settings->host;
+    }
+}
+
+echo 'port - ' . strval($port) . PHP_EOL;
+echo 'browser - ' . $browser . PHP_EOL;
+echo 'host - ' . $host . PHP_EOL;
+echo 'templates = ' . $templatesdir . PHP_EOL;
+foreach ($filenames as $filename) {
+    echo 'filename ' . $filename . PHP_EOL;
+}
