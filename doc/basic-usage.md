@@ -7,7 +7,7 @@ For the most part, use of OGE as a text editor, should be straightforward, as it
 
 OGE builds upon this by providing a back-end for saving, processing and previewing. You will need to **enable pop-ups** for the site serving the editor to see the preview window.
 
-These functions can be invoked either by clicking on buttons on the toolbar, or via keybindings.
+These functions can be invoked either by clicking on buttons on the top panel, or via keybindings.
 
 ## Buttons
 

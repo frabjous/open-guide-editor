@@ -1,12 +1,30 @@
 # Open Guide Editor (OGE)
 
+## Overview
+
 Highly configurable web-based text editor based on [codemirror](https://codemirror.net/) primarily designed for editing markdown, LaTeX, and html files with live-updating html and pdf previews.
 
-However, it can be used to edit other plain text files as well, including subsidiary files (CSS, JavaScript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document. The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
+However, it can be used to edit other plain text files as well, including subsidiary files (css, javascript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document. The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
 
 It was created to be used for the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
-The project is in early development and is not fully usable yet. More documentation to come.
+The project is young, but it has recently gotten to the stage where it might be usable by others, but not much testing has been done.
+
+If you would like to try out OGE without installing it on your own computer or server, [email me](mailto:klement@umass.edu) and let me know.
+
+## Documentation
+
+Documentation for the project is broken down into four separate files. They independently cover:
+
+* [Basic editor usage, including panel buttons and key-bindings](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md)
+
+* [Configuring the editor’s settings and the commands used for processing and previewing](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md)
+
+* [Installation, either locally or on a public webserver](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md)
+
+* [The security model for granting or denying access to editing files remotely](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md)
+
+These are available in the `doc/` subdirectory, or by clicking the links above.
 
 ## Roadmap / TODO
 
@@ -27,21 +45,21 @@ The project is in early development and is not fully usable yet. More documentat
     - [x] speak aloud
     - [x] download ePub
 - [x] implement api for adding citations
-- [ ] good documentation
+- [x] good documentation
     - [x] initial todo on readme
     - [x] basic usage, buttons and keybindings
-    - [ ] custom settings
-    - [ ] installation locally
-    - [ ] server installation
-    - [ ] security model
-- [x] support LaTeX as input
+    - [x] custom settings
+    - [x] installation locally
+    - [x] server installation
+    - [x] security model
+- [x] support LaTeX as input (requires this problem be fixed)
     - [ ] smart quotes
     - [ ] error reports
     - [x] preview pdf
     - [x] synctex support
 - [x] support html as input
     - [x] preview (itself)
-- [ ] templates
+- [x] templates (through CLI script only at present)
 - [x] edit supplementary files with preview
     - [ ] proper syntax highlighting for type of file (partial)
     - [x] css/svg for html/markdown
@@ -56,156 +74,14 @@ The project is in early development and is not fully usable yet. More documentat
 - [x] simple jump marks
 - [x] swap out custom dialogs with codemirror panels (mostly done, could do more)
 - [ ] probably unimportant things
-    - [ ] support other colorschemes
+    - [ ] support other color schemes
     - [ ] make find button grayed out when search panel inactive
     - [ ] word-processor-like interface for bold, italics, quotes, etc.
-- [ ] long term pipedreams (?)
+- [ ] long term pipe dreams (?)
     - [ ] split panels
     - [ ] linting
     - [ ] LSP integration
     - [ ] collaborative editing
-<!--
-
-| **Alt-5**: Move to matching bracket/parenthesis
-| **Alt-j**: Jump to last line marked with Alt-m
-| **Alt-l**: Select current line
-| **Alt-m**: Mark line as jump-to position
-| **Alt-n**: Go to specific line
-| **Alt-t**: Toggle fold/unfold on current block
-| **Alt-w**: Toggle line wrapping
-| **Alt-/**: Toggle comment
-| **Alt-\\**: Pipe text to unix command
-| **Alt-↑**: Move current line up
-| **Alt-↓**: Move current line down
-| **Alt-<**: Indent less
-| **Alt->**: Indent more
-| **Ctrl-a**: Select all
-| **Ctrl-d**: Duplicate current line
-| **Ctrl-k**: Delete to end of line
-| **Ctrl-j**: Join the currently selected lines into one line
-| **Ctrl-s**: Save
-| **Ctrl-x**: Cut, or cut whole line if nothing selected
-| **Ctrl-/**: Toggle comment
-| **Ctrl-|**: Pipe text to unix command
-| **Ctrl-[**: Indent less
-  **Ctrl-]**: Indent more
-| **Ctrl-↑**: Insert line above
-| **Ctrl-↓**: Insert line below
-| **Ctrl-Alt-[**: Fold all foldable blocks
-| **Ctrl-Alt-]**: Unfold all foldable blocks
-| **Ctrl-Shift-[**: Fold current line’s block
-| **Ctrl-Shift-]**: Unfold current line’s block
-
-| **Ctrl-Alt-\**: indentSelection
-
-**Control-mouse click**: Creates another cursor instead of moving the current one. This allows you to type the same thing at multiple places. Similarly control click and selecting can be used to create multiple selections, all of which you can change. The “all” button on the Find panel similarly creates multiple selections. (Close the panel using the x on the right to return focus to the editor without moving the cursors.)
-
-**Alt-mouse click + drag**: Creates a “rectangular” selection, useful for working with, e.g., columns of a table.
-
-**Code folding:** If there are little arrow markers next to a line number of the left, these can be used to fold (hide) or unfold (show) parts of a document. This is not particularly useful in markdown except in yaml blocks, code blocks and quotations, though it is possible to hide whole sections of the document as well.
-
-
-
-# Installation
-
-1. Clone the repository.
-2. Run `npm install` to install codemirror.
-3. Create bundle script: node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve
-
-Note: Since tab it captured by the editor and not passed to the browser or OS, if you need to use tab to avoid the “no keyboard trap”, you can press Escape, then tab.
-=i
-
-#####################3
-# KE = k(ev)e(dit) = Kevin’s editor
-
-KE is a PHP backend for the [codemirror](https://codemirror.net) browser based text editor, along with helper scripts, allowing files to be saved and post-processed. Although you can use it to edit any text file, it can provide for live-updating-as-you-type previews of the output of LaTeX, Markdown and HTML documents. It can also do text-to-speech on such files, which is useful for proofreading.
-
-It can be integrated with other web apps, and was designed with the [Journal Tools](https://bitbucket.org/frabjous/journal-tools/) typesetting framework, used by the *Journal for the History of Analytical Philosophy*.
-
-## Requirements and Installation
-
-KE requires the following external programs:
-
-* A PHP-enabled web server, using PHP 7+. (The PHP testing server suffices for use on localhost.)
-* The following programs, accessible in the `$PATH` of the server PHP user: [flite](http://www.festvox.org/flite/) and [lame](http://lame.sourceforge.net/) (for the text-to-speech features), the core binaries from [TeXlive](https://www.tug.org/texlive/) (for processing LaTeX files), [rubber](https://launchpad.net/rubber/) (for processing LaTeX errors),  [pandoc](https://pandoc.org/) (for processing Markdown files), and the mupdf project’s [mutool](https://mupdf.com/index.html) (for converting PDF pages to images that can be displayed in a browser).
-* Two helper libraries of mine, [KCKlib](https://bitbucket.org/frabjous/kcklib) and [KCK Icons](https://bitbucket.org/frabjous/icons), which are expected be installed in folders named `kcklib/` and `icons/` in immediate subfolders of the web server root directory.
-* Clone this git repo with `git clone https://bitbucket.org/frabjous/ke.git`; the resulting folder, placed on your webserver, should work as is; you may delete the hidden `.git` subfolder after installation if you wish.
-* [codemirror](https://codemirror.net), should be installed in a subfolder of the `ke/` folder named `codemirror/`; e.g., if `ke` is installed at `https://your.server/ke/`, then `https://your.server/ke/codemirror/lib/codemirror.js` when called from the `ke/` folder should find the file in question.
-* Works best with up-to-date Firefox and Chromium.
-
-## Configuration
-
-Because this runs on a webserver, and files on the server may be edited, it is important to control  what web users can edit. Read and write access is controlled by two PHP session variables:
-
- * `$_SESSION["_ke_poweruser"]`: if set to `true`, the session user can read and edit any file that the webserver user can. (It would be best not to run the server as root!)
- * `$_SESSION["_ke_allowed_folders"]` is an array of folders on the server a non-power-user can access and edit, including all subfolders of these folders.
- 
-The *default* behavior is to to make a user on `localhost` a poweruser, but allow no access to remote users. However, the variables above can be set differently by other scripts on the server, in the usual way, and you can override the default behavior by placing a PHP file called `authenticate.php` in the KE subfolder or webserver root, which will be read prior to any write-commands on the server. This should be a standard PHP script that makes the appropriate modifications to the variables above, perhaps by redirection to a login page, which then sets the variables appropriately before redirecting back.
-
-For markdown, if the file `ftplugin/markdown/pandoc-preview-options.json` exists, taking the form:
- 
-```json
-{
-    "pandoc_css": "/path/to/my_stylesheet.css",
-    "pandoc_resource_path": "/path/to/resource/folder/"
-}
-```
-
-Then the specified css file will be added to all pandoc output, and the specified folder will be used as a resource folder (containing common images, for example, such as a signature).
-
-Additional filetype plugins can be created by creating subfolders of the ftplugin folder, with folder and filenames `type/type.js` matching codemirror mode names, and will be automatically loaded.
-
-## Usage
-
-If the scripts are installed, for example, in the `ke/` subfolder of the webserver root, then visit `http(s)://yourserver/ke/`. To open a file, use the open button, or else provide its filename using the `file=` query string parameter, with the filename, urlencoded, e.g., `http(s)://yourserver/ke/?file=%2Fhome%2Fmyfolder%2Ffilename.txt` to open `/home/myfolder/filename.txt`. Many file types will be automatically detected, and the appropriate syntax highlighting, etc., applied. Additions can be added by changing `libke.php`.
-
-The standard codemirror key bindings should work. (E.g., Ctrl-F to find, Ctrl-S to save, etc.)
-
-The following buttons are available for every file type:
-
-![](https://logic.umasscreate.net/icons/mono/save.svg)  Save file (Ctrl-S)
-
-![](https://logic.umasscreate.net/icons/mono/folder_open.svg)  Open file (in new window)
-
-![](https://logic.umasscreate.net/icons/mono/font.svg)  Change UI font (Local host only)
-
-![](https://logic.umasscreate.net/icons/mono/wrap.svg) Toggle wrapping long lines
-
-![](https://logic.umasscreate.net/icons/mono/find.svg) Find (Ctrl-F)
-
-![](https://logic.umasscreate.net/icons/mono/findnext.svg) Find Next (Ctrl-G)
-
-![](https://logic.umasscreate.net/icons/mono/replace.svg) Replace (Ctrl-R)
-
-![](https://logic.umasscreate.net/icons/mono/terminal.svg) Pipe selected text (or all text) through UNIX command; replace with result Ctrl-\|)
-
-![](https://logic.umasscreate.net/icons/mono/exitapp.svg) Insert another file and replace selected text (or all text)
-
-The following buttons are only available for some file types, depending on what has been set up as a file type plugin.
-
-![](https://logic.umasscreate.net/icons/mono/braces.svg) Replace document or selection with LaTeX template 
-
-![](https://logic.umasscreate.net/icons/mono/code.svg) Replace document or selection with HTML/PHP template 
-
-![](https://logic.umasscreate.net/icons/mono/play.svg) Compile or build document and update preview 
-
-![](https://logic.umasscreate.net/icons/mono/playcircle.svg) Toggle auto-compilation/auto-update-preview
-
-![](https://logic.umasscreate.net/icons/mono/volup.svg) Toggle on/off text-to-speech player
-
-![](https://logic.umasscreate.net/icons/mono/globe.svg) Toggle preview for HTML/Markdown files
-
-![](https://logic.umasscreate.net/icons/mono/pdf.svg) Toggle preview of PDF for LaTeX files
-
-![](https://logic.umasscreate.net/icons/mono/alert.svg) View errors in previous compilation
-
-![](https://logic.umasscreate.net/icons/mono/jump.svg) SyncTeX forward search (Jump to corresponding place in PDF)
-
-
-Keep in mind that with auto-compilation turned on, the document is also auto-saved when edited; keep a backup if needed.
-
-To conduct a SyncTeX reverse search, double click the place on the PDF preview you wish to view in the source. 
--->
 
 ## Trivia
 
