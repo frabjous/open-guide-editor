@@ -3,17 +3,17 @@
 
 # Security Model
 
-## Personal use on the same device on which it is installed
+## Local usage
 
-If you merely wish to use OGE on your personal workstation, you do not need to do much to implement any kind of authentication or security mechanism.
+If you merely wish to use OGE running on your personal workstation or other device, you do not need to do much to implement any kind of authentication or security mechanism.
 OGE is configured to grant access to anyone accessing it over `localhost`, `::1`, or the `127.0.0.1` local ip address to whatever files to which the user running the server has access.
 See the [installation documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md) for more information.
 
-## Use as part of a publicly accessible web project
+## Use as part of a publicly accessible web project with `$_SESSION` keys
 
-### Session variable keys
-
-When it is accessed remotely, access to edit files on the server must be granted by an authentication mechanism. The authentication model for OGE is based on [php sessions](https://www.php.net/manual/en/intro.session.php). These are controlled by the php `$_SESSION` variable for the client browser session.
+When it is accessed remotely, access to edit files on the server must be granted by an authentication mechanism.
+The authentication model for OGE is based on [php sessions](https://www.php.net/manual/en/intro.session.php).
+These are controlled by the php `$_SESSION` variable, which is stored on the server for each client browser session.
 
 There are two session variable keys that affect OGE’s behavior. 
 They are:
@@ -23,13 +23,18 @@ $_SESSION["open-guide-editor-poweruser"] // a boolean value, and
 $_SESSION["open-guide-editor-access"] // an array of directory names
 ```
 
-If `$_SESSION["open-guide-editor-poweruser"]` is set, and set to true, the user will have access to any file on the server the user running the server can access. This is always set to true when accessing OGE through `localhost`. Otherwise, it should not be set unless the user is very trusted, such as one of the maintainers of the project.
+If the first is set, and set to true, the user will have access to any file on the server the user running the server can access.
+This is always set to true when accessing OGE through `localhost`.
+Otherwise, it should not be set unless the user is very trusted, such as one of the maintainers of the project.
 
 For most use cases, setting `$_SESSION["open-guide-editor-access"]` is more appropriate.
-This should be set to an array of names of directories the user should be able to access.
-The user will also be able to access subdirectories of directories in this array.
+This can be set to an array of names of directories the user should be able to edit files within.
+The user will also be able to access subdirectories of the directories in this array.
 
-OGE itself does not provide a way to set this variable key. It is assumed that each project making use of OGE would have its open mechanisms, as the Open Guide Typesetting Framework will when finished.<!-- TODO: change this when ogst is in place --> Such a mechanism could be implemented by another php script running on the same server. The basic form of such a script could be something like the following, which could take a post request or similar as input:
+OGE itself does not provide a way to set this variable key. It is assumed that each project making use of OGE would have its open mechanisms, as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) will when finished.<!-- TODO: change this when ogst is in place -->
+
+Such a mechanism could be implemented by another php script running on the same server.
+The basic form of such a script could be something like the following, which could take a post request or similar as input:
 
 ```php
 <?php
@@ -68,22 +73,35 @@ if ($goodlogin && user_is_kinda_trusted()) {
 // if we haven’t exited yet, the user should be denied access
 
 header("HTTP/1.1 403 Forbidden");
-echo "Authentication unsuccesful.";
+session_unset();
+echo "Authentication unsuccessful.";
 exit();
 
-// it’s up to the project how to define such things as the user_is_really_trusted(),
-// user_is_partly_trusted() and get_pwd_hash_for() functions, or implement a different
-// means for setting these $_SESSION variable keys 
+// It’s up to the project how to define such things as
+// the user_is_really_trusted(), user_is_partly_trusted()
+// and get_pwd_hash_for() functions, or implement a different
+// means for setting these $_SESSION variable keys.
 
 ```
 
-### Access keys
+## Access keys
 
 Normally, when used as part of a web project, you will not want to directly load the `index.php` page in the main oge directory. Instead, you want to redirect to this page through the `php/redirect.php` page. The redirection page takes the url parameters `dirname=` and `basename=` to set the requested file. See the sample code above for a way to construct a proper url with these parameters within php.
 
-The redirection page checks whether or not the user should have access based on the php session variable keys described above. If either the user is considered a poweruser, or has the directory or one of its parent directories specified in the `"open-guide-editor-access"` session key, the redirection will be successful.
+The redirection page checks whether or not the user should have access based on the php session variable keys described above. If either the user is considered a poweruser, or has access to the directory of the file or one of its parent directories, the redirection will be successful.
 
-Moreover, in the process of redirecting, the page will 
+Moreover, in the process of redirecting, the page will create an “accesskey”. Access keys provide a faster way to gain direct access to editing a file, and allow the editor to be bookmarked with a url for a specific file.
+
+You will see the accesskey, which is a random string of characters, in the address bar after redirection. The url shown might be something like: 
+
+`http://localhost/open-guide-editor/?accesskey=8oQNEvf7I3b1VOQg3Bi7yNQE`
+
+Access keys can be reused even in different browser sessions without reauthentication, which allows bookmarking to work smoothly.
+
+Access keys and what files they give access to are saved in a json file on the server in specified location.
+This file should not be in one of the directories served by the web-server for security reasons.
+You can set the file’s location in your site-specific `settings.json`, as described in the [configuration and settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md) documentation for OGE.
+You can clear out old access keys by deleting or editing this json file.
 
 ## Other Documentation
 
