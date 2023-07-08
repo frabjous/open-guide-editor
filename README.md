@@ -52,7 +52,7 @@ These are available in the `doc/` subdirectory, or by clicking the links above.
     - [x] installation locally
     - [x] server installation
     - [x] security model
-- [x] support LaTeX as input (requires this problem be fixed)
+- [x] support LaTeX as input (other things require [this problem](https://github.com/mathematic-inc/codemirror-tex/issues/4) be fixed)
     - [ ] smart quotes
     - [ ] error reports
     - [x] preview pdf
