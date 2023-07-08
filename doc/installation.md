@@ -100,7 +100,7 @@ Details can be found by running the script with the argument `--help`, i.e., `ph
 
 If you think you may use this often, I recommend making it executable (if git didn’t already preserve the permissions) and creating a symbolic link to it in one of the directories in your `$PATH`, e.g.:
 
-```
+```sh
 chmod a+x bin/oge.php
 ln -s "$(realpath bin/oge.php)" "$HOME/.local/bin/oge"
 ```
@@ -116,7 +116,7 @@ Again, see `oge --help`.
 
 If anyone wants me to create a `.desktop` file for OGE so it can be put into Desktop Environment menus easily, let me know.
 
-## Installation on a Public-Facing Web-server
+## Installation on a Public-facing Web-server
 
 Installation as part of a web project that allows for remote use is mostly the same as installation for personal use.
 You can follow the steps of the procedure described [above](#user-content-steps-to-install).
@@ -128,14 +128,14 @@ A MySQL or other database is not needed.
 To make use of OGE on such a server, when following the steps above, you merely need to clone the repository into a place under the root directory served by the web-server, e.g., `/var/www`, or whatever the server is configured to use.
 
 If, for example, it is placed as a subdirectory of the server’s document root, it would then be available at `https://yourdomain.com/open-guide-editor/`.
-You can rename the `open-guide-editor` directory if you wish, but the `open-guide-misc/` submodule directory should not be renamed.
+You can rename the `open-guide-editor/` directory if you wish, but the `open-guide-misc/` submodule directory should not be renamed.
 
 When it is not accessed on `localhost` or `127.0.0.1`, the client browser will not automatically have access to editing files on the server.
 That would be a huge security hole.
 Instead, some mechanism will need to be put into place to grant access through some kind of authentication process.
 More information about providing such a mechanism is detailed in the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
 
-One that is in place, there are two ways to access a specific document.
+Once that is in place, there are two ways to access a specific document.
 One would be to use the “open” button/Ctrl-O shortcut, which will be limited to those directories to which the client has been given access.
 The other would be to follow a link to the redirection page `https://yourdomain.com/open-guide-editor/php/redirect.php?dirname=[url-encoded-directory-of file]&basename=[url-encoded-basename-of-file]` where the portions in brackets are replaced by the actual url-encoded names, without brackets.
 This will generate an access key if the user should have access to the file and redirect the browser to the editor with the file in question loaded. 

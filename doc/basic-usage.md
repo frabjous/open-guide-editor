@@ -5,9 +5,9 @@
 
 For the most part, use of OGE as a text editor, should be straightforward, as it is based on [codemirror’s basic setup](https://codemirror.net/docs/ref/#codemirror.basicSetup), which provides sane defaults for regular text editing.
 
-OGE builds upon by providing a back-end for saving, processing and previewing. You will need to **enable pop-ups** for the site serving the editor to see the preview window.
+OGE builds upon this by providing a back-end for saving, processing and previewing. You will need to **enable pop-ups** for the site serving the editor to see the preview window.
 
-These functions can be invoked either by clicking on buttons on the toolbar, or invoked via keybindings.
+These functions can be invoked either by clicking on buttons on the toolbar, or via keybindings.
 
 ## Buttons
 
@@ -15,13 +15,13 @@ Not all buttons are available for every file format. A relatively full panel loo
 
 ![oge-buttons](https://github.com/frabjous/open-guide-editor/assets/305948/b145750d-8a4a-4ce8-8ef4-aa201f0de9c7)
 
-The top panel, when full, looks like the above. They do the following:
+These buttons do the following:
 
 1. (disk) Saves the current file, without any processing.
 
 2. (checkmark and seal) Commits the current state of the file’s git directory, assuming it has one, with a commit message provided to a prompt.
 
-3. (open folder) Opens a new file, usually in another tab, unless the current document is unnamed and empty.
+3. (open folder) Opens a new file, usually in another tab, unless the current one is unnamed and empty.
 
 4. (wrapped lines) Toggles line wrapping on or off.
 
