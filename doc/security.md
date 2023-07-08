@@ -95,7 +95,7 @@ See the sample code above for a way to construct a proper url with these paramet
 The redirection page checks whether or not the user should have access based on the php session variable keys described above.
 If either the user is considered a poweruser, or has access to the directory of the file or one of its parent directories, the redirection will be successful.
 
-Moreover, in the process of redirecting, the page will create an “accesskey”.
+Moreover, in the process of redirecting, the page will create an “access key”.
 Access keys provide a faster way to gain direct access to editing a file, and allow the editor to be bookmarked with a url specific to a given file.
 
 You will see the accesskey, which is a random string of characters, in the address bar after redirection. The url shown might be something like: 

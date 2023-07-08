@@ -13,7 +13,7 @@ I will cover the former use-case first.
 
 #### Steps to install
 
-1. You will need to be running GNU/Linux or another Unix-like operating system. (I have only tested it on Linux but it might work on systems like FreeBSD and even MacOS; if you try, let me know your results!)
+1. You will need to be running GNU/Linux or another Unix-like operating system. (I have only tested it on linux but it might work on systems like FreeBSD and even MacOS; if you try, let me know your results!)
 
 2. You will need to install any other programs that will be used as part of the routines and other commands you plan to use for processing and previewing.
     Below are the programs used by the default configuration, but you can configure OGE to use other programs instead.
@@ -31,8 +31,8 @@ I will cover the former use-case first.
 
     - [weasyprint](https://weasyprint.org/) for creating pdfs from html files
 
-    The above can be easily installed with your distribution’s package manager, on any mainstream Linux distro.
-   You do not need to install them all, however, if you don’t need the [routines](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md) that use them, or want to define your own.
+    The above can be easily installed with your distribution’s package manager, on any mainstream linux distro.
+   You do not need to install them all, however, if you don’t need the [routines](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md#routines) that use them, or want to define your own.
    For example, you might use the (slower, but ubiquitous) [poppler](https://poppler.freedesktop.org/) utilities in place of mutool.
 
 3. You will need the programs used in the installation process.
@@ -119,10 +119,10 @@ If anyone wants me to create a `.desktop` file for OGE so it can be put into Des
 ## Installation on a Public-facing Web-server
 
 Installation as part of a web project that allows for remote use is mostly the same as installation for personal use.
-You can follow the steps of the procedure described [above](#user-content-steps-to-install).
+You can follow the steps of the procedure described [above](#steps-to-install).
 The main exception is that for over-the-web use you will not want to use the php testing server, but instead a full featured web-server with php enabled like [nginx](https://www.nginx.com/) or [apache](https://httpd.apache.org/).
 
-Instructions for setting up a standard php-enabled web-server are beyond the scope of this documentation, but there are many guides and tutorials for doing this online for all major Linux distributions.
+Instructions for setting up a standard php-enabled web-server are beyond the scope of this documentation, but there are many guides and tutorials for doing this online for all major linux distributions.
 A MySQL or other database is not needed.
 
 To make use of OGE on such a server, when following the steps above, you merely need to clone the repository into a place under the root directory served by the web-server, e.g., `/var/www`, or whatever the server is configured to use.
