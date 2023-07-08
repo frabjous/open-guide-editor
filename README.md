@@ -4,7 +4,8 @@
 
 Highly configurable web-based text editor based on [codemirror](https://codemirror.net/) primarily designed for editing markdown, LaTeX, and html files with live-updating html and pdf previews.
 
-However, it can be used to edit other plain text files as well, including subsidiary files (css, javascript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document. The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
+However, it can be used to edit other plain text files as well, including subsidiary files (css, javascript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document.
+The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
 
 It was created to be used for the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
@@ -85,8 +86,10 @@ These are available in the `doc/` subdirectory, or by clicking the links above.
 
 ## Trivia
 
-This is a sequel to, and supersedes, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor. I have also written a lua neovim plugin that provides similar functionality to what is provided by this editor, [KNAP](https://github.com/frabjous/knap) (Kevin’s Neovim Auto-Previewer).
+This is a sequel to, and supersedes, my earlier [K(ev)E(dit)](https://bitbucket.org/frabjous/ke) editor.
+I have also written a lua neovim plugin that provides similar functionality, [KNAP](https://github.com/frabjous/knap) (Kevin’s Neovim Auto-Previewer).
 
 ## License
 
-Copyright 2023 © Kevin C. Klement. This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).
+Copyright 2023 © Kevin C. Klement.
+This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).
