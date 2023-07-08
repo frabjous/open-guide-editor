@@ -13,6 +13,12 @@ The project is young, but it has recently gotten to the stage where it might be 
 
 If you would like to try out OGE without installing it on your own computer or server, [email me](mailto:klement@umass.edu) and let me know.
 
+# Demonstration
+
+Here is a short video showing what OGE looks like and how it works overall.
+
+https://github.com/frabjous/open-guide-editor/assets/305948/92a8d20d-c88d-4e87-8048-18640a824c28
+
 ## Documentation
 
 Documentation for the project is broken down into four separate files. They independently cover:
