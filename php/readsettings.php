@@ -80,6 +80,11 @@ function merge_projectsettings($project_dirname) {
     $ps_filename = get_project_settings_filename($project_dirname);
     if ($ps_filename === false) { return $settings; }
     $projectsettings = json_decode(file_get_contents($ps_filename));
+    // allowing accesskeyfile to be set in project settings could be
+    // a security problem
+    if ($projectsettings->accesskeyfile) {
+        unset($projectsettings->accesskeyfile);
+    }
     $settings = merge($settings, $projectsettings);
     return $settings;
 }

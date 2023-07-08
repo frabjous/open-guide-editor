@@ -190,7 +190,7 @@ Files that haven’t been named have auto-saves with a name with `⁒autosave-20
 }
 ```
 The `"readaloud"` settings determine, for each input file type, how the mp3 that is read aloud by the loudspeaker button is created.
-The command should take the variable `%text%`, which is the text of the line of the document being read, and create a file called `/tmp/oge-audio.mp3`.
+The command should take the variable `%text%`, which is the text of the line of the file being read, and create a file called `/tmp/oge-audio.mp3`.
 The default uses [flite](http://cmuflite.org/), or festival lite, which is easy to install on most servers, with a voice I like, along with [lame](https://lame.sourceforge.io/) for converting its output to mp3.
 However, this option allows you to configure any TTS system that can be used to produce mp3s directly or indirectly.
 

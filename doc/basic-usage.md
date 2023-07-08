@@ -29,11 +29,11 @@ These buttons do the following:
 
 6. (looking glass) Brings up a dialog for search/replace.
 
-7. (terminal prompt) Pipes either the selected text, or the whole file if nothing is selected, through a Unix command on the server, and changes it with the result. Useful for things like [sort](https://www.commandlinux.com/man-page/man1/sort.1.html), [grep](https://www.commandlinux.com/man-page/man1/grep.1.html) or [column](https://www.commandlinux.com/man-page/man1/column.1.html).
+7. (terminal prompt) Pipes either the selected text, or the whole file if nothing is selected, through a Unix command on the server, and replaces it with the result. Useful for things like [sort](https://www.commandlinux.com/man-page/man1/sort.1.html), [grep](https://www.commandlinux.com/man-page/man1/grep.1.html) or [column](https://www.commandlinux.com/man-page/man1/column.1.html).
 
-8. (pdf/globe icon) Toggles between the available output formats for processing and preview, if more than one routine is set for the type of file being edited. The globe represents HTML output, and the PDF icon, obviously, represents PDF output.
+8. (pdf/globe icon) Toggles between the available output formats for processing and preview, if more than one routine is set for the type of file being edited. The globe represents html output, and the pdf icon, obviously, represents pdf output.
 
-9. (play) Processes the current document one time, and updates the preview if it is open.
+9. (play) Processes the current file one time, and updates the preview if it is open.
 
 10. (play with surrounding circle) Toggles on/off automatic processing and previewing; when on, the file will be saved after typing is paused, and processed, and the preview updates.
 
@@ -43,9 +43,9 @@ These buttons do the following:
 
 13. (loudspeaker) Uses a TTS system to read the file being edited out loud, line by line, starting with the line the cursor is on. (This is primarily meant to help with proofreading, but could also be used for accessibility purposes.)
 
-For LaTeX input with PDF output, when the viewer is open, there is also a button for a SyncTeX forward jump that looks like an arrow pointing to a box.
+For LaTeX input with pdf output, when the viewer is open, there is also a button for a synctex forward jump that looks like an arrow pointing to a box.
 
-The preview window also has buttons. For html, it currently only has a download button for the html file. For PDF, it has buttons for moving from page to page (as well as a slider), and for zooming in and out, and resetting the zoom. Hopefully it is obvious which one is which.
+The preview window also has buttons. For html, it currently only has a download button for the html file. For pdf, it has buttons for moving from page to page (as well as a slider), and for zooming in and out, and resetting the zoom. Hopefully it is obvious which one is which.
 
 ## Keybindings
 
@@ -54,9 +54,9 @@ Here is a partial list of the keybindings for various functions.
 | Key                   | Function                                                                  |
 | --------------------- | ------------------------------------------------------------------------- |
 | **F6/Ctrl-F6**        | Open or close the preview window                                          | 
-| **F5/Ctrl-F5**        | Process current document and update preview                               | 
+| **F5/Ctrl-F5**        | Process current file and update preview                                   | 
 | **F7/Ctrl-F7**        | Toggle auto-process/auto-preview                                          | 
-| **F8/Ctrl-F8**        | SyncTeX forward jump from current line number (LaTeX→PDF only)            | 
+| **F8/Ctrl-F8**        | Synctex forward jump from current line number (currently tex→pdf only)    | 
 | **Alt-5**             | Move cursor to matching bracket/parenthesis                               | 
 | **Alt-j**             | Jump to last line marked with Alt-m                                       | 
 | **Alt-l**             | Select current line                                                       | 
@@ -75,9 +75,9 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-f**            | Open find/replace panel                                                   | 
 | **Ctrl-g**            | Find next                                                                 | 
 | **Ctrl-Shift-g**      | Find previous                                                             | 
-| **Ctrl-i**            | Selects current paragraph or block                                        | 
+| **Ctrl-i**            | Select current paragraph or block                                         | 
 | **Ctrl-j**            | Join the currently selected lines into one line                           | 
-| **Ctrl-k**            | Deletes to end of line                                                    | 
+| **Ctrl-k**            | Delete to end of line                                                     | 
 | **Ctrl-o**            | Open a file                                                               | 
 | **Ctrl-r**            | Open find/replace panel                                                   | 
 | **Ctrl-s**            | Save                                                                      | 
@@ -87,7 +87,7 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-y**            | Redo                                                                      | 
 | **Ctrl-z**            | Undo                                                                      | 
 | **Ctrl-/**            | Toggle selected text or current line as a comment                         | 
-| **Ctrl-\|**           | **Pipe text to unix command                                               |
+| **Ctrl-\|**           | Pipe text through unix command                                            |
 | **Ctrl-[**            | Indent less                                                               | 
 | **Ctrl-]**            | Indent more                                                               | 
 | **Ctrl-</Alt-<**      | Indent less                                                               | 
@@ -104,7 +104,7 @@ Things like `Home` and `End` also behave as they should, etc.
 
 ## Citations
 
-For markdown files, if a bibliography (or bibliographies) is set for the project in the [settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrows and enter to select one of the autocompletions.
+For markdown files, if a bibliography (or bibliographies) is set for the project in the [settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrow keys to select, and press enter to insert one of the autocompletions.
 
 ## Other Documentation
 
