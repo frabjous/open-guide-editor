@@ -17,7 +17,7 @@ If you would like to try out OGE without installing it on your own computer or s
 
 Here is a short video showing what OGE looks like and how it works overall.
 
-https://github.com/frabjous/open-guide-editor/assets/305948/92a8d20d-c88d-4e87-8048-18640a824c28
+https://github.com/frabjous/open-guide-editor/assets/305948/e26b0c8c-f84b-4b21-83fc-2aa2b3ed0555
 
 ## Documentation
 
