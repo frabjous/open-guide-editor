@@ -96,7 +96,10 @@ if (isset($settings->readaloud->{$thisextension})) {
 $bibcompletions = [];
 if (isset($settings->bibliographies)) {
     foreach ($settings->bibliographies as $bibfile) {
-        $fullbibfile = $rdirname . '/' . $bibfile;
+        $fullbibfile = $bibfile;
+        if (substr($bibfile,0,1) != '/') {
+            $fullbibfile = $rdirname . '/' . $fullbibfile;
+        }
         if (!file_exists($fullbibfile)) {
             continue;
         }
