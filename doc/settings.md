@@ -30,10 +30,10 @@ Creating your own settings in many cases requires knowledge of linux/unix comman
 
 These can be achieved by creating an `oge-settings.json` file in the same directory as the files you’re working on.
 
-One important use for this is setting an alternative "main" or "root" file: this is the file that will actually be processed for previewing.
+One important use for this is setting an alternative “main” or “root” file: this is the file that will actually be processed for previewing.
 You might, however, be working on a subsidiary file, e.g., a LaTeX file introduced with `\include{filename}`, or a css file for styling an html or markdown file.
 
-Setting a root document will result in the file set as root being the one previewed, even if you are working on another file in the project's directory.
+Setting a root document will result in the file set as root being the one previewed, even if you are working on another file in the project’s directory.
 A simple version of `oge-settings.json` could look like this:
 
 ```json
@@ -46,7 +46,7 @@ A simple version of `oge-settings.json` could look like this:
 You can also provide a list (array) of bibliography files, which should be CSL json files, the keys of which will be used for [citation autocompletion](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md#citations) for markdown files.
 See the example above.
 
-**Important note**: If the file extension of the root document differs from the file being edited, it is the *root document*'s extension that will determine what routine is used, not the extension of the file being edited.
+**Important note**: If the file extension of the root document differs from the file being edited, it is the *root document*’s extension that will determine what routine is used, not the extension of the file being edited.
 See [routines](#routines) below.
 
 However, these options need not be given, and the `oge-settings.json` can be used to override any settings in `settings.json` or `default-settings.json` discussed below. Or if no special options or commands need to be set for the project, an `oge-settings.json` file need not be used at all.
@@ -176,8 +176,8 @@ You should probably change this in your `settings.json`, as the `/tmp` directory
 ```
 OGE can be configured to create an auto-save of files being edited to avoid losing work if the browser crashes. The interval sets how often in milliseconds this happens.
 The default, 300000, is 5 minutes. The directory specifies where the files are saved. This too you likely want to customize.
-Files are saved with their full path name but with '⁒' replacing the directory separator `/`.
-Files that haven't been named have auto-saves with a name with `⁒autosave-2023-7-4-1688470336511` specifying the date and timestamp they were autosaved. If you set the interval to 0, it will disable auto-saving.
+Files are saved with their full path name but with ‘⁒’ replacing the directory separator `/`.
+Files that haven’t been named have auto-saves with a name with `⁒autosave-2023-7-4-1688470336511` specifying the date and timestamp they were autosaved. If you set the interval to 0, it will disable auto-saving.
 
 ```json
 {
@@ -223,7 +223,7 @@ These options determine the height and width of the viewer window when it is cre
 The `"pdf"` suboption determines how the pages that are displayed in the pdf preview are converted into an image file that the browser can display.
 You could use a different filetype, e.g., `png`, and set its mimetype (`image/png`), and/or use a different conversion program.
 For most pdfs, however, `svg` is ideal, as it is a vector format and thus scalable without pixelation, and converting is usually quicker.
-In my experience, `mutool`'s svg conversion is faster at rendering pdfs as browser-displayable images than even a browser-native pdf viewer like Mozilla's pdfjs.
+In my experience, `mutool`’s svg conversion is faster at rendering pdfs as browser-displayable images than even a browser-native pdf viewer like Mozilla’s pdfjs.
 
 Pages are only converted and displayed when requested.
 
@@ -233,7 +233,7 @@ For html output, only the html file itself can be viewed in the previewer.
 Separate files like css files and images will not be available (for security reasons).
 It is therefore useful to actually embed all resources needed into the html file.
 This is why the default routines for md→html and tex→html use `pandoc` with its `--standalone` and `--embed-resources` option.
-For viewing html output for html, this can be less than ideal, since it will filter everything through pandoc's conversion and you won’t be previewing what you had meant to.
+For viewing html output for html, this can be less than ideal, since it will filter everything through pandoc’s conversion and you won’t be previewing what you had meant to.
 
 You could just use `touch %outputfile%` (which in fact is the default) as your routine to view the html file itself without modification, but then it won’t have the external resources available.
 An alternative might be to install something like [inliner](https://github.com/remy/inliner) for embedding other resources, but [due to a bug it requires some hacks to get working in scripts](https://github.com/remy/inliner/issues/151).
