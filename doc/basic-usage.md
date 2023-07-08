@@ -102,6 +102,14 @@ Here is a partial list of the keybindings for various functions.
 
 Things like `Home` and `End` also behave as they should, etc.
 
+## Additional User Interface Niceties
+
+**Control-mouse click**: Creates another cursor instead of moving the current one. This allows you to type the same thing at multiple places. Similarly, control click and selecting can be used to create multiple selections, all of which you can change. The “all” button on the find panel similarly creates multiple selections. (Close the panel using the x on the right to return focus to the editor without moving the cursors.)
+
+**Alt-mouse click + drag**: Creates a “rectangular” selection, useful for working with, e.g., columns of a table.
+
+**Code folding**: If there are little arrow markers next to a line number of the left, these can be used to fold (hide) or unfold (show) parts of a file. This is not particularly useful in markdown except in yaml blocks, code blocks, and quotations, though it is possible to hide whole sections of the document as well.
+
 ## Citations
 
 For markdown files, if a bibliography (or bibliographies) is set for the project in the [settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), if a `@` is typed to begin [pandoc-style citation](https://pandoc.org/MANUAL.html#citation-syntax), an autocomplete list of keys from the bibliography should pop up. It should filter down as you type. Use the arrow keys to select, and press enter to insert one of the autocompletions.
