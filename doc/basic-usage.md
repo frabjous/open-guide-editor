@@ -3,7 +3,7 @@
 
 # Basic Usage, Buttons and Keybindings
 
-For the most part, use of OGE as a text editor, should be straightforward, as it is based on [codemirror's basic setup](https://codemirror.net/docs/ref/#codemirror.basicSetup), which provides sane defaults for regular text editing.
+For the most part, use of OGE as a text editor, should be straightforward, as it is based on [codemirror’s basic setup](https://codemirror.net/docs/ref/#codemirror.basicSetup), which provides sane defaults for regular text editing.
 
 OGE builds upon by providing a back-end for saving, processing and previewing. You will need to **enable pop-ups** for the site serving the editor to see the preview window.
 
@@ -19,7 +19,7 @@ The top panel, when full, looks like the above. They do the following:
 
 1. (disk) Saves the current file, without any processing.
 
-2. (checkmark and seal) Commits the current state of the file's git folder, assuming it has one, with a commit message provided to a prompt.
+2. (checkmark and seal) Commits the current state of the file’s git directory, assuming it has one, with a commit message provided to a prompt.
 
 3. (open folder) Opens a new file, usually in another tab, unless the current document is unnamed and empty.
 
@@ -108,7 +108,7 @@ For markdown files, if a bibliography (or bibliographies) is set for the project
 
 ## Other Documentation
 
-See also the other documentation files concerning [configuring the editor's settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), [installation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+See also the other documentation files concerning [configuring the editor’s settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), [installation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
 
 ## License
 

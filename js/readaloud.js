@@ -70,6 +70,10 @@ function makeReadAloudButton() {
         }
         // strip double quotation marks that might screw up cmd
         texttoread = texttoread.replaceAll('"','');
+        // remove backticks, so they don't do weird things
+        texttoread = texttoread.replaceAll('`','');
+        // put slashes before dollar signs
+        texttoread = texttoread.replaceAll('$','\\$');
         // get mp3 data from PHP
         ogEditor.readaudio.src = 'php/getaudio.php?text=' +
             encodeURIComponent(texttoread) +

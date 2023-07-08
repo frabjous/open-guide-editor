@@ -31,11 +31,18 @@ I will cover the former use-case first.
 
     - [weasyprint](https://weasyprint.org/) for creating pdfs from html files
 
-    The above can be easily installed with your distribution’s package manager, on any mainstream Linux distro. You do not need to install them all, however, if you don’t need the [routines](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md) that use them, or want to define your own. For example, you might use the (slower, but ubiquitous) [poppler](https://poppler.freedesktop.org/) utilities in place of mutool.
+    The above can be easily installed with your distribution’s package manager, on any mainstream Linux distro.
+   You do not need to install them all, however, if you don’t need the [routines](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md) that use them, or want to define your own.
+   For example, you might use the (slower, but ubiquitous) [poppler](https://poppler.freedesktop.org/) utilities in place of mutool.
 
-3. You will need the programs used in the installation process. These include [git](https://git-scm.com/) and [npm](https://www.npmjs.com/). There’s a good chance that you’ll have these installed already. They do not need root access.
+3. You will need the programs used in the installation process.
+These include [git](https://git-scm.com/) and [npm](https://www.npmjs.com/).
+There’s a good chance that you have these installed already.
+They do not need root access.
 
-4. You will need to be able to run a [php](https://www.php.net/)-capable web-server. For personal use, the [php testing server](https://www.php.net/manual/en/features.commandline.webserver.php) may suffice. It may work with earlier versions, but I recommend using PHP version 8.x or above.
+4. You will need to be able to run a [php](https://www.php.net/)-capable web-server.
+For personal use, the [php testing server](https://www.php.net/manual/en/features.commandline.webserver.php) may suffice.
+It may work with earlier versions, but I recommend using php version 8.x or above.
 
    For example, on an [Arch](https://archlinux.org)-based distribution, you can get all you need for the past few steps with:
 
@@ -46,7 +53,8 @@ I will cover the former use-case first.
 
     The corresponding package names will likely be slightly different on other distros.
 
-5. Clone this repository. Starting from the parent directory where you want it installed, run:
+5. Clone this repository.
+   Starting from the parent directory where you want it installed, run:
 
     ```sh
     git clone --recurse-submodules --depth 1 \
@@ -67,7 +75,8 @@ I will cover the former use-case first.
     node_modules/.bin/rollup js/editor.mjs -f iife -o editor.bundle.js -p @rollup/plugin-node-resolve
     ```
 
-8. Make sure the PHP enabled web-server is running. For the testing server, you can do (again from the same directory):
+8. Make sure the php-enabled web-server is running.
+   For the testing server, you can do (again from the same directory):
 
     ```sh
     php -S localhost:8181
@@ -75,15 +84,19 @@ I will cover the former use-case first.
 
     You can then visit `http://localhost:8181` in a browser, and you should see OGE.
 
-Note that when connecting on `localhost`, you can edit any files the user running the server has access to. See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more detail.
+Note that when connecting on `localhost`, you can edit any files the user running the server has access to.
+See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more detail.
 
 #### Convenience script
 
 Opening the files you want to edit via OGE’s “open” dialog is not very efficient.
 
-For that reason, OGE comes with a script you can run from the command line, `bin/oge.php`, which will take one or more filenames on the local system as argument, and open browser tabs for each one.
+For that reason, OGE comes with a script you can run from the command line, `bin/oge.php`.
+This takes one or more filenames on the local system as argument, and opens browser tabs for each one.
 
-The script will also launch a php testing server if one isn’t already launched. You can specify the port, host, and browser to use, either from the command line or in the `settings.json` file for your installation OGE. Details can be found by running the script with the argument `--help`, i.e., `php bin/oge.php --help`.
+The script will also launch a php testing server if one isn’t already launched.
+You can specify the port, host, and browser to use, either from the command line or in the `settings.json` file for your OGE installation.
+Details can be found by running the script with the argument `--help`, i.e., `php bin/oge.php --help`.
 
 If you think you may use this often, I recommend making it executable (if git didn’t already preserve the permissions) and creating a symbolic link to it in one of the directories in your `$PATH`, e.g.:
 
@@ -109,7 +122,7 @@ Installation as part of a web project that allows for remote use is mostly the s
 You can follow the steps of the procedure described [above](#user-content-steps-to-install).
 The main exception is that for over-the-web use you will not want to use the php testing server, but instead a full featured web-server with php enabled like [nginx](https://www.nginx.com/) or [apache](https://httpd.apache.org/).
 
-Instructions for setting up a standard PHP-enabled web-server are beyond the scope of this documentation, but there are many guides and tutorials for doing this online for all major Linux distributions.
+Instructions for setting up a standard php-enabled web-server are beyond the scope of this documentation, but there are many guides and tutorials for doing this online for all major Linux distributions.
 A MySQL or other database is not needed.
 
 To make use of OGE on such a server, when following the steps above, you merely need to clone the repository into a place under the root directory served by the web-server, e.g., `/var/www`, or whatever the server is configured to use.
