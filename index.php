@@ -47,8 +47,12 @@ if (!isset($_SESSION["open-guide-editor-access"])) {
     $_SESSION["open-guide-editor-access"] = array();
 }
 if ($dirname != '') {
+    $array_to_add = array($dirname);
+    if (isset($settings->autosave->directory)) {
+        array_push($array_to_add, $settings->autosave->directory);
+    }
     $_SESSION["open-guide-editor-access"] = array_unique(
-        array_merge($_SESSION["open-guide-editor-access"], array($dirname))
+        array_merge($_SESSION["open-guide-editor-access"], $array_to_add)
     );
     $settings = merge_projectsettings($dirname);
 }

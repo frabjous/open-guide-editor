@@ -81,7 +81,6 @@ function new_access_key($dirname, $basename) {
         return false;
     }
 
-
     // check for regular authentication
     $fullfilename = $dirname .'/'.$basename;
     if (!has_authentication($fullfilename)) {

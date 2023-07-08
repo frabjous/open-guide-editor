@@ -9,7 +9,7 @@ OGE aims to be very user-configurable.
 Configuration is done by means of [json files](https://www.json.org/json-en.html).
 Each time a file is loaded or processed by the editor, the following files are checked for configuration options.
 
-1. The file `oge-settings.json` in the same directory as the file, or any parent directory to which oge has access.
+1. The file `oge-settings.json` in the same directory as the file, or any parent directory to which OGE has access.
 2. The file `settings.json` in the main `open-guide-editor/` directory.
 3. The file `default-settings.json` in the main `open-guide-editor/` directory.
 
@@ -43,7 +43,7 @@ A simple version of `oge-settings.json` could look like this:
 }
 ```
 
-You can also provide a list (array) of bibliography files, which should be CSL json files, the keys of which will be used for [citation autocompletion](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md#citations) for markdown files.
+You can also provide a list (array) of bibliography files, which should be [CSL json](https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html) files, the keys of which will be used for [citation autocompletion](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md#citations) for markdown files.
 See the example above.
 
 **Important note**: If the file extension of the root document differs from the file being edited, it is the *root document*’s extension that will determine what routine is used, not the extension of the file being edited.
@@ -96,13 +96,13 @@ For example, one might use a configuration like this to use xelatex instead of t
 The following variables are filled in for you when the processing command is executed:
 
 - `%rootdocument%`: The name of the main file being processed; this will be the same as the file edited unless a different root document is specified, as described above.
-- `%outputfile%`: The name of the file. This can be explicitly set for the routine, but otherwise will be assumed to be the name of the root document with the extension change to the output extension.
+- `%outputfile%`: The name of the file. This can be explicitly set for the routine, but otherwise will be assumed to be the name of the root document with the extension changed to the output extension.
 - `%savedfile%`: The file currently being edited, and saved along with the processing job.
 
 Note that quotation marks for the shell are automatically added around these variables.
 You should not add your own, or they will cancel each other out and possibly break the commands for filenames with spaces, etc.!
 
-In addition to output extensions, the object for a given input extension can also contain a key for `"defaultext"`, i.e., the default output extension the editor will start having set, and `"spellcheck"` which is a boolean that enables or disables the browser’s built-in spell-check capabilities.
+In addition to output extensions, the object for a given input extension can also contain a key for `"defaultext"`, i.e., the default output extension the editor will start having set, and `"spellcheck"`, which is a boolean that enables or disables the browser’s built-in spell-check capabilities.
 
 For example:
 
@@ -139,15 +139,17 @@ You can use any file extension for the input, even those not already included in
 }
 ```
 
-You could similarly create routines for javascript (`js`/`mjs`) files or `css` files, though in such cases this is usually unnecessary, because such files are likely to be used with html main or root documents that OGE already has routines for. 
+You could similarly create routines for javascript (`js`/`mjs`) files or `css` files, though this is usually unnecessary.
+Such files are likely to be used with html main or root documents, which OGE already has routines for. 
 
-You can also use any file extension for the output. However, for output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer.
+You can also use any file extension for the output.
+However, for output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer.
 Currently OGE only knows how to preview html and pdf output files.
 (But pull requests for others are welcome!)
 
-In addition to the `"command"` option, routines can set the following, though they are less likely to need customizing by the average user (except perhaps `"icon"` for new input extensions.
+In addition to the `"command"` option, routines can set the following, though they are less likely to need customizing by the average user (except perhaps `"icon"` for new input extensions).
 
-* `"icon"`: The Google Material Symbols icon name to display on the panel button to represent the output format (all lowercase with underscores instead of spaces).
+* `"icon"`: The [Google Material Symbols](https://fonts.google.com/icons) icon name to display on the panel button to represent the output format (all lowercase with underscores instead of spaces).
 * `"postprocess"`: A command that will be executed after the processing command. Note, however, that the `"postprocess"` option for pdf outputs is expected to output the number of pages to stdout, which the preview window uses for its slider display and buttons. You can include other commands in its postprocessing joined with `;` or `&&`, but they should be configured to be silent.
 * `"forwardjump"`: a command that returns the page number corresponding to a line in the editor; this is used, e.g., for SyncTeX forward jumps with LaTeX-produced PDFs. Also respects the variable `%line%` for inserting the line the editor is currently focused on.
 * `"reversejump"`: A command that can be executed in the pdf preview window by double-clicking, which should output something similar to what is outputted by `synctex edit`. The variable `%page%`, `%x%` and `%y%` can be used for the coordinates in the pdf clicked on, with 72 points per inch.
@@ -176,8 +178,8 @@ You should probably change this in your `settings.json`, as the `/tmp` directory
 ```
 OGE can be configured to create an auto-save of files being edited to avoid losing work if the browser crashes. The interval sets how often in milliseconds this happens.
 The default, 300000, is 5 minutes. The directory specifies where the files are saved. This too you likely want to customize.
-Files are saved with their full path name but with ‘⁒’ replacing the directory separator `/`.
-Files that haven’t been named have auto-saves with a name with `⁒autosave-2023-7-4-1688470336511` specifying the date and timestamp they were autosaved. If you set the interval to 0, it will disable auto-saving.
+Files are saved with their full path name but with `⁒` replacing the directory separator `/`.
+Files that haven’t been named have auto-saves with a name like `⁒autosave-2023-7-4-1688470336511` specifying the date and timestamp they were auto-saved. If you set the interval to 0, it will disable auto-saving.
 
 ```json
 {
@@ -232,7 +234,7 @@ Pages are only converted and displayed when requested.
 For html output, only the html file itself can be viewed in the previewer.
 Separate files like css files and images will not be available (for security reasons).
 It is therefore useful to actually embed all resources needed into the html file.
-This is why the default routines for md→html and tex→html use `pandoc` with its `--standalone` and `--embed-resources` option.
+This is why the default routines for md→html and tex→html use `pandoc` with its `--standalone` and `--embed-resources` options.
 For viewing html output for html, this can be less than ideal, since it will filter everything through pandoc’s conversion and you won’t be previewing what you had meant to.
 
 You could just use `touch %outputfile%` (which in fact is the default) as your routine to view the html file itself without modification, but then it won’t have the external resources available.
