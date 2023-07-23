@@ -51,7 +51,7 @@ if (!has_authentication($filename)) {
 // check if autosave request
 if (isset($opts->autosave) && $opts->autosave) {
     if (!isset($settings->autosave->directory)) {
-        rage_quit(new StdClass(), "autosaving without an autosave folder in settings");
+        rage_quit(new StdClass(), "autosaving without an autosave directory in settings");
     }
     $filename = $settings->autosave->directory . '/' .
         str_replace('/','⁒',$filename);
