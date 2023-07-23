@@ -7,7 +7,7 @@
 // defines functions common to different scripts that do processing  //
 ///////////////////////////////////////////////////////////////////////
 
-require_once 'open-guide-misc/pipe.php';
+require_once(dirname(__FILE__) . '/../open-guide-misc/pipe.php');
 $swapvariables = array(
     'outputfile', 'page', 'rootdocument', 'savedfile', 'line', 'x', 'y'
 );
