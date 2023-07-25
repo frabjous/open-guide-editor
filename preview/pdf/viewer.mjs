@@ -58,7 +58,7 @@ function setPDFPage(n, forced = false) {
     let changed = (n != window.pdfpage);
     if (n > window.numpdfpages) { n = window.numpdfpages; }
     if (n < 1) { n = 1; }
-    // TODO: page widgets
+
     window.pdfpage = n;
     if (changed || forced) {
         window.pdfimg.src = getPDFPageURL();
