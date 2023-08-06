@@ -25,7 +25,7 @@ I will cover the former use-case first.
 
     - [mutool](https://mupdf.readthedocs.io/en/latest/mupdf-command-line.html?utm_source=mupdf&utm_medium=website&utm_content=cta-header-link#mupdf-command-line-mutool) from the [mupdf project](https://mupdf.com/) for converting pdf pages to images, and other pdf-related tasks
 
-    - [flite](http://cmuflite.org/) for text-to-speech capability
+    - [flite](http://cmuflite.org/) for text-to-speech capability, and [lame](https://lame.sourceforge.io/) for converting to mp3
 
     - [ebook-convert](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) for converting html files to epubs; this is a command line program that ships with the [calibre](https://calibre-ebook.com/) ebook software suite
 
@@ -48,7 +48,7 @@ It may work with earlier versions, but I recommend using php version 8.x or abov
 
    ```sh
    sudo pacman --needed -S git npm php texlive-latexrecommended mupdf-tools \
-       flite calibre haskell-pandoc python-weasyprint
+       flite lame calibre haskell-pandoc python-weasyprint
    ```
 
     The corresponding package names will likely be slightly different on other distros.
