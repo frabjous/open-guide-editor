@@ -7,7 +7,7 @@ Highly configurable web-based text editor based on [codemirror](https://codemirr
 However, it can be used to edit other plain text files as well, including subsidiary files (css, javascript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document.
 The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
 
-It was created to be used for the [open-guide-typesetting-framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
+It was created to be used for the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
 The project is young, but it has recently gotten to the stage where it might be usable by others, but not much testing has been done.
 

@@ -32,7 +32,7 @@ This can be set to an array of names of directories the user should be able to e
 The user will also be able to access subdirectories of the directories in this array.
 
 OGE itself does not provide a way to set this variable key.
-It is assumed that each project making use of OGE would have its own mechanisms, as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) will when finished.<!-- TODO: change this when ogst is in place -->
+It is assumed that each project making use of OGE would have its own mechanisms, as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) does. (See the source of its [libauthentication.php](https://github.com/frabjous/open-guide-typesetting-framework/blob/main/php/libauthentication.php) script and the `function grant_oge_access(…)`.)
 
 Such a mechanism should be implemented by another php script running on the same server.
 The basic form of such a script could be something like the following, which could respond to an http POST request, or similar:
