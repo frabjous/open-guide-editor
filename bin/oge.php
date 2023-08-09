@@ -147,7 +147,7 @@ if ($templatesdir != '' && is_dir($templatesdir)) {
 
 // move to the main open-guide-editor folder, which should be the
 // parent of where this script is
-chdir(dirname(dirname(__FILE__)));
+chdir(dirname(dirname(realpath(__FILE__))));
 
 // if something isn't set, try to read it from settings.json
 if (($port == 0 || $browser == '' || $host == '' ||
@@ -230,7 +230,27 @@ $urlbase = $protocol . '://' . $host;
 if ($port != 443 && $port != 80) {
     $urlbase .= ':' . strval($port);
 }
-$url = $urlbase . '/bin/oge.php';
+
+// try to determine webroot based on names, might not be best
+$pathparts = explode('/', getcwd());
+$stophere = 0;
+for($i = (count($pathparts) - 1); $i >= 0; $i--) {
+    $thispart = $pathparts[$i];
+    if ((strpos($thispart, 'http') !== false) ||
+        (strpos($thispart, 'html') !== false) ||
+        (strpos($thispart, 'www') !== false)) {
+        $stophere = $i;
+        break;
+    }
+}
+
+$basepath = implode('/',array_slice($pathparts, $stophere + 1));
+
+if ($basepath[0] != '/') {
+    $basepath = '/' . $basepath;
+}
+
+$url = $urlbase . $basepath . '/bin/oge.php';
 // start a curl session
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $url);
@@ -292,7 +312,7 @@ foreach ($filenames as $filename) {
     // open a redirection to the file in the browser
     $dirname = dirname($filename);
     $basename = basename($filename);
-    $filelaunchurl = $urlbase . '/php/redirect.php?dirname=' .
+    $filelaunchurl = $urlbase . $basepath . '/php/redirect.php?dirname=' .
         rawurlencode($dirname) . '&basename=' . rawurlencode($basename);
     shell_exec($browser . ' "' . $filelaunchurl .
         '" >/dev/null 2>&1 & disown');
