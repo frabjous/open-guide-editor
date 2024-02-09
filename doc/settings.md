@@ -93,6 +93,20 @@ For example, one might use a configuration like this to use xelatex instead of t
 }
 ```
 
+One use for customizing routines would be to make use of other pandoc options or filters. For example, to enable the [Fregeifier](https://github.com/frabjous/fregeifier) pandoc filter to allow Frege’s logical notation (or other complex mathematics) to be supported when converting md to html, one might include something like this:
+
+```json
+{
+    "routines": {
+        "md": {
+            "html": {
+                "command": "pandoc --standalone --embed-resources --filter /path/to/fregeifier/fregeifier_pandoc_filter.php  %rootdocument% -o %outputfile%"
+            }
+        }
+    }
+}
+```
+
 The following variables are filled in for you when the processing command is executed:
 
 - `%rootdocument%`: The name of the main file being processed; this will be the same as the file edited unless a different root document is specified, as described above.

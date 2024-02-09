@@ -76,7 +76,7 @@ These are available in the `doc/` subdirectory, or by clicking the links above.
     - [ ] revert to earlier commit
     - [ ] more?
 - [x] symbol picker
-- [ ] “Frege-ifier” integration
+- [x] “[Fregeifier](https://github.com/frabjous/fregeifier” integration
 - [x] spellcheck through browser’s native spellcheck
 - [x] simple jump marks
 - [x] swap out custom dialogs with codemirror panels (mostly done, could do more)
