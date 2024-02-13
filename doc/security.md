@@ -25,13 +25,13 @@ $_SESSION["open-guide-editor-access"] // an array of directory names
 
 If the first is set, and set to true, the user will have access to any file on the server the user running the server can access.
 
-There is nothing in the code of this repository that would set the first value to true, but this could be done by means of another script operating on the same server. It is up to the system administrator to determine under what conditions this should be set. This should never be set unless the user is very trusted, such as one of the maintainers of the project.
+There is nothing in the code of this repository that would set these to true. It is up to the system administrator to determine under what conditions they should be set. The first should never be set to true unless the user is very trusted, such as one of the maintainers of the project.
 
 For most use cases, setting `$_SESSION["open-guide-editor-access"]` is more appropriate.
 This can be set to an array of names of directories the user should be able to edit files within.
 The user will also be able to access subdirectories of the directories in this array.
 
-OGE itself does not provide a way to set this variable key.
+OGE itself does not provide a way to set these variable keys.
 It is assumed that each project making use of OGE would have its own mechanisms, as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) does. (See the source of its [libauthentication.php](https://github.com/frabjous/open-guide-typesetting-framework/blob/main/php/libauthentication.php) script and the `function grant_oge_access(…)`.)
 
 Such a mechanism should be implemented by another php script running on the same server.

@@ -27,6 +27,7 @@ $accesskey = new_access_key($dirname, $basename);
 
 if ($accesskey === false) {
     header("HTTP/1.1 403 Forbidden");
+    echo '<html><head><title>403 Forbidden</title></head><body><h1>Error 403 Forbidden</h1></body></html>';
     exit;
 }
 

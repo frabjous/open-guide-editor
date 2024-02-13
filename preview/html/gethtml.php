@@ -35,6 +35,7 @@ if (!$filename || !file_exists($filename)) {
 // check if authenticated
 if (!has_authentication($filename)) {
     header("HTTP/1.1 403 Forbidden");
+    echo '<html><head><title>403 Forbidden</title></head><body><h1>Error 403 Forbidden</h1></body></html>';
     exit;
 }
 
