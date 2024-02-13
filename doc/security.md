@@ -24,8 +24,8 @@ $_SESSION["open-guide-editor-access"] // an array of directory names
 ```
 
 If the first is set, and set to true, the user will have access to any file on the server the user running the server can access.
-This is always set to true when accessing OGE through `localhost`.
-Otherwise, it should not be set unless the user is very trusted, such as one of the maintainers of the project.
+
+There is nothing in the code of this repository that would set the first value to true, but this could be done by means of another script operating on the same server. It is up to the system administrator to determine under what conditions this should be set. This should never be set unless the user is very trusted, such as one of the maintainers of the project.
 
 For most use cases, setting `$_SESSION["open-guide-editor-access"]` is more appropriate.
 This can be set to an array of names of directories the user should be able to edit files within.

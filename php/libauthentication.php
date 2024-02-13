@@ -10,11 +10,6 @@
 
 // should always be required from script that calls session_start
 
-// grant superuser access to local users
-if ($_SERVER["REMOTE_ADDR"] == '::1' || $_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
-    $_SESSION["open-guide-editor-poweruser"] = true;
-}
-
 // global variable for poweruser
 $poweruser = ((isset($_SESSION["open-guide-editor-poweruser"])) &&
     $_SESSION["open-guide-editor-poweruser"]);
