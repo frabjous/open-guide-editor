@@ -93,6 +93,7 @@ Opening the files you want to edit via OGE’s “open” dialog is not very eff
 
 For that reason, OGE comes with a script you can run from the command line, `bin/oge.php`.
 This takes one or more filenames on the local system as argument, and opens browser tabs for each one.
+An access key for each file is also created.
 
 The script will also launch a php testing server if one isn’t already launched.
 You can specify the port, host, and browser to use, either from the command line or in the `settings.json` file for your OGE installation.

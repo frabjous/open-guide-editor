@@ -129,5 +129,8 @@ function save_access_keys($newkeys) {
     if ($newkeys === 'invalidjson') {
         return false;
     }
+    if (!is_dir(dirname($settings->accesskeyfile))) {
+        mkdir(dirname($settings->accesskeyfile), 0755, true);
+    }
     return file_put_contents($settings->accesskeyfile, $keysjson);
 }

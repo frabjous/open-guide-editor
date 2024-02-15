@@ -242,10 +242,12 @@ for($i = (count($pathparts) - 1); $i >= 0; $i--) {
     if ((strpos($thispart, 'http') !== false) ||
         (strpos($thispart, 'html') !== false) ||
         (strpos($thispart, 'www') !== false)) {
+        echo 'stopping at ' . $i;
         $stophere = $i;
         break;
     }
 }
+
 
 $basepath = implode('/',array_slice($pathparts, $stophere + 1));
 
@@ -254,7 +256,6 @@ if ($basepath[0] != '/') {
 }
 
 $url = $urlbase . $basepath . '/bin/oge.php';
-echo $url;
 
 // start a curl session
 $curl = curl_init();
