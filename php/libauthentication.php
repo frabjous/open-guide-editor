@@ -10,9 +10,11 @@
 
 // should always be required from script that calls session_start
 
-// global variable for poweruser
-$poweruser = ((isset($_SESSION["open-guide-editor-poweruser"])) &&
-    $_SESSION["open-guide-editor-poweruser"]);
+// global variable for poweruser if not set
+if (!(isset($poweruser))) {
+    $poweruser = ((isset($_SESSION["open-guide-editor-poweruser"])) &&
+        $_SESSION["open-guide-editor-poweruser"]);
+}
 
 // define this function first as it is required by readsettings.php
 // though I'm not sure that matters

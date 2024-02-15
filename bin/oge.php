@@ -149,11 +149,14 @@ if ($templatesdir != '' && is_dir($templatesdir)) {
 // parent of where this script is
 chdir(dirname(dirname(realpath(__FILE__))));
 
+$poweruser = true;
+require_once('php/libauthentication.php');
+
 // if something isn't set, try to read it from settings.json
 if (($port == 0 || $browser == '' || $host == '' ||
     $templatesdir == '') && (file_exists('settings.json'))) {
-    $settings = json_decode(file_get_contents('settings.json')) ??
-        (new StdClass());
+    //$settings = json_decode(file_get_contents('settings.json')) ??
+        //(new StdClass());
     if ($port == 0 && isset($settings->port)) {
         $port = intval($settings->port);
     }
@@ -251,6 +254,8 @@ if ($basepath[0] != '/') {
 }
 
 $url = $urlbase . $basepath . '/bin/oge.php';
+echo $url;
+
 // start a curl session
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $url);
@@ -312,8 +317,10 @@ foreach ($filenames as $filename) {
     // open a redirection to the file in the browser
     $dirname = dirname($filename);
     $basename = basename($filename);
-    $filelaunchurl = $urlbase . $basepath . '/php/redirect.php?dirname=' .
-        rawurlencode($dirname) . '&basename=' . rawurlencode($basename);
+    $accesskey = new_access_key($dirname, $basename);
+    $filelaunchurl = $urlbase . $basepath . '/?accesskey=' . $accesskey;
+    //$filelaunchurl = $urlbase . $basepath . '/php/redirect.php?dirname=' .
+        //rawurlencode($dirname) . '&basename=' . rawurlencode($basename);
     shell_exec($browser . ' "' . $filelaunchurl .
         '" >/dev/null 2>&1 & disown');
 }
