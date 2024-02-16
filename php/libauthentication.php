@@ -130,7 +130,9 @@ function save_access_keys($newkeys) {
         return false;
     }
     if (!is_dir(dirname($settings->accesskeyfile))) {
-        mkdir(dirname($settings->accesskeyfile), 0755, true);
+        if (!mkdir(dirname($settings->accesskeyfile), 0755, true)) {
+            return false;
+        }
     }
     return file_put_contents($settings->accesskeyfile, $keysjson);
 }

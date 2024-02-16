@@ -242,7 +242,6 @@ for($i = (count($pathparts) - 1); $i >= 0; $i--) {
     if ((strpos($thispart, 'http') !== false) ||
         (strpos($thispart, 'html') !== false) ||
         (strpos($thispart, 'www') !== false)) {
-        echo 'stopping at ' . $i;
         $stophere = $i;
         break;
     }
