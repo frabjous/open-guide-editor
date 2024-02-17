@@ -87,7 +87,7 @@ For example, one might use a configuration like this to use xelatex instead of t
         "md": {
             "pdf": {
                 "command": "pandoc --pdf-engine xelatex %rootdocument% -o %outputfile%"
-            }      
+            }
         }
     }
 }
