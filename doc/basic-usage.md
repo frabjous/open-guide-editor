@@ -53,52 +53,52 @@ Here is a partial list of the keybindings for various functions.
 
 | Key                   | Function                                                                  |
 | --------------------- | ------------------------------------------------------------------------- |
-| **F6/Ctrl-F6**        | Open or close the preview window                                          | 
-| **F5/Ctrl-F5**        | Process current file and update preview                                   | 
-| **F7/Ctrl-F7**        | Toggle auto-process/auto-preview                                          | 
+| **F6/Ctrl-F6**        | Open or close the preview window                                          |
+| **F5/Ctrl-F5**        | Process current file and update preview                                   |
+| **F7/Ctrl-F7**        | Toggle auto-process/auto-preview                                          |
 | **F8/Ctrl-F8**        | Synctex forward jump from current line number (currently tex→pdf only)    | 
-| **Alt-5**             | Move cursor to matching bracket/parenthesis                               | 
-| **Alt-j**             | Jump to last line marked with Alt-m                                       | 
-| **Alt-l**             | Select current line                                                       | 
-| **Alt-m**             | Mark line as jump-to position                                             | 
-| **Alt-n**             | Go to specific line                                                       | 
-| **Alt-t**             | Toggle fold/unfold on current block                                       | 
-| **Alt-w**             | Toggle line wrapping                                                      | 
+| **Alt-5**             | Move cursor to matching bracket/parenthesis                               |
+| **Alt-j**             | Jump to last line marked with Alt-m                                       |
+| **Alt-l**             | Select current line                                                       |
+| **Alt-m**             | Mark line as jump-to position                                             |
+| **Alt-n**             | Go to specific line                                                       |
+| **Alt-t**             | Toggle fold/unfold on current block                                       |
+| **Alt-w**             | Toggle line wrapping                                                      |
 | **Alt-/**             | Toggle selected text or current line as a comment                         | 
-| **Alt-\|**            | Pipe text to unix command                                                 |   
-| **Alt-↑**             | Move current line up                                                      | 
-| **Alt-↓**             | Move current line down                                                    | 
-| **Alt-Tab/Shift-Tab** | Reapply indentation to current selection                                  | 
-| **Ctrl-a**            | Select all                                                                | 
-| **Ctrl-c**            | Copy                                                                      | 
-| **Ctrl-d**            | Duplicate current line                                                    | 
-| **Ctrl-f**            | Open find/replace panel                                                   | 
-| **Ctrl-g**            | Find next                                                                 | 
-| **Ctrl-Shift-g**      | Find previous                                                             | 
-| **Ctrl-i**            | Select current paragraph or block                                         | 
-| **Ctrl-j**            | Join the currently selected lines into one line                           | 
-| **Ctrl-k**            | Delete to end of line                                                     | 
-| **Ctrl-o**            | Open a file                                                               | 
-| **Ctrl-r**            | Open find/replace panel                                                   | 
+| **Alt-\|**            | Pipe text to unix command                                                 |
+| **Alt-↑**             | Move current line up                                                      |
+| **Alt-↓**             | Move current line down                                                    |
+| **Alt-Tab/Shift-Tab** | Reapply indentation to current selection                                  |
+| **Ctrl-a**            | Select all                                                                |
+| **Ctrl-c**            | Copy                                                                      |
+| **Ctrl-d**            | Duplicate current line                                                    |
+| **Ctrl-f**            | Open find/replace panel                                                   |
+| **Ctrl-g**            | Find next                                                                 |
+| **Ctrl-Shift-g**      | Find previous                                                             |
+| **Ctrl-i**            | Select current paragraph or block                                         |
+| **Ctrl-j**            | Join the currently selected lines into one line                           |
+| **Ctrl-k**            | Delete to end of line                                                     |
+| **Ctrl-o**            | Open a file                                                               |
+| **Ctrl-r**            | Open find/replace panel                                                   |
 | **Ctrl-s**            | Save                                                                      | 
 | **Ctrl-u**            | Undo                                                                      | 
 | **Ctrl-v**            | Paste                                                                     | 
-| **Ctrl-x**            | Cut, or cut whole line if nothing selected                                | 
+| **Ctrl-x**            | Cut, or cut whole line if nothing selected                                |
 | **Ctrl-y**            | Redo                                                                      | 
 | **Ctrl-z**            | Undo                                                                      | 
-| **Ctrl-/**            | Toggle selected text or current line as a comment                         | 
+| **Ctrl-/**            | Toggle selected text or current line as a comment                         |
 | **Ctrl-\|**           | Pipe text through unix command                                            |
-| **Ctrl-[**            | Indent less                                                               | 
-| **Ctrl-]**            | Indent more                                                               | 
-| **Ctrl-</Alt-<**      | Indent less                                                               | 
-| **Ctrl->/Alt->**      | Indent more                                                               | 
-| **Ctrl-→**            | Move to next word                                                         | 
-| **Ctrl-←**            | Move to previous word                                                     | 
-| **Ctrl-↑**            | Insert line above                                                         | 
-| **Ctrl-↓**            | Insert line below                                                         | 
-| **Ctrl-Alt-[**        | Fold all foldable blocks                                                  | 
-| **Ctrl-Alt-]**        | Unfold all foldable blocks                                                | 
-| **Ctrl-Shift-[**      | Fold current line’s block                                                 | 
+| **Ctrl-[**            | Indent less                                                               |
+| **Ctrl-]**            | Indent more                                                               |
+| **Ctrl-</Alt-<**      | Indent less                                                               |
+| **Ctrl->/Alt->**      | Indent more                                                               |
+| **Ctrl-→**            | Move to next word                                                         |
+| **Ctrl-←**            | Move to previous word                                                     |
+| **Ctrl-↑**            | Insert line above                                                         |
+| **Ctrl-↓**            | Insert line below                                                         |
+| **Ctrl-Alt-[**        | Fold all foldable blocks                                                  |
+| **Ctrl-Alt-]**        | Unfold all foldable blocks                                                |
+| **Ctrl-Shift-[**      | Fold current line’s block                                                 |
 
 Things like `Home` and `End` also behave as they should, etc.
 
