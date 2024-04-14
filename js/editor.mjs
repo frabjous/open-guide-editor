@@ -44,6 +44,7 @@ import {javascript} from '@codemirror/lang-javascript';
 import {lua} from '@codemirror/legacy-modes/mode/lua';
 import {stex} from '@codemirror/legacy-modes/mode/stex';
 import {shell} from '@codemirror/legacy-modes/mode/shell';
+import {yaml} from '@codemirror/legacy-modes/mode/yaml';
 //import { texSyntax } from "lang-tex";
 
 // my package
@@ -261,6 +262,8 @@ if (ext == 'md') {
     langExtensions.push(StreamLanguage.define(stex));
 } else if (['sh','zsh','bash'].indexOf(ext) >= 0) {
     langExtensions.push(StreamLanguage.define(shell));
+} else if (ext == 'yaml') {
+    langExtensions.push(StreamLanguage.define(yaml));
 }
 /*else if (ext == 'tex') {
     langExtensions.push(texSyntax());
