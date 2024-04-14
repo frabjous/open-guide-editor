@@ -102,8 +102,23 @@ const toggleWrap = function(view) {
 }
 
 const joinLines = function(view) {
-    let fr = view.state.selection.main.from;
-    let to = view.state.selection.main.to;
+    let smthgsel = view.state.selection.ranges.some(r => !r.empty);
+    let fr = 0;
+    let to = 0;
+    if (smthgsel) {
+        // if something selected, that determines range
+        fr = view.state.selection.main.from;
+        to = view.state.selection.main.to;
+    } else {
+        // otherwise, take current line
+        let cpos = view?.state?.selection?.main?.anchor ?? 0;
+        const stline = view.state.doc.lineAt(cpos);
+        const stlinenum = stline.number;
+        const nextline = view.state.doc.line(stlinenum+1);
+        if (!nextline) { return; }
+        fr = stline.from;
+        to = nextline.to;
+    }
     let stuff = view.state.sliceDoc(fr, to);
     let newstuff = stuff.replace(/\s*\n\s*/g,' ');
     view.dispatch(view.state.update({
