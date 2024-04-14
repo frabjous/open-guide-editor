@@ -172,7 +172,7 @@ if (is_dir($rdirname . '/.git')) {
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined">
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
         <!-- javascript file -->
         <script charset="utf-8" src="js/panel.js"></script>
@@ -229,6 +229,7 @@ if (is_dir($rdirname . '/.git')) {
                     'JuliaMono',
                     'TeX Gyre DejaVu Math',
                     'DejaVu Sans Mono',
+                    'Symbols Nerd Font',
                     monospace !important;
                 overflow: auto;
             }
