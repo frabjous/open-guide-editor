@@ -10,7 +10,7 @@
 //
 // Modules
 //
-import {indentUnit, toggleFold} from '@codemirror/language';
+import {indentUnit, toggleFold, StreamLanguage} from '@codemirror/language';
 import {EditorView, basicSetup} from "codemirror";
 import {
     cursorLineBoundaryBackward,
@@ -41,6 +41,9 @@ import {xml} from '@codemirror/lang-xml';
 import {json} from '@codemirror/lang-json';
 import {php} from '@codemirror/lang-php';
 import {javascript} from '@codemirror/lang-javascript';
+import {lua} from '@codemirror/legacy-modes/mode/lua';
+import {stex} from '@codemirror/legacy-modes/mode/stex';
+import {shell} from '@codemirror/legacy-modes/mode/shell';
 //import { texSyntax } from "lang-tex";
 
 // my package
@@ -231,12 +234,18 @@ if (ext == 'md') {
     langExtensions.push(html());
 } else if ((ext == 'svg') || (ext == 'xml')) {
     langExtensions.push(xml());
+} else if (ext == 'lua') {
+    langExtensions.push(StreamLanguage.define(lua));
 } else if (ext == 'json') {
     langExtensions.push(json());
 } else if ((ext == 'js') || (ext == 'mjs')) {
     langExtensions.push(javascript());
 } else if (ext == 'php') {
     langExtensions.push(php());
+} else if (['tex','cls','sty'].indexOf(ext) >= 0) {
+    langExtensions.push(StreamLanguage.define(stex));
+} else if (['sh','zsh','bash'].indexOf(ext) >= 0) {
+    langExtensions.push(StreamLanguage.define(shell));
 }
 /*else if (ext == 'tex') {
     langExtensions.push(texSyntax());
