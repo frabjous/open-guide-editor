@@ -56,7 +56,7 @@ Here is a partial list of the keybindings for various functions.
 | **F6/Ctrl-F6**        | Open or close the preview window                                          |
 | **F5/Ctrl-F5**        | Process current file and update preview                                   |
 | **F7/Ctrl-F7**        | Toggle auto-process/auto-preview                                          |
-| **F8/Ctrl-F8**        | Synctex forward jump from current line number (currently tex→pdf only)    | 
+| **F8/Ctrl-F8**        | Synctex forward jump from current line number (currently tex→pdf only)    |
 | **Alt-5**             | Move cursor to matching bracket/parenthesis                               |
 | **Alt-j**             | Jump to last line marked with Alt-m                                       |
 | **Alt-l**             | Select current line                                                       |
@@ -64,7 +64,7 @@ Here is a partial list of the keybindings for various functions.
 | **Alt-n**             | Go to specific line                                                       |
 | **Alt-t**             | Toggle fold/unfold on current block                                       |
 | **Alt-w**             | Toggle line wrapping                                                      |
-| **Alt-/**             | Toggle selected text or current line as a comment                         | 
+| **Alt-/**             | Toggle selected text or current line as a comment                         |
 | **Alt-\|**            | Pipe text to unix command                                                 |
 | **Alt-↑**             | Move current line up                                                      |
 | **Alt-↓**             | Move current line down                                                    |
@@ -80,12 +80,12 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-k**            | Delete to end of line                                                     |
 | **Ctrl-o**            | Open a file                                                               |
 | **Ctrl-r**            | Open find/replace panel                                                   |
-| **Ctrl-s**            | Save                                                                      | 
-| **Ctrl-u**            | Undo                                                                      | 
-| **Ctrl-v**            | Paste                                                                     | 
+| **Ctrl-s**            | Save                                                                      |
+| **Ctrl-u**            | Undo                                                                      |
+| **Ctrl-v**            | Paste                                                                     |
 | **Ctrl-x**            | Cut, or cut whole line if nothing selected                                |
-| **Ctrl-y**            | Redo                                                                      | 
-| **Ctrl-z**            | Undo                                                                      | 
+| **Ctrl-y**            | Redo                                                                      |
+| **Ctrl-z**            | Undo                                                                      |
 | **Ctrl-/**            | Toggle selected text or current line as a comment                         |
 | **Ctrl-\|**           | Pipe text through unix command                                            |
 | **Ctrl-[**            | Indent less                                                               |
@@ -99,6 +99,7 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-Alt-[**        | Fold all foldable blocks                                                  |
 | **Ctrl-Alt-]**        | Unfold all foldable blocks                                                |
 | **Ctrl-Shift-[**      | Fold current line’s block                                                 |
+| **Ctrl-Shift-]**      | Unfold current line’s block                                               |
 
 Things like `Home` and `End` also behave as they should, etc.
 
