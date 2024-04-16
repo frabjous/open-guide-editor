@@ -81,7 +81,7 @@ Here is a partial list of the keybindings for various functions.
 | **Ctrl-o**            | Open a file                                                               |
 | **Ctrl-r**            | Open find/replace panel                                                   |
 | **Ctrl-s**            | Save                                                                      |
-| **Ctrl-u**            | Undo                                                                      |
+| **Ctrl-u**            | Delete to start of line                                                   |
 | **Ctrl-v**            | Paste                                                                     |
 | **Ctrl-x**            | Cut, or cut whole line if nothing selected                                |
 | **Ctrl-y**            | Redo                                                                      |
