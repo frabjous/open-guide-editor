@@ -186,7 +186,6 @@ const additionalKeymap = [
     { key: "Ctrl-r", run: openSearchPanel, preventDefault: true },
     { key: "Ctrl-j", run: joinLines, preventDefault: true },
     { key: "Alt-t", run: toggleFold, preventDefault: true },
-    { key: "Alt-t", run: toggleFold, preventDefault: true },
     { key: "Ctrl-o", run: openFile, preventDefault: true },
     { key: "Ctrl-k", run: deleteToLineEnd, preventDefault: true },
     { key: "Ctrl-x", run: smartDeleteLine },
