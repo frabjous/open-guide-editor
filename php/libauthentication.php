@@ -20,6 +20,7 @@ if (!(isset($poweruser))) {
 // though I'm not sure that matters
 function has_authentication($filename) {
     global $poweruser;
+    $filename = realpath($filename);
     if ($poweruser) { return true; }
 
     // no one can access root
