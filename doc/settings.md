@@ -123,7 +123,7 @@ For example:
 ```json
 {
     "routines": {
-        "html": { 
+        "html": {
             "spellcheck": false,
             "defaultext": "pdf",
             "pdf": {
@@ -154,7 +154,7 @@ You can use any file extension for the input, even those not already included in
 ```
 
 You could similarly create routines for javascript (`js`/`mjs`) files or `css` files, though this is usually unnecessary.
-Such files are likely to be used with html main or root documents, which OGE already has routines for. 
+Such files are likely to be used with html main or root documents, which OGE already has routines for.
 
 You can also use any file extension for the output.
 However, for output extensions that OGE doesn’t know how to preview, such as `epub`, OGE will create a download button for the generated file, rather than an option for the previewer.
@@ -201,7 +201,7 @@ Files that haven’t been named have auto-saves with a name like `⁒autosave-20
         "html" : {
             "command": "flite_cmu_us_slt -t \"$(pandoc -f html -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
         },
-        ⋮       
+        ⋮
     }
 }
 ```
