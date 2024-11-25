@@ -18,9 +18,9 @@ import determinedirs from './app/determinedirs.mjs';
 
 // get script directory
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const viewsdir = path.join(__dirname, 'views');
-process.__dirname = __dirname;
+const __ogedirname = path.dirname(__filename);
+const viewsdir = path.join(__ogedirname, 'views');
+process.__ogedirname = __ogedirname;
 
 const {ogesettings, ogedatadir, ogesessionsdir} = determinedirs();
 
@@ -125,7 +125,7 @@ async function getHtmlPage(page, req, res) {
 const router = express.Router();
 
 router.use('/ogepublic', express.static(
-  path.join(__dirname, 'public')
+  path.join(__ogedirname, 'public')
 ));
 
 router.use('/ogereverse', async function(req, res) {
@@ -190,7 +190,7 @@ router.get('/ogeaudio/:sessionid/:inputext/oge-audio.mp3',
 });
 
 // process json requests
-router.use(express.json({limit: '10mb'}));
+router.use('/ogejson/*', express.json({limit: '10mb'}));
 
 router.post('/ogejson/:sessionid', async function(req, res) {
   if (!req?.body) {

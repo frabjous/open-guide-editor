@@ -1,3 +1,9 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: jsonresponse.mjs
+// Exports a relatively generic function for making json requests
 
 const handlers = {};
 

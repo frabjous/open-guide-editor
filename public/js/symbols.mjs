@@ -1,3 +1,11 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: symbols.mjs
+// Defines the symbols that can be inserted by the insert special
+// character drop down and their English descriptions
+
 const symbols = {
     " ": "non-breaking space",
     " ": "thin space",

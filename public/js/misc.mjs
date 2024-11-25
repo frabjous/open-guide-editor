@@ -1,3 +1,11 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: misc.mjs
+// Some widely used generic functions for page manipulation, etc., used
+// by many other scripts.
+
 export function addelem(opts) {
   if (!("tag" in opts)) { return null; }
   const elem = document.createElement(opts.tag);

@@ -20,8 +20,8 @@ import gettemplate from '../app/json/template.mjs';
 import determinedirs from '../app/determinedirs.mjs';
 import {fileURLToPath} from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-process.__dirname = __dirname;
+const __ogedirname = path.dirname(__filename);
+process.__ogedirname = __ogedirname;
 
 const {ogesettings, ogedatadir, ogesessionsdir} = determinedirs();
 
@@ -208,7 +208,7 @@ if (files.length == 0) {
 if (colorscheme) {
   colorscheme = colorscheme.replace(/\.css$/i,'').replaceAll(' ','_');
   const colorschemedir = path.resolve(
-    __dirname, '..', 'public', 'style', 'colors'
+    __ogedirname, '..', 'public', 'style', 'colors'
   );
   const colorfile = path.join(colorschemedir, colorscheme + '.css');
   if (!fs.isfile(colorfile)) {
@@ -219,7 +219,7 @@ if (colorscheme) {
 if (font) {
   font = font.replace(/\.css$/i,'').replaceAll(' ','_');
   const fontsdir = path.resolve(
-    __dirname, '..', 'public', 'style', 'fonts'
+    __ogedirname, '..', 'public', 'style', 'fonts'
   );
   const fontfile = path.join(fontsdir, font + '.css');
   if (!fs.isfile(fontfile)) {

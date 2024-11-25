@@ -22,7 +22,7 @@ export default function determinedirs() {
   // if instance does not have settings, copy defaults
   if (!fs.isfile(ogesettingsfile)) {
     fs.copyFileSync(
-      path.join(process.__dirname, 'default-settings.json'),
+      path.join(process.__ogedirname, 'default-settings.json'),
       ogesettingsfile
     );
   }

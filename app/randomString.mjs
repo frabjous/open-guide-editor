@@ -1,3 +1,10 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: randonString.mjs
+// Exports a flexible function for creating random strings
+
 const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowercase = 'abcdefghijklmnopqrstuvwxyz';
 const digits = '0123456789';

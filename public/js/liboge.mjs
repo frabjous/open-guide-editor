@@ -1,3 +1,11 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: liboge.mjs
+// Defines most of the important functions that provide the capabilities
+// of the OGE editor above what codemirror offers
+
 import {loadcolorscheme, loadeditorfont} from './common.mjs';
 import ogeEditor from './editor.mjs';
 import {addelem, byid, extensionOf, htmlesc, iconOf, basename} from './misc.mjs';
@@ -1602,10 +1610,6 @@ async function unixFilter(unixcmd) {
   const view = this;
   if (unixcmd.includes('sudo')) {
     view.dialogPanel.errormsg('Unix filters must not contain “sudo”.');
-    return;
-  }
-  if (unixcmd.includes('/')) {
-    view.dialogPanel.errormsg('Unix filters must not contain slashes.');
     return;
   }
   const rangesToFilter = [];

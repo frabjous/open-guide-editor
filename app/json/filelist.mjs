@@ -1,3 +1,11 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: filelist.json
+// Sends a list of files in a directory for creating the file tree
+// for opening files
+
 import path from 'node:path';
 import fs from '../fs.mjs';
 

@@ -1,3 +1,11 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: test-server.mjs
+// A simple example expressjs app that shows how to use the router,
+// or allows it to be used on its own
+
 import express from 'express';
 import http from 'node:http';
 import ogeRouter from './ogeRouter.mjs';

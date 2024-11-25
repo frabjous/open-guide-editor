@@ -1,3 +1,9 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: getfiles.mjs
+// Processes a request to get the contents of a file for editing
 
 import path from 'node:path';
 import fs from '../fs.mjs';

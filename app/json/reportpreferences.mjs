@@ -1,3 +1,9 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: reportpreferences.mjs
+// Processes a change to user preferences regarding colorschemes, fonts, etc.
 
 import savesession from '../savesession.mjs';
 import {saveuserinfo} from '../userinfo.mjs';
