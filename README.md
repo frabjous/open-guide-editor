@@ -27,13 +27,13 @@ https://github.com/frabjous/open-guide-editor/assets/305948/e26b0c8c-f84b-4b21-8
 
 Documentation for the project is broken down into four separate files. They independently cover:
 
-* [Basic editor usage, including panel buttons and key-bindings](./basic-usage.md)
+* [Basic editor usage, including panel buttons and key-bindings](https://github.com/frabjous/open-guide-editor/blob/php/doc/basic-usage.md)
 
-* [Configuring the editor’s settings and the commands used for processing and previewing](./settings.md)
+* [Configuring the editor’s settings and the commands used for processing and previewing](https://github.com/frabjous/open-guide-editor/blob/php/doc/settings.md)
 
-* [Installation, either locally or on a public webserver](./installation.md)
+* [Installation, either locally or on a public webserver](https://github.com/frabjous/open-guide-editor/blob/php/doc/installation.md)
 
-* [The security model for granting or denying access to editing files remotely](./security.md)
+* [The security model for granting or denying access to editing files remotely](https://github.com/frabjous/open-guide-editor/blob/php/doc/security.md)
 
 These are available in the `doc/` subdirectory, or by clicking the links above.
 
