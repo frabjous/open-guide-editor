@@ -1,0 +1,257 @@
+@charset 'UTF-8';
+@import url('https://fonts.googleapis.com/css?family=Material+Symbols+Outlined');
+
+/* COLOR and other global VARIABLES */
+
+:root {
+  --ogeactivelinebg: color-mix(in srgb, var(--ogegray5) 10%, transparent);
+  --ogeatom: var(--ogepurple);
+  --ogebg: var(--ogebackground);
+  --ogebuttonhover: var(--ogeblue);
+  --ogeclosebtn: var(--ogered);
+  --ogefg: var(--ogeforeground);
+  --ogefoldplaceholder: var(--ogegreen);
+  --ogejump: var(--ogeyellow);
+  --ogegutteractivelinefg: var(--ogeblue);
+  --ogegutteractivelinebg: var(--ogebackground);
+  --ogegutterbg: var(--ogegray1);
+  --ogegutterfg: var(--ogeforeground);
+  --ogeinvalid: var(--ogered);
+  --ogematchingbracket: var(--ogegreen); /* transparent 88? */
+  --ogenonmatchingbracket: var(--ogered); /* transparent 88? */
+  --ogepanelbg: var(--ogegray3);
+  --ogepanelfieldbg: var(--ogebackground);
+  --ogepanelfieldfg: var(--ogeforeground);
+  --ogepanelplaceholder: var(--ogegray3);
+  --ogepanelsborder: var(--ogebackground);
+  --ogesearchmatch: var(--ogebrightYellow); /* transparent 33 */
+  --ogesearchmatchselected: var(--ogebrightOrange); /* transparnet 55 */
+  --ogeselectionmatch: var(--ogegreen); /*  (transparent 33)*/
+  --ogetooltipfg: var(--ogeforeground);
+  --ogetooltipbg: var(--ogebackground);
+  --ogetooltipborder: var(--ogegray2);
+  --ogetrailingspacebg: var(--ogegray4);
+  --ogesans: Arimo, Helvetica, Arial, sans-serif;
+}
+
+/* PAGE LAYOUT */
+
+:root, html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 19px;
+  background-color: var(--ogegutterbg);
+}
+
+body {
+  overflow: hidden;
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+main header {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dropdown {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes rollup {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes slightpulse {
+  from {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+@keyframes flashy {
+  from {
+    background-color: var(--ogeblue);
+  } to {
+    background-color: transparent;
+  }
+}
+
+@keyframes flashbad {
+  from {
+    background-color: var(--ogered);
+  } to {
+    background-color: transparent;
+  }
+}
+
+.flashy {
+  animation: flashy 2s linear;
+}
+
+.flashbad {
+  animation: flashbad 2s linear;
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: transparent;
+  border-radius: 1em;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div.spacesymbol {
+  color: var(--ogebrightGreen);
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div.spacesymbol:hover,
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div:hover {
+  background-color: var(--ogeselection);
+  color: var(--ogeblue);
+}
+
+/* GUTTERS etc */
+
+.ogesplitwrapper .cm-editor .cm-scroller .cm-gutters {
+  border-bottom: none;
+}
+
+.cm-editor .cm-indent-markers {
+  --indent-marker-bg-color: var(--ogegray2);
+  --indent-marker-active-bg-color: color-mix(
+    in srgb,
+    var(--ogeblue) 60%,
+    var(--ogebg)
+  );
+}
+
+.oge-jump-indicator {
+  background-color: var(--ogejump);
+  width: 0.2em;
+}
+
+/* TOP PANEL */
+
+#toppanel {
+  list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+li.upperpanelbuttons {
+  display: flex;
+  padding: 0.1rem;
+  flex-direction: row;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+li.upperpanelbuttons .material-symbols-outlined {
+  position: relative;
+  top: 0.1rem;
+  font-size: 1rem;
+}
+
+li.upperpanelbuttons button {
+  font-family: var(--ogesans);
+  display: inline-block;
+  border: 1px solid transparent;
+  padding: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 1.5rem;
+  color: var(--ogefg);
+  background-color: var(--ogegutterbg);
+  cursor: pointer;
+  text-align: center;
+  vertical-align: center;
+  outline: none;
+}
+
+li.upperpanelbuttons button.oge-hiddenbutton {
+  display: none;
+}
+
+li.upperpanelbuttons button:active {
+  outline: 1px solid var(--ogeblue);
+}
+
+li.upperpanelbuttons button.error:hover,
+li.upperpanelbuttons button.error {
+  color: var(--ogered);
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+li.upperpanelbuttons button.busy,
+li.upperpanelbuttons button.busy:disabled,
+li.upperpanelbuttons button.busy:disabled:hover {
+  color: var(--ogeyellow);
+  animation: rotating 1.5s linear infinite;
+}
+
+li.upperpanelbuttons button.turnedon {
+  color: var(--ogefg);
+}
+
+li.upperpanelbuttons button.inactive:hover,
+li.upperpanelbuttons button.turnedon:hover,
+li.upperpanelbuttons button.turnedoff:hover,
+li.upperpanelbuttons button:hover {
+  background-color: var(--ogebg);
+  color: var(--ogeblue);
+}
+
+li.upperpanelbuttons button.inactive:disabled:hover,
+li.upperpanelbuttons button:disabled:hover,
+li.upperpanelbuttons button:disabled,
+li.upperpanelbuttons button.turnedoff,
+li.upperpanelbuttons button.inactive {
+  color: var(--ogegray3);
+  background-color: transparent;
+  border: 1px solid var(--transparent);
+}
+
+li.upperpanelbuttons button:disabled:hover,
+li.upperpanelbuttons button:disabled {
+  cursor: default;
+}

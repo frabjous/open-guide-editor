@@ -1,8 +1,6 @@
 node_modules/
-dist/
 package-lock.json
-settings.json
-editor.bundle.js
-bundle.sh
+public/js/editor.mjs
+oge-settings.json
 doc/*.pdf
 doc/*.html

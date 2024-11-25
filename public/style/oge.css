@@ -1,0 +1,1066 @@
+@charset 'UTF-8';
+@import './common.css';
+
+main div#alltabs {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 1;
+  flex-grow: 1;
+  object-fit: contain;
+  min-height: 200px;
+}
+
+main div#alltabs .oge-jumpbutton {
+  display: none;
+}
+
+main div#alltabs.jumpable .oge-jumpbutton {
+  display: inline;
+}
+
+main div#alltabs > div {
+  width: 100%;
+}
+
+main #alltabs #maintabs {
+  flex-grow: 1.4;
+  flex-shrink: 1;
+  min-width: 10px;
+}
+
+main #alltabs #stackedtabs {
+  display: none;
+}
+
+main #alltabs #stackedtabs:has(.ogetab) {
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1.4;
+  font-size: 14px;
+  min-width: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+main #alltabs #stackedtabs .ogetab {
+  min-height: 5px;
+  min-width: 5px;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.ogetab, .ogesplitwrapper {
+  max-height: 100%;
+  height: 100%;
+}
+
+.ogesplitwrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.ogesplitwrapper.hsplit {
+  flex-direction: column;
+}
+
+.ogesplitwrapper.vsplit {
+  flex-direction: row;
+}
+
+.ogeeditorsplit {
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin: 2px;
+  min-height: 10px;
+  min-width: 10px;
+  flex-basis: 50%;
+}
+
+
+.ogesplitwrapper.mono .ogeeditorsplit.split2 {
+  display : none;
+}
+
+.ogeeditorsplit:has(.cm-focused) {
+  outline: 2px solid var(--ogeblue);
+  margin: 2px;
+}
+
+.cm-editor {
+  max-height: 100%;
+}
+
+div.ogeeditorsplit .cm-editor .cm-scroller {
+  background-color: var(--ogebg);
+  font-family: var(--ogemono) !important;
+}
+
+/* CORE CM STUFF */
+
+.cm-editor .cm-scroller {
+  background-color: var(--ogebg);
+  font-family: var(--ogemono) !important;
+}
+
+.cm-content {
+  color: var(--ogefg);
+}
+
+.cm-content .cm-line .cm-foldPlaceholder {
+  background-color: transparent;
+  color: var(--ogefoldplaceholder);
+  border: 0.5px solid var(--ogefoldplaceholder);
+}
+
+.cm-cursor,
+.cm-editor .cm-cursorLayer  .cm-cursorLayer .cm-cursor,
+.cm-editor .cm-cursorLayer .cm-dropCursor {
+    border-left: 3px solid var(--ogecursor) !important;
+}
+
+
+.cm-editor.cm-focused .cm-scroller .cm-selectionLayer .cm-selectionBackground,
+.cm-editor .cm-scroller .cm-selectionLayer .cm-selectionBackground {
+  background-color: var(--ogeselection);
+}
+
+.cm-editor .cm-content .cm-line .tok-comment ::selection,
+.cm-editor .cm-content .cm-line .tok-comment::selection,
+.cm-editor.cm-focused .cm-content .cm-line .tok-comment ::selection,
+.cm-editor.cm-focused .cm-content .cm-line .tok-comment::selection {
+  color: var(--ogebg) !important;
+}
+
+.cm-content .cm-panels {
+  background-color: var(--ogepanelbg);
+  color: var(--ogefg);
+  font-family: var(--ogesans);
+}
+
+.cm-content .cm-panel .cm-textfield {
+  background-color: var(--ogepanelfieldbg);
+  color: var(--ogepanelfieldfg);
+}
+
+.cm-content .cm-panel button[name="close"] {
+  color: var(--ogeclosebtn);
+  cursor: pointer;
+}
+
+.cm-content .cm-panel .cm-textfield::placeholder {
+  color: var(--ogepanelplaceholder);
+}
+
+.cm-content .cm-panels.cm-panels-top {
+  border-bottom: 2px solid var(--ogepanelsborder);
+}
+
+.cm-content .cm-searchMatch {
+  outline: 1px solid var(--ogesearchmatch);
+  background-color: color-mix(
+    in srgb,
+    var(--ogesearchmatch) 40%,
+    var(--ogebg));
+}
+
+.cm-content .cm-activeLine .cm-searchMatch .tok-comment,
+.cm-content .cm-searchMatch .tok-comment {
+  color: var(--ogebg);
+}
+
+.cm-content .cm-activeLive .cm-searchMatch {
+  background-color: color-mix(
+    in srgb,
+    var(--ogesearchmatch) 40%,
+    var(--ogeactivelinebg));
+}
+
+.cm-content .cm-searchMatch.cm-searchMatch-selected {
+    outline: 2px solid var(--ogesearchmatchselected);
+}
+
+.cm-content .cm-activeLive .cm-searchMatch.cm-searchMatch-selected {
+  background-color: color-mix(
+    in srgb,
+    var(--ogesearchmatch) 40%,
+    var(--ogeactivelinebg));
+}
+
+.cm-content .cm-activeLine {
+  background-color: var(--ogeactivelinebg);
+}
+
+.cm-content .cm-selectionMatch {
+  text-decoration: var(--ogeselectionmatch) solid underline;
+  background-color: transparent;
+}
+
+.cm-content .cm-matchingBracket .tok-punctuation,
+.cm-focused .cm-content .cm-matchingBracket .tok-punctuation,
+.cm-content .cm-matchingBracket,
+.cm-focused .cm-content .cm-matchingBracket
+{
+  color: var(--ogematchingbracket) !important;
+  background-color: transparent;
+  outline: 0.5px solid var(--ogematchingbracket);
+}
+
+.cm-content .cm-nonmatchingBracket .tok-punctuation,
+.cm-content.cm-focused .cm-nonmatchingBracket .tok-punctuation,
+.cm-content .cm-nonmatchingBracket,
+.cm-content.cm-focused .cm-nonmatchingBracket {
+  background-color: transparent;
+  color: var(--ogenonmatchingbracket) !important;
+  outline: 0.5px solid var(--ogeinvalid);
+}
+
+.cm-editor .cm-scroller .cm-gutters {
+  background-color: var(--ogegutterbg);
+  color: var(--ogegutterfg);
+  border: none;
+}
+
+.cm-editor .cm-scroller .cm-activeLineGutter {
+  background-color: var(--ogegutteractivelinebg);
+  color: var(--ogegutteractivelinefg);
+  font-weight: bold;
+}
+
+.cm-editor .cm-tooltip {
+  border: 1px solid var(--ogetooltipborder);
+  background-color: var(--ogetooltipbg);
+  color: var(--ogetooltipfg);
+}
+
+.cm-editor .cm-tooltip .cm-tooltip-arrow:before {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.cm-editor .cm-tooltip .cm-tooltip-arrow:after {
+  border-top-color: var(--ogetooltipborder);
+  border-bottom-color: var(--ogetooltipborder);
+}
+
+.cm-editor .cm-tooltip.cm-tooltip-autocomplete ul {
+  font-family: var(--ogesans);
+}
+
+.cm-editor .cm-tooltip.cm-tooltip-autocomplete ul li[aria-selected=true] {
+  background-color: var(--ogeselection);
+}
+
+/* SYNTAX HILIGHTING TOKENS */
+
+.cm-content .tok-atom {
+  color: var(--ogeatom);
+}
+
+.cm-content .tok-string,
+.cm-content .tok-string2,
+.cm-content .tok-labelName,
+.cm-content .tok-literal,
+.cm-content .tok-character {
+  color: var(--ogeyellow);
+}
+.cm-content .tok-className {
+  color: var(--ogemagenta);
+}
+
+.cm-content .tok-color {
+  color: var(--ogegreen);
+}
+
+.cm-content .tok-meta,
+.cm-content .tok-comment {
+  color: var(--ogegray3);
+}
+.cm-content .tok-constant {
+  color: var(--ogeblue);
+}
+
+.cm-content .tok-definition {
+  color: var(--ogewhite);
+}
+
+.cm-content .tok-deleted {
+  color: var(--ogegray2);
+  text-decoration: line-through;
+  text-decoration-color: var(--ogered);
+}
+
+.cm-content .tok-emphasis {
+  color: var(--ogeyellow);
+  font-style: italic;
+}
+.cm-content .tok-emphasis.tok-meta {
+  color: var(--ogepurple);
+}
+
+.cm-content .tok-escape {
+  color: var(--ogeorange);
+}
+
+.cm-content .tok-heading {
+  color: var(--ogemagenta);
+  text-decoration: underline;
+  text-decoration-color: var(--ogefg);
+  font-weight: bold;
+}
+.cm-content .tok-heading.tok-meta {
+  color: var(--ogepurple);
+}
+
+.cm-content .tok-inserted {
+  color: var(--ogeblue);
+}
+
+.cm-content .tok-invalid {
+  color: var(--ogered);
+}
+
+.cm-content .tok-link {
+  color: var(--ogegreen);
+}
+.cm-content .tok-url {
+  color: var(--ogeblue);
+  text-decoration: underline;
+}
+.cm-content .tok-link.tok-meta {
+  color: var(--ogepurple);
+}
+
+.cm-content .tok-local {
+  color: var(--ogecyan);
+}
+
+.cm-content .tok-macroName {
+  color: var(--ogepurple);
+}
+
+.cm-content .tok-modifier {
+  color: var(--ogeblue);
+}
+.cm-content .tok-name {
+  color: var(--ogecyan);
+}
+
+.cm-content .tok-keyword,
+.cm-content .tok-typeName,
+.cm-content .tok-namespace {
+  color: var(--ogeblue);
+}
+
+.cm-content .tok-bool,
+.cm-content .tok-number {
+  color: var(--ogegreen);
+}
+.cm-content .tok-processingInstruction,
+.cm-content .tok-operatorKeyword,
+.cm-content .tok-operator {
+  color: var(--ogebrightOrange)
+}
+.cm-content .tok-propertyName {
+  color: var(--ogebrightBlue);
+}
+
+.cm-content .tok-special,
+.cm-content .tok-separator,
+.cm-content .tok-punctuation {
+  color: var(--ogemagenta);
+}
+
+.cm-content .tok-regexp {
+  color: var(--ogegreen);
+}
+
+.cm-content .tok-standard {
+  color: var(--ogeforeground);
+}
+
+.cm-content .tok-strong {
+  color: var(--ogecyan);
+  font-weight: bold;
+}
+.cm-content .tok-strong.tok-meta {
+  color: var(--ogepurple);
+}
+
+.cm-content .tok-variableName,
+.cm-content .tok-variableName2 {
+  color: var(--ogeforeground);
+}
+
+.cm-content .cm-line .cm-trailingSpace {
+  text-decoration: var(--ogered) wavy underline;
+  background-color: transparent;
+}
+
+.cm-editor .cm-content .cm-line .cm-specialChar {
+  color: color-mix(in srgb, var(--ogefg) 40%, var(--ogebg));
+}
+
+/* PANELS */
+
+.cm-editor .cm-panels.cm-panels-bottom {
+  border-top: none;
+  background-color: var(--ogegutterbg);
+  color: var(--ogegutterfg);
+  padding: 0.2em;
+}
+
+.cm-editor .cm-panels .cm-panel {
+  font-family: var(--ogesans);
+  font-size: 0.8em;
+}
+
+.cm-panels input {
+  font-family: var(--ogesans);
+  background-color: var(--ogepanelfieldbg);
+  color: var(--ogepanelfieldfg);
+  outline: none;
+  border: none;
+}
+
+.cm-panels input ::selection,
+.cm-panels input::selection {
+  background-color: var(--ogegray3);
+}
+
+.cm-panels input[type=number] {
+  width: 3em;
+  text-align: center;
+  border: 1px solid transparent;
+  -moz-appearance: textfield;
+}
+
+.cm-panels input[type=number]:focus {
+  border: 1px solid var(--ogeblue);
+}
+
+.cm-panels input[type=number].colinput {
+  width: 2em;
+}
+
+.cm-panels input[type=search] {
+  width: 12em;
+}
+.cm-panels input[type=search]::placeholder {
+  color: var(--ogepanelplaceholder);
+}
+
+.cm-panels .oge-pos-indicator {
+  display: inline-block;
+  float: right;
+}
+.cm-panels .oge-pos-indicator label {
+  display: inline-block;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+}
+
+.cm-panels input::-webkit-outer-spin-button,
+.cm-panels input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.oge-panel-toggles {
+  display: inline-block;
+  float: left;
+  padding-right: 0.3em;
+  color: var(--ogepanelplaceholder);
+}
+
+.cm-panels .oge-bottom-panel .hidden {
+  display: none;
+}
+
+.oge-bottom-panel-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+.oge-bottom-panel-toggle.active {
+  color: var(--ogepanelfieldfg);
+}
+
+.oge-bottom-panel-toggle .material-symbols-outlined {
+  font-size: 1.1em;
+  position: relative;
+  top: 0.3em;
+}
+
+.oge-panel-toggles-right .oge-bottom-panel-toggle .material-symbols-outlined {
+  top: 2px;
+}
+
+.oge-bottom-panel-toggle.active:hover,
+.oge-bottom-panel-toggle:hover {
+  color: var(--ogeblue);
+}
+
+.oge-search-panel,
+.oge-search-find-block {
+  display: inline-block;
+}
+.oge-search-find-block {
+  background-color: var(--ogebg);
+  border-radius: 2em;
+  padding: 0 0 0 0.3em;
+  top: 2px;
+  position: relative;
+  margin-right: 0.4em;
+  border: 1px solid transparent;
+}
+
+.oge-search-find-block:has(:focus) {
+  border: 1px solid var(--ogeblue);
+}
+
+.oge-search-find-block .material-symbols-outlined {
+  color: var(--ogepanelplaceholder);
+  position: relative;
+  top: 0.15em;
+  font-size: 1em;
+}
+
+.oge-search-find-block .oge-search-find-button {
+  cursor: pointer;
+  color: var(--ogepanelplaceholder);
+  user-select: none;
+}
+
+.oge-search-find-block .oge-search-find-button[title="select all matches"],
+.oge-search-find-block .oge-search-find-button[title="replace all"],
+.oge-search-find-block .oge-search-find-button[title="submit git commit"],
+.oge-search-find-block .oge-search-find-button[title="pipe text"],
+.oge-search-find-block .oge-search-find-text-button {
+  margin-right: 0.4em;
+}
+
+.oge-search-find-block .oge-search-find-button:hover,
+.oge-search-find-block .oge-search-find-button:hover .material-symbols-outlined {
+  color: var(--ogebuttonhover);
+}
+
+.cm-editor .cm-panels .cm-panel.cm-search {
+  display: none;
+}
+
+.cm-editor .cm-panels.cm-panels-top {
+  border-bottom: none;
+  background-color: var(--ogebg);
+}
+
+.cm-editor .cm-panels .oge-info-panel {
+  background-color: var(--ogegutterbg);
+  color: var(--ogegutterfg);
+  padding: 0.3em;
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-info-close-button {
+  float: right;
+  cursor: pointer;
+  color: color-mix(in srgb, var(--ogered) 60%, transparent);
+  display: inline-block;
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-info-close-button .material-symbols-outlined {
+  position: relative;
+  font-size: 1em;
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-info-close-button:hover {
+  color: var(--ogered);
+}
+
+.cm-editor .cm-panels .oge-info-panel.closed {
+  display: none;
+}
+
+.cm-editor .cm-panels .oge-info-panel.info,
+.cm-editor .cm-panels .oge-info-panel.error,
+.cm-editor .cm-panels .oge-info-panel.utility {
+  animation: dropdown 0.5s linear forwards;
+  transform-origin: top center;
+}
+
+.cm-editor .cm-panels .oge-info-panel.closing,
+.cm-editor .cm-panels .oge-info-panel.info.closing,
+.cm-editor .cm-panels .oge-info-panel.error.closing,
+.cm-editor .cm-panels .oge-info-panel.utility.closing {
+  animation: rollup 0.5s linear forwards;
+  transform-origin: top center;
+}
+
+.cm-editor .cm-panels .oge-info-panel.info {
+  border: 2px dotted var(--ogeblue);
+}
+
+.cm-editor .cm-panels .oge-info-panel.error {
+  border: 2px dotted var(--ogered);
+}
+
+.cm-editor .cm-panels .oge-info-panel.utility {
+  border: 2px dotted var(--ogegray3);
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-info-message .infoicon .material-symbols-outlined {
+  position: relative;
+  top: 0.2em;
+  font-size: 1em;
+}
+
+.cm-editor .cm-panels .oge-info-panel.info .oge-info-message .infoicon {
+  color: var(--ogeblue);
+}
+
+.cm-editor .cm-panels .oge-info-panel.error .oge-info-message .infoicon {
+  color: var(--ogered);
+}
+
+.cm-editor .cm-panels .oge-info-panel button {
+  font-family: var(--ogesans);
+  outline: none;
+  border: none;
+  background-color: var(--ogebg);
+  padding: 0.5em;
+  border-radius: 0.2em;
+  margin: 0 0.2em;
+  cursor: pointer;
+}
+
+.cm-editor .cm-panels .oge-info-panel button:hover {
+  text-decoration: underline;
+}
+
+.cm-editor .cm-panels .oge-info-panel button.closeanyway {
+  color: var(--ogeyellow);
+}
+.cm-editor .cm-panels .oge-info-panel button.closeanyway:hover {
+  color: var(--ogered);
+}
+
+.cm-editor .cm-panels .oge-info-panel button.closecancel {
+  color: var(--ogefg);
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: transparent;
+  border-radius: 1em;
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div.spacesymbol {
+  color: var(--ogebrightGreen);
+}
+
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div.spacesymbol:hover,
+.cm-editor .cm-panels .oge-info-panel .oge-symbol-chart > div:hover {
+  background-color: var(--ogeselection);
+  color: var(--ogeblue);
+}
+
+/* GUTTERS etc */
+
+.ogesplitwrapper .cm-editor .cm-scroller .cm-gutters {
+  border-bottom: none;
+}
+
+.cm-editor .cm-indent-markers {
+  --indent-marker-bg-color: var(--ogegray2);
+  --indent-marker-active-bg-color: color-mix(
+    in srgb,
+    var(--ogeblue) 60%,
+    var(--ogebg)
+  );
+}
+
+.oge-jump-indicator {
+  background-color: var(--ogejump);
+  width: 0.2em;
+}
+
+/* TABLIST */
+
+#tablist {
+  list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#tablist li.oge-tablistitem {
+  display: flex;
+  background-color: var(--ogebg);
+  border: 1px solid var(--ogegray2);
+  margin: 0 0.2rem;
+  border-radius: 1rem;
+  font-family: var(--ogesans);
+  min-height: 10px;
+  min-width: 10px;
+  cursor: pointer;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0 0.3rem 0 0.5rem;
+  color: var(--ogegray5);
+  font-size: 0.8rem;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+#tablist li.oge-tablistitem.focusedtab {
+  border-color: var(--ogeblue);
+}
+
+#tablist li.oge-tablistitem:hover {
+  background-color: color-mix(in srgb, var(--ogeblue) 10%, var(--ogebg));
+}
+
+#tablist li.oge-tablistitem.unsavedtab .oge-tabsaveindicator .material-symbols-outlined {
+  animation: slightpulse 1s linear infinite alternate;
+  color: var(--ogemagenta);
+}
+
+#tablist li.oge-tablistitem .oge-tabfilename {
+  display: inline-block;
+}
+
+#tablist li.oge-tablistitem .material-symbols-outlined {
+  position: relative;
+  top: 0.1rem;
+  font-size: 0.8rem;
+  color: var(--ogegray4);
+}
+
+#tablist li.oge-tablistitem .oge-tabclosebutton:hover .material-symbols-outlined,
+#tablist li.oge-tablistitem .oge-tabclosebutton:hover {
+  color: var(--ogeclosebtn);
+}
+
+#tablist li.oge-tablistitem .oge-tabbuttons .material-symbols-outlined {
+  top: 0.2rem;
+}
+
+#tablist li.oge-tablistitem .oge-tabbuttons {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+#tablist li.oge-tablistitem .oge-tabfilename {
+  flex-grow: 1;
+  flex-shrink: 1;
+  white-space: nowrap;
+}
+
+#tablist li.oge-tablistitem .oge-tabnamepart:last-child {
+  font-size: 1rem;
+  color: var(--ogefg);
+  margin-right: 0.3rem;
+}
+
+#tablist li.oge-tablistitem:hover .oge-tabnamepart:last-child {
+  color: var(--ogeblue);
+  text-decoration: underline;
+}
+
+#tablist li.oge-tablistitem .oge-tabnamepart:after {
+  content: '/'
+}
+
+#tablist li.oge-tablistitem .oge-tabnamepart:last-child:after {
+  content: ''
+}
+
+#tablist li.oge-tablistitem .oge-tabviewbutton .material-symbols-outlined {
+  color: var(--ogeblue);
+}
+
+#tablist li.oge-tablistitem.hiddentab .oge-tabviewbutton .material-symbols-outlined {
+  color: var(--ogegray4);
+}
+#tablist li.oge-tablistitem.hiddentab .oge-tabviewbutton:hover .material-symbols-outlined,
+#tablist li.oge-tablistitem .oge-tabviewbutton:hover .material-symbols-outlined {
+  color: var(--ogegreen);
+}
+
+/* Left and right panel */
+
+#rightpopin,
+#leftpopin {
+  width: 320px;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  background-color: var(--ogebg);
+  color: var(--ogefg);
+  border: 2px solid var(--ogegray2);
+  font-family: var(--ogesans);
+  margin-top: 0;
+  margin-bottom: 0;
+  max-height: 100vh;
+}
+
+#leftpopin {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+#rightpopin {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.spinicon .material-symbols-outlined {
+  animation: rotating 1.5s linear infinite;
+}
+
+#rightpopin header,
+#leftpopin header {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--ogegray2);
+  user-select: none;
+}
+
+#leftpopin header form {
+  float: right;
+  cursor: pointer;
+}
+
+#rightpopin header form {
+  float: left;
+  cursor: pointer;
+}
+
+
+#leftpopin header form:hover {
+  color: var(--ogeblue);
+}
+
+#leftpopin ul {
+  list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0 0 0 1rem;
+  border-left: 3px solid var(--ogeorange);
+}
+
+#leftpopin .oge-directory-icon {
+  cursor: pointer;
+  margin-right: 0.2rem;
+  color: var(--ogeyellow);
+}
+
+#leftpopin .oge-fileselector .material-symbols-outlined {
+  position: relative;
+  top: 0.3rem;
+}
+
+#leftpopin .oge-fileselector .oge-filelistbuttons .material-symbols-outlined {
+  top: 0rem;
+}
+
+#leftpopin .oge-fileselector > ul,
+#leftpopin ul > li > ul {
+  display: none;
+}
+#leftpopin .oge-fileselector.oge-opendirlisting > ul,
+#leftpopin ul > li.oge-opendirlisting > ul {
+  display: block;
+}
+
+#rightpopin .oge-settings,
+#leftpopin .oge-fileselector {
+  padding: 0.5rem;
+}
+
+#leftpopin .oge-hiddenfile {
+  color: var(--ogegray2);
+}
+
+#leftpopin li.oge-hiddenfile.oge-alreadyopen,
+#leftpopin li.oge-alreadyopen {
+  color: var(--ogeblue);
+}
+
+#leftpopin .oge-fileselector li div.oge-filelistbuttons {
+  float: right;
+  display: inline-block;
+  margin-left: auto;
+  color: var(--ogegray3);
+}
+
+#leftpopin .oge-fileselector li div.oge-filelistbuttons span {
+  cursor: pointer;
+}
+
+#leftpopin .oge-fileselector li.oge-isvisible div.oge-filelistbuttons .oge-filelistviewbtn {
+  color: var(--ogeblue);
+}
+
+#leftpopin .oge-fileselector li div.oge-filelistbuttons .oge-filelistclosebtn {
+  visibility: hidden;
+}
+
+#leftpopin .oge-fileselector li.oge-alreadyopen div.oge-filelistbuttons .oge-filelistclosebtn {
+  visibility: visible;
+}
+
+#leftpopin .oge-fileselector li div.oge-filelistbuttons .oge-filelistviewbtn:hover {
+  color: var(--ogegreen);
+}
+
+#leftpopin .oge-fileselector li div.oge-filelistbuttons .oge-filelistclosebtn:hover {
+  color: var(--ogeclosebtn);
+}
+
+#leftpopin .oge-fileselector li {
+  clear: both;
+  padding: 0.2rem 0 0.2rem 0;
+  border-bottom: 1px solid var(--ogegray2);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#leftpopin .oge-fileselector li.oge-dirlistdiritem {
+  border-bottom: none;
+  cursor: pointer;
+}
+#leftpopin .oge-fileselector > div {
+  cursor: pointer;
+}
+
+#leftpopin .oge-fileselector > div:hover,
+#leftpopin .oge-fileselector li.oge-dirlistdiritem > div:hover {
+  text-decoration: underline;
+}
+
+#leftpopin .oge-fileselector li.oge-openable > span {
+  cursor: pointer;
+}
+
+#leftpopin .oge-fileselector li.oge-openable.oge-hiddenfile > span:hover,
+#leftpopin .oge-fileselector li.oge-openable > span:hover {
+  color: var(--ogegreen);
+  text-decoration: underline;
+  text-decoration-color: var(--ogefg);
+}
+
+#leftpopin li.oge-filelistnewfile > label {
+  display: flex;
+  flex-direction: row;
+}
+
+#leftpopin li.oge-filelistnewfile > label > span {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#leftpopin li.oge-filelistnewfile > label > input {
+  flex-grow: 1;
+  flex-shrink: 1;
+  transform: translateY(-0.1rem);
+  font-family: var(--ogesans);
+  background-color: var(--ogebg);
+  color: var(--ogefg);
+  min-width: 2rem;
+  outline: none;
+  border: 1px solid var(--ogegray3);
+}
+
+#leftpopin li.oge-filelistnewfile > label > input:focus {
+  border-color: var(--ogeblue);
+}
+
+#leftpopin li.oge-filelistnewfile > label > span .material-symbols-outlined {
+  transform: translateY(-0.2rem);
+}
+
+#leftpopin li.oge-filelistnewfile > label > span:first-child {
+  color: var(--ogepurple);
+  margin-right: 0.2rem;
+}
+
+#leftpopin li.oge-filelistnewfile > label > span:last-child {
+  color: var(--ogegray3);
+  cursor: pointer;
+}
+
+#leftpopin li.oge-filelistnewfile > label > span:last-child:hover {
+  color: var(--ogegreen);
+}
+
+#rightpopin .oge-settings label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#rightpopin .oge-settings input[type="number"],
+#rightpopin .oge-settings select {
+  font-family: var(--ogesans);
+  color: var(--ogefg);
+  background-color: var(--ogebg);
+  font-size: 1rem;
+  border: none;
+  outline: 1px solid var(--ogegray2);
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#rightpopin .oge-settings input[type="number"] {
+  text-align: left;
+  -moz-appearance: textfield;
+}
+
+#rightpopin .oge-settings input[type="number"]:focus,
+#rightpopin .oge-settings select:focus {
+  outline: 1px solid var(--ogeblue);
+}
+
+#rightpopin .oge-settings select option {
+  font-family: var(--ogesans);
+  font-size: 1rem;
+}
+
+#rightpopin .oge-settings select option:hover {
+  background-color: var(--ogeblue);
+}
+
+#rightpopin .oge-settings .oge-settingsrevertdiv {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+#rightpopin .oge-settings .oge-settingsrevertdiv > div {
+  display: inline-block;
+  cursor: pointer;
+  color: var(--ogemagenta);
+}
+#rightpopin .oge-settings .oge-settingsrevertdiv > div .material-symbols-outlined {
+  position: relative;
+  top: 0.3rem;
+}
+
+#rightpopin .oge-settings .oge-settingsrevertdiv > div:hover {
+  color: var(--ogeyellow);
+}
+
+::spelling-error {
+  /* not widely supported */
+  text-decoration-color: var(--ogered);
+  text-emphasis-color: var(--ogered);
+}

@@ -1,0 +1,25 @@
+@charset 'UTF-8';
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300..700&display=swap');
+:root {
+  --ogemono:
+    'Overpass Mono',
+    'JetBrains Mono',
+    'JuliaMono',
+    'DejaVu Sans Code',
+    'DejaVu Sans Mono',
+    'Droid Sans Mono',
+    'Fira Code',
+    'Fira Mono',
+    'IBM Plex Mono',
+    Inconsolata,
+    Cousine,
+    'Red Hat Mono',
+    'Sarasa Mono K',
+    'Ubuntu Mono',
+    Consolas,
+    Menlo,
+    Monaco,
+    'Lucida Console',
+    monospace,
+    'Symbols Nerd Font';
+}

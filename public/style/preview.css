@@ -1,0 +1,193 @@
+@charset 'UTF-8';
+@import url('./common.css');
+
+:root {
+  --ogemono:
+    'JetBrains Mono',
+    'JuliaMono',
+    'DejaVu Sans Code',
+    'DejaVu Sans Mono',
+    'Droid Sans Mono',
+    'Fira Code',
+    'Fira Mono',
+    Inconsolata,
+    Cousine,
+    'IBM Plex Mono',
+    'Red Hat Mono',
+    'Sarasa Mono K',
+    'Ubuntu Mono',
+    Consolas,
+    Menlo,
+    Monaco,
+    'Lucida Console',
+    monospace,
+    'Symbols Nerd Font';
+}
+
+#previewoutercontainer {
+  background-color: var(--ogebg);
+  color: var(--ogefg);
+  min-height: 200px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+}
+
+#previewinnercontainer {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#preview {
+  font-family: var(--ogesans);
+  font-size: 26px;
+  min-height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-rendering: optimizeLegibility;
+}
+#preview.pdf {
+  background-color: var(--ogegray3);
+  text-align: center;
+  padding: 0.5rem;
+}
+#preview.ogedownloadonly > div {
+  padding: 1rem;
+}
+#preview.ogedownloadonly > div > p {
+  margin-bottom: 0;
+}
+
+#preview.ogedownloadonly > div > p.oge-dllink {
+  border: 1px solid var(--ogeblue);
+  color: var(--ogeblue);
+  border-radius: 1rem;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5rem 1.2rem 1rem 1rem;
+  font-weight: bold;
+  background: linear-gradient(180deg, var(--ogebg) 0%, var(--ogegray2) 50%, var(--ogebg) 100%);
+}
+
+#preview.ogedownloadonly > div > p.lastupdated {
+  font-size: 80%;
+  font-style: italic;
+}
+
+#preview.ogedownloadonly > div > p.oge-dllink .material-symbols-outlined {
+  color: var(--ogemagenta);
+  position: relative;
+  top: 0.5rem;
+  font-size: 150%;
+  font-weight: normal;
+}
+
+#preview.ogedownloadonly > div > p.oge-dllink:hover {
+  border: 1px solid var(--ogemagenta);
+}
+
+#preview.ogedownloadonly > div > p.oge-dllink:hover span:last-child {
+  text-decoration: underline;
+}
+
+#preview:has(iframe) {
+  display: flex;
+  flex-direction: column;
+}
+
+#preview iframe {
+  min-height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  border: none;
+  outline: none;
+}
+
+#filenamedisplay {
+  color: var(--ogefg);
+  font-family: var(--ogemono);
+}
+
+#toppanel {
+  min-height: 1.8rem;
+}
+
+#toppanel.url .download-button {
+  display: none;
+}
+
+#toppanel .pdf-button {
+  display: none;
+}
+
+#toppanel.pdf .pdf-button {
+  display: inline-block;
+}
+
+#rightpanelbuttons {
+  color: var(--ogefg);
+  font-family: var(--ogesans);
+}
+
+#pdfimageholder {
+  background-color: white;
+  display: inline-block;
+  width: 100%;
+  margin: auto;
+}
+
+#pdfimageholder img {
+  width: 100%;
+}
+#rightpanelbuttons .pagenumindicator {
+  margin-right: 0.5rem;
+}
+
+input[type="range"] {
+  background-color: transparent;
+  appearance: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type="range"]::-moz-range-progress {
+  background-color: var(--ogeblue);
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--ogefg);
+  height: 0.2rem;
+  border-radius: 8px;
+}
+input[type="range"]::-moz-range-track {
+  border-radius: 8px;
+  background-color: var(--ogefg);
+  height: 0.2rem;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--ogeblue);
+  color: var(--ogeblue);
+  height: 0.7rem;
+  width: 0.7rem;
+  border: none;
+  outline: none;
+  border-radius: 0.7rem;
+  margin-top: -0.2rem;
+}
+input[type="range"]::-moz-range-thumb {
+  appearance: none;
+  background-color: var(--ogeblue);
+  height: 0.7rem;
+  width: 0.7rem;
+  border-radius: 0.7rem;
+  outline: none;
+  border: none;
+}
+input[type="range"]::-moz-range-thumb:active {
+  background-color: var(--ogepurple);
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  background-color: var(--ogepurple);
+}

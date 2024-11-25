@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+:root {
+    --ogeblack: #181818;
+    --ogered: #810009;
+    --ogegreen: #48513b;
+    --ogeyellow: #cc8b3f;
+    --ogeblue: #576d8c;
+    --ogepurple: #724d7c;
+    --ogecyan: #5c4f4b;
+    --ogewhite: #aea47f;
+    --ogebrightBlack: #555555;
+    --ogebrightRed: #ac3835;
+    --ogebrightGreen: #a6a75d;
+    --ogebrightYellow: #dcdf7c;
+    --ogebrightBlue: #3097c6;
+    --ogebrightPurple: #d33061;
+    --ogebrightCyan: #f3dbb2;
+    --ogebrightWhite: #f4f4f4;
+    --ogebackground: #191c27;
+    --ogeforeground: #aea47a;
+    --ogecursor: #92805b;
+    --ogeselection: #172539;
+    --ogeorange: #a64524;
+    --ogebrightOrange: #c48b58;
+    --ogemagenta: #90787d;
+    --ogebrightMagenta: #e392aa;
+    --ogegray1: #2e2f32;
+    --ogebrightGray1: #6b6b6b;
+    --ogegray2: #43423e;
+    --ogebrightGray2: #828282;
+    --ogegray3: #58564a;
+    --ogebrightGray3: #999999;
+    --ogegray4: #6e6956;
+    --ogebrightGray4: #afafaf;
+    --ogegray5: #837d62;
+    --ogebrightGray5: #c6c6c6;
+    --ogegray6: #98906e;
+    --ogebrightGray6: #dddddd;
+}

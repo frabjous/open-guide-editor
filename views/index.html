@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Your name">
+    <meta name="copyright" content="© Your name">
+    <meta name="dcterms.date" content="2024-11-10">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="/ogepublic/favicon.ico" type="image/x-icon">
+    <title>open guide editor</title>
+    <script type="module">
+      import ogesetup from '/ogepublic/js/ogesetup.mjs';
+      window.sessioninfo = {};
+      window.globalogesettings = {};
+      window.localogesettings = {};
+      ogesetup(sessioninfo);
+    </script>
+    <style>
+      @keyframes loadspin {
+        from {transform:rotate(0deg);}
+        to {transform:rotate(360deg);}
+      }
+      #ogestartloading {
+        font-size: 24px;
+        font-family: sans-serif;
+        background-color: white;
+        color: black;
+        padding: 20px;
+      }
+      #ogestartloading div.spinning {
+        display: inline-block;
+        animation: loadspin 1s infinite linear;
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <dialog id="leftpopin"></dialog>
+    <div id="ogestartloading">
+      <div class="spinning">/</div> Loading … <div class="spinning">/</div>
+    </div>
+    <main>
+      <header>
+        <nav><ul id="tablist">
+          <li id="upperpanelbuttons" class="upperpanelbuttons"></li>
+          <li id="rightpanelbuttons" class="upperpanelbuttons"></li>
+        </ul></nav>
+      </header>
+      <div id="alltabs">
+        <div id="maintabs"></div>
+        <div id="stackedtabs"></div>
+        <div id="hiddentabs" style="display: none;"></div>
+      </div>
+    </main>
+    <dialog id="rightpopin"></dialog>
+  </body>
+</html>

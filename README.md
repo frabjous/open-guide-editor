@@ -2,93 +2,106 @@
 
 ## Overview
 
-Highly configurable web-based text editor based on [codemirror](https://codemirror.net/) primarily designed for editing markdown, LaTeX, and html files with live-updating html and pdf previews.
+Highly configurable web-based text editor based on [codemirror](https://codemirror.net).
+It is especially suited for editing markdown, LaTeX and html files with its built-in mechanism for viewing live-updating-as-you-type html and pdf previews.
+(It is also a capable editor for coding and other tasks.)
 
-However, it can be used to edit other plain text files as well, including subsidiary files (css, javascript, csv, json, pandoc templates, etc.) and see their effects live-update in their chosen root markdown/LaTeX/html document.
+It can also be used for editing subsidiary files (css, javascript, xml, json, pandoc templates, etc.) and see their effects in the live-updating preview for their root markdown/LaTeX/html document.
 The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
+In fact, it can be configured for creating live-previews of the output of *any arbitrary kind of file*, if the necessary processing commands are added to the settings.
 
 It was created to be used for the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
-The project is young, but it has recently gotten to the stage where it might be usable by others, but not much testing has been done.
+# Supported Platforms and Older Versions
 
-If you would like to try out OGE without installing it on your own computer or server, [email me](mailto:klement@umass.edu) and let me know.
+Since version 0.2.0, the server-side backend for OGE takes the form of a router that can be added to [ExpressJS](https://expressjs.com) or compatible server apps, running on [NodeJS](https://nodejs.org) (or possibly another server-side JavaScript runtime). An earlier version took the form of php scripts for php-based websites. The older version is still available in this repo in the php branch.
+
+See the [installation documentation](./doc/installation.md) for information on how to use the router (or the [corresponding document](../php/doc/installation.md)) in the php branch for it).
 
 # Demonstration
 
 Here is a short video showing what OGE looks like and how it works overall.
 
-https://github.com/frabjous/open-guide-editor/assets/305948/e26b0c8c-f84b-4b21-83fc-2aa2b3ed0555
+https://github.com/user-attachments/assets/a701d540-e125-4150-90e2-b6d68fc7460b
 
 ## Documentation
 
 Documentation for the project is broken down into four separate files. They independently cover:
 
-* [Basic editor usage, including panel buttons and key-bindings](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md)
+* [Basic editor usage, including panel buttons and key-bindings](./doc/basic-usage.md)
 
-* [Configuring the editor’s settings and the commands used for processing and previewing](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md)
+* [Configuring the editor’s settings and the commands used for processing and previewing](./doc/settings.md)
 
-* [Installation, either locally or on a public webserver](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md)
+* [Installation, either locally or on a public webserver](./doc/installation.md)
 
-* [The security model for granting or denying access to editing files remotely](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md)
+* [Creating sessions and granting access locally or on a server](./doc/sessions.md)
 
 These are available in the `doc/` subdirectory, or by clicking the links above.
 
 ## Roadmap / TODO
 
-- [x] implement authentication model for who is allowed to edit which files
-- [x] implement basic codemirror v6 editor with top panel
-    - [x] allow saving
-    - [x] allow opening new files
-    - [x] allow toggling wrap/nowrap
-    - [x] find/replace panel
-    - [x] piping selection to unix tools on server
-    - [x] good keybindings
-    - [x] auto-comment/uncomment
-- [x] implement autosaving with configurable timer
-- [x] provide generic mechanisms for autopreview depending on input filetype
+- [x] implement session control and session configuration files
+  - [x] reload settings on save
+- [x] implement codemirror v6 editor with top panel
+  - [x] syntax highlighting
+  - [x] code folding
+  - [x] saving
+  - [x] open new files
+  - [x] create new files
+  - [x] project tree
+  - [x] allow toggling wrap/no-wrap
+  - [x] find/replace panel
+  - [x] piping selection to unix tools on server
+  - [x] good keybindings
+  - [x] auto-comment/uncomment
+- [x] generic autopreview mechanism for input/output file-type
+  - [x] select type of output from panel
+  - [x] allow downloading unpreviewable output
 - [x] support markdown as input
-    - [x] preview html
-    - [x] preview pdf
-    - [x] speak aloud
-    - [x] download ePub
-- [x] implement api for adding citations
-- [x] good documentation
-    - [x] initial todo on readme
-    - [x] basic usage, buttons and keybindings
-    - [x] custom settings
-    - [x] installation locally
-    - [x] server installation
-    - [x] security model
+  - [x] preview html
+  - [x] preview pdf
+  - [x] download ePub
+  - [x] citation auto-completion for pandoc-style citations/bibliographies
 - [x] support LaTeX as input (other things require [this problem](https://github.com/mathematic-inc/codemirror-tex/issues/4) be fixed)
-    - [ ] smart quotes
-    - [ ] error reports
-    - [x] preview pdf
-    - [x] synctex support
+  - [x] smart quotes
+  - [x] error reports
+  - [x] preview pdf
+  - [x] synctex support (both directions)
 - [x] support html as input
-    - [x] preview (itself)
-- [x] templates (through CLI script only at present)
-- [x] edit supplementary files with preview
-    - [ ] proper syntax highlighting for type of file (partial)
-    - [x] css/svg for html/markdown
-    - [x] latex package, bibtex database or included file
-- [x] provide git integration
-    - [x] doing a commit
-    - [ ] revert to earlier commit
-    - [ ] more?
+  - [x] preview (itself)
+- [x] edit supplementary files with same preview
+  - [x] css/svg for html/markdown
+  - [x] latex packages, bibtex databases or included files
+  - [x] edit multiple files at once
+- [x] implement text-to-speech system for reading file out loud
+- [x] implement autosaving with configurable timer
 - [x] symbol picker
 - [x] “[Fregeifier](https://github.com/frabjous/fregeifier)” integration
 - [x] spellcheck through browser’s native spellcheck
 - [x] simple jump marks
-- [x] swap out custom dialogs with codemirror panels (mostly done, could do more)
-- [ ] probably unimportant things
-    - [ ] support other color schemes
-    - [ ] make find button grayed out when search panel inactive
-    - [ ] word-processor-like interface for bold, italics, quotes, etc.
+- [x] templates
+- [x] custom dialogs with codemirror panels
+- [x] documentation
+  - [x] initial to-do on readme
+  - [x] basic usage, buttons and keybindings
+  - [x] custom settings
+  - [x] installation locally
+  - [x] server installation
+  - [x] handling sessions
+- [x] git integration
+  - [x] doing a commit
+  - [ ] revert to earlier commit
+  - [ ] more?
+- [x] additional features
+  - [x] multiple file at once
+  - [x] split panels
+  - [x] linting (partial through "checkonsave")
+  - [x] support other color schemes (now supports over 300!)
+  - [x] support other fonts in the editor
+  - [x] settings panel for colors and fonts
 - [ ] long term pipe dreams (?)
-    - [ ] split panels
-    - [ ] linting
-    - [ ] LSP integration
-    - [ ] collaborative editing
+  - [ ] LSP integration
+  - [ ] collaborative editing
 
 ## Trivia
 
@@ -97,5 +110,5 @@ I have also written a lua neovim plugin that provides similar functionality, [KN
 
 ## License
 
-Copyright 2023 © Kevin C. Klement.
+Copyright 2023–2024 © Kevin C. Klement.
 This is free software, which can be redistributed and/or modified under the terms of the [GNU General Public License (GPL), version 3](https://www.gnu.org/licenses/gpl.html).

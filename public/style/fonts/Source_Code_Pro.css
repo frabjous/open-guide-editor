@@ -1,0 +1,25 @@
+@charset 'UTF-8';
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+:root {
+  --ogemono:
+    'Source Code Pro',
+    'JetBrains Mono',
+    'JuliaMono',
+    'DejaVu Sans Code',
+    'DejaVu Sans Mono',
+    'Droid Sans Mono',
+    'Fira Code',
+    'Fira Mono',
+    Inconsolata,
+    Cousine,
+    'IBM Plex Mono',
+    'Red Hat Mono',
+    'Sarasa Mono K',
+    'Ubuntu Mono',
+    Consolas,
+    Menlo,
+    Monaco,
+    'Lucida Console',
+    monospace,
+    'Symbols Nerd Font';
+}

@@ -1,10 +1,13 @@
 {
   "name": "open-guide-editor",
-  "version": "0.0.1",
-  "description": "Web based editor based on codemirror for editing markdown and LaTeX files with live updating HTML and PDF previews.",
-  "main": "none",
+  "version": "0.2.0",
+  "description": "Web based editor based on codemirror, including generic appartus for live-previews, especially HTML and PDF output when editing markdown and LaTeX files.",
+  "main": "test-server.mjs",
+  "homepage": "https://github.com/frabjous/open-guide-editor#readme",
   "scripts": {
-    "test": "true"
+    "test": "OGETESTSERVERPORT=11011 NODE_ENV=development nodemon test-server.mjs",
+    "production": "NODE_ENV=production node test-server.mjs",
+    "build": "node_modules/.bin/rollup public/js/load.mjs -f es -o public/js/editor.mjs -p @rollup/plugin-node-resolve"
   },
   "repository": {
     "type": "git",
@@ -19,26 +22,31 @@
     "open",
     "guide"
   ],
-  "author": "Kevin C. Klement",
-  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/frabjous/open-guide-editor/issues"
   },
-  "homepage": "https://github.com/frabjous/open-guide-editor#readme",
+  "author": "Kevin C. Klement",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@codemirror/lang-css": "^6.2.0",
-    "@codemirror/lang-html": "^6.4.5",
-    "@codemirror/lang-javascript": "^6.1.9",
+    "@codemirror/autocomplete": "^6.18.2",
+    "@codemirror/commands": "^6.7.1",
+    "@codemirror/lang-css": "^6.3.0",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-json": "^6.0.1",
-    "@codemirror/lang-markdown": "^6.1.1",
+    "@codemirror/lang-markdown": "^6.3.1",
     "@codemirror/lang-php": "^6.0.1",
-    "@codemirror/lang-xml": "^6.0.2",
-    "@codemirror/language": "^6.10.2",
-    "@codemirror/legacy-modes": "^6.4.0",
-    "@lezer/highlight": "^1.1.6",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "codemirror": "^6.0.1",
-    "lang-tex": "^0.0.3",
-    "rollup": "^3.25.1"
+    "@codemirror/lang-xml": "^6.1.0",
+    "@codemirror/lang-yaml": "^6.1.1",
+    "@codemirror/language": "^6.10.3",
+    "@codemirror/legacy-modes": "^6.4.2",
+    "@codemirror/lint": "^6.8.2",
+    "@codemirror/search": "^6.5.7",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.34.2",
+    "@replit/codemirror-indentation-markers": "^6.5.3",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "express": "^4.21.1",
+    "rollup": "^4.24.4"
   }
 }

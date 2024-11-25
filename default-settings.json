@@ -1,84 +1,88 @@
 {
-    "accesskeyfile": "/tmp/oge-accesskeys.json",
-    "autoprocess" : {
-        "delay": 800
+  "autoprocess" : {
+    "delay": 800
+  },
+  "autosave": {
+    "interval": 300000,
+    "directory": "autosave"
+  },
+  "datalocation": ".",
+  "readaloud": {
+    "playbackrate": 1.5,
+    "html" : {
+      "command": "pandoc -f html -t plain | gtts-cli -f - -o %audiofile%"
     },
-    "autosave": {
-        "interval": 300000,
-        "directory": "/tmp"
+    "md": {
+      "command": "pandoc -f markdown -t plain | gtts-cli -f - -o %audiofile%"
     },
-    "readaloud": {
-        "html" : {
-            "command": "flite_cmu_us_slt -t \"$(pandoc -f html -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
-        },
-        "md": {
-            "command": "flite_cmu_us_slt -t \"$(pandoc -f markdown -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
-        },
-        "tex": {
-            "command": "flite_cmu_us_slt -t \"$(pandoc -f latex -t plain <<< %text%)\" -o /dev/stdout | lame - /tmp/oge-audio.mp3"
-        }
+    "tex": {
+      "command": "pandoc -f latex -t plain | gtts-cli -f - -o %audiofile%"
     },
-    "routines": {
-        "html": {
-            "defaultext": "html",
-            "html": {
-                "command": "touch %outputfile%",
-                "icon": "public"
-            },
-            "pdf": {
-                "command": "weasyprint %rootdocument% %outputfile%",
-                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
-                "icon": "picture_as_pdf"
-            },
-            "epub": {
-                "command": "ebook-convert %rootdocument% %outputfile%",
-                "icon": "install_mobile"
-            }
-        },
-        "md": {
-            "defaultext": "html",
-            "html": {
-                "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
-                "icon": "public"
-            },
-            "pdf": {
-                "command": "pandoc -f markdown -t pdf %rootdocument% -o %outputfile%",
-                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
-                "icon": "picture_as_pdf"
-            },
-            "epub": {
-                "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%",
-                "icon": "install_mobile"
-            },
-            "spellcheck": true
-        },
-        "tex": {
-            "defaultext": "pdf",
-            "html": {
-                "command": "pandoc -f latex -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
-                "icon": "public"
-            },
-            "pdf": {
-                "command": "pdflatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%",
-                "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
-                "getpagedimensions": "O=\"$(mutool pages %outputfile% %page% | grep '^<MediaBox')\" ; W=\"${O#*r=\\\"}\" ; W=\"${W%%\\\"*}\" ; echo $W ; H=\"${O#*t=\\\"}\" ; H=\"${H%%\\\"*}\" ; echo $H",
-                "forwardjump": "synctex view -i %line%:1:%savedfile% -o %outputfile% | grep -m 1 '^Page:' | sed 's/[^0-9]//g'",
-                "reversejump": "synctex edit -o %page%:%x%:%y%:%outputfile%",
-                "icon": "picture_as_pdf"
-            },
-            "epub": {
-                 "command": "pandoc -f latex -t epub %rootdocument% -o %outputfile%",
-                 "icon": "install_mobile"
-            }
-        }
-    },
-    "viewer": {
-        "height": 500,
-        "width": 900,
-        "pdf": {
-            "convertcommand": "mutool draw -F svg -o - %outputfile% %page%",
-            "convertextension": "svg",
-            "convertmimetype": "image/svg+xml"
-        }
+    "txt": {
+      "command": "gtts-cli -f - -o %audiofile%"
     }
+  },
+  "routines": {
+    "html": {
+      "defaultext": "html",
+      "html": {
+        "command": "touch %outputfile%",
+        "icon": "public"
+      },
+      "pdf": {
+        "command": "weasyprint %rootdocument% %outputfile%",
+        "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
+        "icon": "picture_as_pdf"
+      },
+      "epub": {
+        "command": "ebook-convert %rootdocument% %outputfile%",
+        "icon": "install_mobile"
+      }
+    },
+    "md": {
+      "defaultext": "html",
+      "html": {
+        "command": "pandoc -f markdown -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
+        "icon": "public"
+      },
+      "pdf": {
+        "command": "pandoc -f markdown -t pdf %rootdocument% -o %outputfile%",
+        "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
+        "icon": "picture_as_pdf"
+      },
+      "epub": {
+        "command": "pandoc -f markdown -t epub %rootdocument% -o %outputfile%",
+        "icon": "install_mobile"
+      },
+      "spellcheck": true
+    },
+    "tex": {
+      "defaultext": "pdf",
+      "html": {
+        "command": "pandoc -f latex -t html --embed-resources --standalone %rootdocument% -o %outputfile%",
+        "icon": "public"
+      },
+      "pdf": {
+        "command": "pdflatex -halt-on-error -interaction=batchmode -synctex=1 %rootdocument%",
+        "postprocess": "mutool pages %outputfile% | grep '^<page' | wc -l",
+        "getpagedimensions": "O=\"$(mutool pages %outputfile% %page% | grep '^<MediaBox')\" ; W=\"${O#*r=\\\"}\" ; W=\"${W%%\\\"*}\" ; echo $W ; H=\"${O#*t=\\\"}\" ; H=\"${H%%\\\"*}\" ; echo $H",
+        "forwardjump": "synctex view -i %line%:1:%savedfile% -o %outputfile% | grep -m 1 '^Page:' | sed 's/[^0-9]//g'",
+        "reversejump": "synctex edit -o %page%:%x%:%y%:%outputfile%",
+        "icon": "picture_as_pdf"
+      },
+      "epub": {
+        "command": "pandoc -f latex -t epub %rootdocument% -o %outputfile%",
+        "icon": "install_mobile"
+      }
+    }
+  },
+  "viewer": {
+    "height": 500,
+    "width": 900,
+    "pdf": {
+      "convertcommand": "mutool draw -F svg -o - %outputfile% %page%",
+      "convertextension": "svg",
+      "convertmimetype": "image/svg+xml"
+    }
+  }
 }
