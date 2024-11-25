@@ -1,7 +1,17 @@
 
-# Open Guide Editor (OGE) Documentation
+# Open Guide Editor (OGE) PHP Branch Documentation
 
 # Basic Usage, Buttons and Keybindings
+
+## Note on Major Version Change
+
+As of version 0.2.0, OGE has changed from using a php server backend to using a router written for an ExpressJS server or compatible javascript runtime server app. In the recent versions, both server-side and browser-side code is all javascript.
+
+You are currently viewing documentation for the older php branch. This branch of the repo retains the php code, and may continue to be used for those making use of php-servers. However, as the code is almost wholly different, new features added to the main branch will not be merged back into this branch (at least not by me).
+
+The documentation below only applies to the php branch. Please check out the main branch to see its corresponding documentation.
+
+## Overview
 
 For the most part, use of OGE as a text editor, should be straightforward, as it is based on [codemirror’s basic setup](https://codemirror.net/docs/ref/#codemirror.basicSetup), which provides sane defaults for regular text editing.
 
@@ -117,7 +127,7 @@ For markdown files, if a bibliography (or bibliographies) is set for the project
 
 ## Other Documentation
 
-See also the other documentation files concerning [configuring the editor’s settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), [installation](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+See also the other documentation files concerning [configuring the editor’s settings](./settings.md), [installation](./installation.md), and the [security model](./security.md).
 
 ## License
 

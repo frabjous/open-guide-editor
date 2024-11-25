@@ -3,6 +3,15 @@
 
 # Installation
 
+## Note on Major Version Change
+
+As of version 0.2.0, OGE has changed from using a php server backend to using a router written for an ExpressJS server or compatible javascript runtime server app. In the recent versions, both server-side and browser-side code is all javascript.
+
+You are currently viewing documentation for the older php branch. This branch of the repo retains the php code, and may continue to be used for those making use of php-servers. However, as the code is almost wholly different, new features added to the main branch will not be merged back into this branch (at least not by me).
+
+The documentation below explains the procedure for installing the php version. Please check out the main branch to see its corresponding documentation.
+
+## Overview
 
 OGE has two main use-cases. One is for personal use on one’s own workstation.
 A second is as part of a web-based project in which it could be used remotely, such as the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework) it was originally written for, or similar project.
@@ -17,7 +26,7 @@ I will cover the former use-case first.
 
 2. You will need to install any other programs that will be used as part of the routines and other commands you plan to use for processing and previewing.
     Below are the programs used by the default configuration, but you can configure OGE to use other programs instead.
-    See the [settings and configuration documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md).
+    See the [settings and configuration documentation](./settings.md).
 
     - [pandoc](https://pandoc.org) for processing markdown files and converting between formats generally
 
@@ -32,7 +41,7 @@ I will cover the former use-case first.
     - [weasyprint](https://weasyprint.org/) for creating pdfs from html files
 
     The above can be easily installed with your distribution’s package manager, on any mainstream linux distro.
-   You do not need to install them all, however, if you don’t need the [routines](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md#routines) that use them, or want to define your own.
+   You do not need to install them all, however, if you don’t need the [routines](./settings.md#routines) that use them, or want to define your own.
    For example, you might use the (slower, but ubiquitous) [poppler](https://poppler.freedesktop.org/) utilities in place of mutool.
 
 3. You will need the programs used in the installation process.
@@ -57,7 +66,7 @@ It may work with earlier versions, but I recommend using php version 8.x or abov
    Starting from the parent directory where you want it installed, run:
 
     ```sh
-    git clone --recurse-submodules --depth 1 \
+    git clone --branch php --recurse-submodules --depth 1 \
         https://github.com/frabjous/open-guide-editor.git
     ```
 
@@ -85,7 +94,7 @@ It may work with earlier versions, but I recommend using php version 8.x or abov
     You can then visit `http://localhost:8181` in a browser, and you should see OGE.
 
 Note that when connecting on `localhost`, you can edit any files the user running the server has access to.
-See the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md) for more detail.
+See the [security documentation](./security.md) for more detail.
 
 #### Convenience script
 
@@ -134,7 +143,7 @@ You can rename the `open-guide-editor/` directory if you wish, but the `open-gui
 When it is not accessed on `localhost` or `127.0.0.1`, the client browser will not automatically have access to editing files on the server.
 That would be a huge security hole.
 Instead, some mechanism will need to be put into place to grant access through some kind of authentication process.
-More information about providing such a mechanism is detailed in the [security documentation](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+More information about providing such a mechanism is detailed in the [security documentation](./security.md).
 
 Once that is in place, there are two ways to access a specific file.
 One would be to use the “open” button/Ctrl-O shortcut, which will be limited to those directories to which the client has been given access.
@@ -143,7 +152,7 @@ This will generate an access key if the user should have access to the file and 
 
 ## Other Documentation
 
-See also the other documentation files concerning [basic usage, buttons and keybindings](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md), [configuring the editor’s settings](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md), and the [security model](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md).
+See also the other documentation files concerning [basic usage, buttons and keybindings](./basic-usage.md), [configuring the editor’s settings](./settings.md), and the [security model](./security.md).
 
 ## License
 

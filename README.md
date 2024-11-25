@@ -1,4 +1,12 @@
-# Open Guide Editor (OGE)
+# Open Guide Editor (OGE): PHP Branch
+
+## Note on Major Version Change
+
+As of version 0.2.0, OGE has changed from using a php server backend to using a router written for an ExpressJS server or compatible javascript runtime server app. In the recent versions, both server-side and browser-side code is all javascript.
+
+You are currently viewing documentation for the older php branch. This branch of the repo retains the php code, and may continue to be used for those making use of php-servers. However, as the code is almost wholly different, new features added to the main branch will not be merged back into this branch (at least not by me).
+
+Please check out the main branch to see its corresponding documentation.
 
 ## Overview
 
@@ -8,10 +16,6 @@ However, it can be used to edit other plain text files as well, including subsid
 The default configuration uses [pandoc](https://pandoc.org) for markdown conversions, but it can be configured to use other tools.
 
 It was created to be used for the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
-
-The project is young, but it has recently gotten to the stage where it might be usable by others, but not much testing has been done.
-
-If you would like to try out OGE without installing it on your own computer or server, [email me](mailto:klement@umass.edu) and let me know.
 
 # Demonstration
 
@@ -23,17 +27,17 @@ https://github.com/frabjous/open-guide-editor/assets/305948/e26b0c8c-f84b-4b21-8
 
 Documentation for the project is broken down into four separate files. They independently cover:
 
-* [Basic editor usage, including panel buttons and key-bindings](https://github.com/frabjous/open-guide-editor/blob/main/doc/basic-usage.md)
+* [Basic editor usage, including panel buttons and key-bindings](./basic-usage.md)
 
-* [Configuring the editor’s settings and the commands used for processing and previewing](https://github.com/frabjous/open-guide-editor/blob/main/doc/settings.md)
+* [Configuring the editor’s settings and the commands used for processing and previewing](./settings.md)
 
-* [Installation, either locally or on a public webserver](https://github.com/frabjous/open-guide-editor/blob/main/doc/installation.md)
+* [Installation, either locally or on a public webserver](./installation.md)
 
-* [The security model for granting or denying access to editing files remotely](https://github.com/frabjous/open-guide-editor/blob/main/doc/security.md)
+* [The security model for granting or denying access to editing files remotely](./security.md)
 
 These are available in the `doc/` subdirectory, or by clicking the links above.
 
-## Roadmap / TODO
+## TODO (as of when the PHP branch was abandoned)
 
 - [x] implement authentication model for who is allowed to edit which files
 - [x] implement basic codemirror v6 editor with top panel
