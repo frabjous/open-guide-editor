@@ -6,3 +6,5 @@ editor.bundle.js
 bundle.sh
 doc/*.pdf
 doc/*.html
+oge-settings.json
+public/
