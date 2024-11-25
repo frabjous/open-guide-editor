@@ -1,5 +1,5 @@
 
-# Open Guide Editor (OGE) Documentation
+# Open Guide Editor (OGE) PHP Branch Documentation
 
 # Security Model
 
@@ -23,7 +23,7 @@ When it is accessed remotely, access to editing files on the server must be gran
 The authentication model for OGE is based on [php sessions](https://www.php.net/manual/en/intro.session.php).
 These are controlled by the php `$_SESSION` variable, which is stored on the server for each client browser session.
 
-There are two session variable keys that affect OGE’s behavior. 
+There are two session variable keys that affect OGE’s behavior.
 They are:
 
 ```php
@@ -97,7 +97,7 @@ exit();
 
 Normally, when used as part of a web project, you would not want to directly load the `index.php` page in the main oge directory.
 Instead, you would want to redirect to this page through the `php/redirect.php` page.
-The redirection page takes the url parameters `dirname=` and `basename=` to set the requested file. 
+The redirection page takes the url parameters `dirname=` and `basename=` to set the requested file.
 See the sample code above for a way to construct a proper url with these parameters within php.
 
 The redirection page checks whether or not the user should have access based on the php session variable keys described above.
@@ -106,7 +106,7 @@ If either the user is considered a poweruser, or has access to the directory of 
 Moreover, in the process of redirecting, the page will create an “access key”.
 Access keys provide a faster way to gain direct access to editing a file, and allow the editor to be bookmarked with a url specific to a given file.
 
-You will see the accesskey, which is a random string of characters, in the address bar after redirection. The url shown might be something like: 
+You will see the accesskey, which is a random string of characters, in the address bar after redirection. The url shown might be something like:
 
 `http://localhost/open-guide-editor/?accesskey=8oQNEvf7I3b1VOQg3Bi7yNQE`
 

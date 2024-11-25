@@ -1,5 +1,5 @@
 
-# Open Guide Editor (OGE) Documentation
+# Open Guide Editor (OGE) PHP Branch Documentation
 
 # Installation
 
@@ -148,7 +148,7 @@ More information about providing such a mechanism is detailed in the [security d
 Once that is in place, there are two ways to access a specific file.
 One would be to use the “open” button/Ctrl-O shortcut, which will be limited to those directories to which the client has been given access.
 The other would be to follow a link to the redirection page `https://yourdomain.com/open-guide-editor/php/redirect.php?dirname=[url-encoded-directory-of file]&basename=[url-encoded-basename-of-file]` where the portions in brackets are replaced by the actual url-encoded names, without brackets.
-This will generate an access key if the user should have access to the file and redirect the browser to the editor with the file in question loaded. 
+This will generate an access key if the user should have access to the file and redirect the browser to the editor with the file in question loaded.
 
 ## Other Documentation
 
