@@ -235,7 +235,7 @@ Additional security steps similar to those [discussed above](#additional-securit
 
 ## Other Documentation
 
-See also the other documentation files concerning [basic usage, buttons and keybindings](./basic-usage.md), [configuring the editor’s settings](./settings.md), and [creating and making use of sessions](./sessopms.md).
+See also the other documentation files concerning [basic usage, buttons and keybindings](./basic-usage.md), [configuring the editor’s settings](./settings.md), and [creating and making use of sessions](./sessions.md).
 
 ## License
 

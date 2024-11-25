@@ -12,11 +12,11 @@ In fact, it can be configured for creating live-previews of the output of *any a
 
 It was created to be used for the [Open Guide Typesetting Framework](https://github.com/frabjous/open-guide-typesetting-framework), though could be used independently.
 
-# Supported Platforms and Older Versions
+# Supported Platforms and Older Version
 
-Since version 0.2.0, the server-side backend for OGE takes the form of a router that can be added to [ExpressJS](https://expressjs.com) or compatible server apps, running on [NodeJS](https://nodejs.org) (or possibly another server-side JavaScript runtime). An earlier version took the form of php scripts for php-based websites. The older version is still available in this repo in the php branch.
+Since version 0.2.0, the server-side backend for OGE takes the form of a router that can be added to [ExpressJS](https://expressjs.com) or compatible server apps, running on [NodeJS](https://nodejs.org) (or possibly another server-side JavaScript runtime). An earlier version took the form of php scripts for php-based websites. The older version is still available in this repo in the [php branch](https://github.com/frabjous/open-guide-editor/blob/php/).
 
-See the [installation documentation](./doc/installation.md) for information on how to use the router (or the [corresponding document](../php/doc/installation.md)) in the php branch for it).
+See the [installation documentation](./doc/installation.md) for information on how to use the router (or the [corresponding documentation](../php/doc/installation.md) in the php branch for it).
 
 # Demonstration
 
