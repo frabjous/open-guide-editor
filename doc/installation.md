@@ -218,17 +218,18 @@ If you want to use OGE as part of a different kind of web app, not using Express
 
 For example, with nginx one could point a subdomain to the OGE port with a reverse proxy:
 
-```
 
+```
 server {
   listen 80;
   listen [::]:80;
-  server_name oge.mydomain.net;
-  location / {
+  server_name yourdomain.net;
+  location /oge* {
     proxy_pass http://localhost:12012;
   }
 }
 ```
+
 Experienced sysadmins can no doubt think of other solutions tailored to the individual use case.
 
 Additional security steps similar to those [discussed above](#additional-security) should also be considered if OGE is used in his way.

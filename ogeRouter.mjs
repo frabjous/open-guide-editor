@@ -130,7 +130,7 @@ router.use('/ogepublic', express.static(
 
 router.use('/ogereverse', async function(req, res) {
   const s = req?.query?.s;
-  if (!s) {
+  if (!s || s.length > 120) {
     res.status(401).type('txt').send('Error 401 Invalid Request');
     return;
   }
