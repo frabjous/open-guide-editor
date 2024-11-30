@@ -539,7 +539,7 @@ function bottomPanel(view) {
         view.split.querySelector('input[placeholder=Replace]');
       if (!view.searchPanelReplaceInput) return;
       view.searchPanelReplaceInput.value = this.value
-        .replace(/\\([0-9]*)/g,"\$$1");
+        .replace(/\\([0-9]+)/g,"\$$1");
       view.searchPanelReplaceInput.onkeyup();
     },
     oninput: function() {

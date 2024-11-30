@@ -17,8 +17,8 @@ import {readuserinfo} from './app/userinfo.mjs';
 import determinedirs from './app/determinedirs.mjs';
 
 // get script directory
-const __filename = fileURLToPath(import.meta.url);
-const __ogedirname = path.dirname(__filename);
+const __ogefilename = fileURLToPath(import.meta.url);
+const __ogedirname = path.dirname(__ogefilename);
 const viewsdir = path.join(__ogedirname, 'views');
 process.__ogedirname = __ogedirname;
 
