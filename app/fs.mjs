@@ -1,12 +1,7 @@
-// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
-// Public License along with this program. If not, see
-// https://www.gnu.org/licenses/.
-
-// File: fs.mjs
-// A wrapper around node’s fs module adding additional simpler functions
-
 import fs from 'node:fs';
 import path from 'node:path';
+
+const prettytabsize = 2;
 
 // checks if a directory exists and creates it otherwise
 // returns directory name/path on success, or else false
@@ -114,7 +109,7 @@ fs.readfile = function(filename) {
 
 fs.rm = function(filename) {
     try {
-        return fs.unlinkSync(filename);
+      fs.unlinkSync(filename);
     } catch(err) {
         return false;
     }
@@ -138,9 +133,13 @@ fs.savefile = function(filename, contents) {
 
 // saves serializable object as json file
 fs.savejson = function(filename, obj, pretty = false){
-    const json = JSON?.stringify?.(obj, null, (pretty) ? 4 : null);
+    const json = JSON?.stringify?.(obj, null, (pretty) ? prettytabsize : null);
     if (!json) return false;
     return fs.savefile(filename, json);
+}
+
+fs.stdin = function() {
+  return fs.readfile(process.stdin.fd);
 }
 
 // gets immediate subdirs of a given dir
@@ -275,7 +274,7 @@ fs.async.readfile = async function(filename) {
 
 fs.async.rm = async function(filename) {
     try {
-        return await fs.promises.unlink(filename);
+      await fs.promises.unlink(filename);
     } catch(err) {
         return false;
     }
@@ -298,9 +297,13 @@ fs.async.savefile = async function(filename, contents) {
 }
 
 fs.async.savejson = async function(filename, obj, pretty = false){
-    const json = JSON?.stringify?.(obj, null, (pretty) ? 4 : null);
+    const json = JSON?.stringify?.(obj, null, (pretty) ? prettytabsize : null);
     if (!json) return false;
     return await fs.async.savefile(filename, json);
+}
+
+fs.async.stdin = async function() {
+  return await fs.async.readfile(process.stdin.fd);
 }
 
 fs.async.subdirs = async function(dir, includeHidden = false) {
