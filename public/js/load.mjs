@@ -538,8 +538,13 @@ function bottomPanel(view) {
       view.searchPanelReplaceInput =
         view.split.querySelector('input[placeholder=Replace]');
       if (!view.searchPanelReplaceInput) return;
-      view.searchPanelReplaceInput.value = this.value
-        .replace(/\\([0-9]+)/g,"\$$1");
+      let newval = this.value;
+      for (let j=1; j<10; j++) {
+        const torepl = '\\' + j.toString();
+        const replace = '$' + j.toString();
+        newval = newval.replaceAll(torepl, replace);
+      }
+      view.searchPanelReplaceInput.value = newval;
       view.searchPanelReplaceInput.onkeyup();
     },
     oninput: function() {
