@@ -1,7 +1,25 @@
+// LICENSE: GNU GPL v3 You should have received a copy of the GNU General
+// Public License along with this program. If not, see
+// https://www.gnu.org/licenses/.
+
+// File: fs.mjs
+// A wrapper around node's fs module with added convenience functions
+
 import fs from 'node:fs';
 import path from 'node:path';
 
 const prettytabsize = 2;
+
+// copies a file
+
+fs.cp = function(src, dest) {
+  try {
+    fs.copyFileSync(src, dest);
+  } catch(err) {
+    return false;
+  }
+  return true;
+}
 
 // checks if a directory exists and creates it otherwise
 // returns directory name/path on success, or else false
@@ -158,6 +176,15 @@ fs.subdirs = function(dir, includeHidden = false) {
 
 // async versions
 fs.async = {};
+
+fs.async.cp = async function(src, dest) {
+  try {
+    await fs.promises.copyFile(src, dest);
+  } catch(err) {
+    return false;
+  }
+  return true;
+}
 
 fs.async.ensuredir = async function(dir) {
   let stats;

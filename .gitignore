@@ -1,3 +1,4 @@
+open-guide-misc/
 node_modules/
 package-lock.json
 public/js/editor.mjs
