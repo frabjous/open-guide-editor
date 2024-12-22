@@ -10,13 +10,13 @@
   "readaloud": {
     "playbackrate": 1.5,
     "html" : {
-      "command": "pandoc -f html -t plain | gtts-cli -f - -o %audiofile%"
+      "command": "pandoc -f html --wrap none -t plain | gtts-cli -f - -o %audiofile%"
     },
     "md": {
-      "command": "pandoc -f markdown -t plain | gtts-cli -f - -o %audiofile%"
+      "command": "pandoc -f markdown --wrap none -t plain | gtts-cli -f - -o %audiofile%"
     },
     "tex": {
-      "command": "pandoc -f latex -t plain | gtts-cli -f - -o %audiofile%"
+      "command": "pandoc -f latex --wrap none -t plain | gtts-cli -f - -o %audiofile%"
     },
     "txt": {
       "command": "gtts-cli -f - -o %audiofile%"
