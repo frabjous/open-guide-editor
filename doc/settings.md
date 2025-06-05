@@ -309,7 +309,7 @@ This alternative uses [flite](http://cmuflite.org/), or festival lite, along wit
     "height": 500,
     "width": 900,
     "pdf": {
-      "convertcommand": "mutool draw -F svg -o - %outputfile% %page%"
+      "convertcommand": "mutool draw -F svg %outputfile% %page%"
     }
   }
 }
