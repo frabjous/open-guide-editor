@@ -176,7 +176,7 @@ function filetypeOf(name) {
     ext = ext.toLowerCase();
     if (['md', 'markdown'].includes(ext)) return 'markdown';
     if (['html', 'htm', 'xhtml'].includes(ext)) return 'html';
-    if (['json', 'task'].includes(ext)) return 'json';
+    if (['json', 'task', 'jsonc'].includes(ext)) return 'json';
     if (['css', 'scss'].includes(ext)) return 'css';
     if (['cjs', 'js', 'mjs'].includes(ext)) return 'javascript';
     if (['sh', 'bash', 'zsh', 'shell', 'dirs',' install'].includes(ext)) {
