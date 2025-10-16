@@ -5,5 +5,4 @@ public/js/editor.mjs
 oge-settings.json
 doc/*.pdf
 doc/*.html
-public/style/colors/defaultlight.css
-public/style/colors/defaultdark.css
+public/style/colors/kcktheme.css
