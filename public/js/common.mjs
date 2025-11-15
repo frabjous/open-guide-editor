@@ -9,7 +9,7 @@ import {addelem} from './misc.mjs';
 
 export function defaultcolorscheme() {
   let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  return ((dark) ? 'defaultdark' : 'defaultlight');
+  return ((dark) ? 'OneHalfDark' : 'OneHalfLight');
 }
 
 export function loadcolorscheme(name) {
