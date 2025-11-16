@@ -358,6 +358,9 @@ export default async function ogesetup(sessioninfo) {
       classes: ["turnedon"],
       disabled: false,
       onclick: function(e) {
+        if (window?.speakButton) {
+          window.speakButton.stopClicked = Date.now();
+        }
         e?.preventDefault?.();
         e?.stopPropagation?.();
         stopReadAloud();
@@ -371,6 +374,12 @@ export default async function ogesetup(sessioninfo) {
       onclick: function(e) {
         e?.preventDefault?.();
         e?.stopPropagation?.();
+        if (window?.speakButton?.pseudoPlaying) {
+          window.speakButton.stopClicked = Date.now();
+          stopReadAloud();
+          return;
+        }
+        window.speakButton.startClicked = Date.now();
         startReadAloud();
       }
     },
@@ -382,11 +391,20 @@ export default async function ogesetup(sessioninfo) {
       onclick: function(e) {
         e?.preventDefault?.();
         e?.stopPropagation?.();
+        if (window?.speakButton?.pseudoPlaying) {
+          window.speakButton.stopClicked = Date.now();
+          stopReadAloud();
+          return;
+        }
+        window.speakButton.startClicked = Date.now();
         startReadAloud();
       }
     }
   });
   window.speakButton.setstate("inactive");
+  window.speakButton.pseudoPlaying = false;
+  window.speakButton.stopClicked = 0;
+  window.speakButton.startClicked = 0;
 
   window.settingsButton = panelButton(rightpanelbuttons, {
     open: {

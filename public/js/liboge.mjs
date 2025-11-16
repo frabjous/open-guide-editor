@@ -1306,6 +1306,7 @@ function soloShow() {
 export function startReadAloud() {
   // only make active once we know reading works
   window.speakButton.setstate("inactive");
+  window.speakButton.pseudoPlaying = true;
 
   // tab is always the first one in main
   const editortab = maintabs?.getElementsByClassName("ogetab")?.[0];
@@ -1360,6 +1361,7 @@ export function startReadAloud() {
   window.audioelem.currentTime = 0;
   window.audioelem.preload = true;
   window.audioelem.onended = () => {
+    window.speakButton.pseudoPlaying = false;
     if (hassel) {
       window.speakButton.setstate('inactive');
       return;
@@ -1367,6 +1369,10 @@ export function startReadAloud() {
     const wentdown = view.linedown();
     if (!wentdown) {
       window.speakButton.setstate('inactive');
+      return;
+    }
+    if (window.speakButton.startClicked <
+       window.speakButton.stopClicked) {
       return;
     }
     view.focus();
@@ -1384,17 +1390,19 @@ export function startReadAloud() {
   }
   window.audioelem.onplaying = () => {
     window.speakButton.setstate('active');
+    window.speakButton.pseudoPlaying = false;
   }
   const playbackrate = window?.ogesettings?.readaloud?.playbackrate ?? 1;
   window.audioelem.playbackRate = playbackrate;
+  if (window.speakButton.stopClicked >= window.speakButton.startClicked) {
+    return;
+  }
   window.audioelem.play();
 }
 
 export function stopReadAloud() {
-  if (window.audioelem) {
-    window.audioelem.onended = function() {};
-    window.audioelem.pause();
-  }
+  window.audioelem.pause();
+  window.speakButton.pseudoPlaying = false;
   window.speakButton.setstate('inactive');
 }
 
