@@ -187,7 +187,7 @@ function filetypeOf(name) {
     if (['txt', 'log', 'py', 'bib', 'ris', 'rtf'].includes(ext)) return 'plain';
     if (['php'].includes(ext)) return 'php';
     if (['lua'].includes(ext)) return 'lua';
-    if (['xml', 'svg', 'rss'].includes(ext)) return 'xml';
+    if (['xml', 'svg', 'rss', 'csl'].includes(ext)) return 'xml';
   }
   if (
     /^\.?bash/.test(name) ||
