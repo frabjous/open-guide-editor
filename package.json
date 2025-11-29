@@ -47,6 +47,6 @@
     "@replit/codemirror-indentation-markers": "^6.5.3",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "express": "^4.21.1",
-    "rollup": "^4.24.4"
+    "rollup": "^4.53.3"
   }
 }
