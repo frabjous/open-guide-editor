@@ -17,6 +17,8 @@ export default function makeAudioFile(sessioninfo, inputext, text) {
   if (!fs.ensuredir(sessionaudiodir)) return null;
   const settings = jobsettings(sessioninfo);
   if (!settings?.readaloud?.[inputext]?.command) return null;
+  // handle footnotes better
+  text = text.replace(/^\[\^([0-9]+)\]:/, "$1 ");
   if (settings.readaloud?.substitutions) {
     const substitutions = settings.readaloud?.substitutions;
     for (const subst in substitutions) {
