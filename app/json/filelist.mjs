@@ -11,6 +11,7 @@ import fs from '../fs.mjs';
 
 function getDirList(dir) {
   const dirlist = {dirname:dir};
+  if (!fs.isdir(dir)) return dirlist;
   const subdirs = fs.subdirs(dir).filter(
     (d) => (
       path.basename(d) != '.git' && path.basename(d) != 'node_modules'

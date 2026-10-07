@@ -1050,6 +1050,12 @@ const betterReplaceNext = function(view) {
   }
 }
 
+const closeInfoPanel = function(view) {
+  if (view?.dialogPanel) view.dialogPanel.closeme();
+  return true;
+}
+
+
 const closeMyTab = function(view) {
   if (view?.myTab?.closeme) view.myTab.closeme();
   return true;
@@ -1427,6 +1433,7 @@ const toggleWrap = function(view) {
 // KEYMAPS //////////////////////////////////////////
 
 const additionalKeymap = [
+  //{key: "Escape", run: closeInfoPanel, preventDefault: true, stopPropagation: true},
   {key: "Shift-Tab", run: indentSelection, preventDefault: true, stopPropagation: true},
   // Ctrl-a = select all
   {key: "Ctrl-b", run: closeSearchPanel, preventDefault: true, stopPropagation: true, global: true},
